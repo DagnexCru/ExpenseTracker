@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "node tests/health.test.js && node tests/utils.test.js && node tests/user.test.js && node tests/auth.test.js"
+    "test": "node tests/health.test.js && node tests/utils.test.js && node tests/user.test.js && node tests/auth.test.js && node tests/auth_edge_cases.test.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
