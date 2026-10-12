@@ -6,10 +6,14 @@
   "scripts": {
     "server": "npm --prefix server run dev",
     "client": "npm --prefix client run dev",
-    "dev": "npm run server",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"cyan.bold,magenta.bold\" \"npm run server\" \"npm run client\"",
+    "start": "npm run dev",
     "install:server": "npm --prefix server install",
     "install:client": "npm --prefix client install",
-    "install:all": "npm run install:server && npm run install:client"
+    "install:all": "npm install && npm run install:server && npm run install:client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   },
   "keywords": [
     "mern",
