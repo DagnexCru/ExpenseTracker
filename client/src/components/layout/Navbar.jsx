@@ -1,8 +1,20 @@
 import React from 'react';
-import { Wallet, Bell, ShieldCheck, Activity, Menu, Globe } from 'lucide-react';
+import { Wallet, LogIn, LogOut, UserPlus, Activity, Menu, Globe, User } from 'lucide-react';
 import Badge from '../ui/Badge';
+import Button from '../ui/Button';
+import { useAuth } from '../../hooks/useAuth';
 
-export const Navbar = ({ onToggleSidebar, isHealthy, uptime }) => {
+export const Navbar = ({ onToggleSidebar, isHealthy, onNavigate }) => {
+  const { user, isAuthenticated, logout } = useAuth();
+
+  // Extract initials from full name (e.g. "Dagnew Cru" -> "DC")
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    const parts = name.trim().split(' ');
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 py-3.5 transition-all">
       <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
@@ -16,8 +28,11 @@ export const Navbar = ({ onToggleSidebar, isHealthy, uptime }) => {
             <Menu className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25">
+          <button
+            onClick={() => onNavigate && onNavigate('health')}
+            className="flex items-center gap-2.5 text-left group"
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
               <Wallet className="w-5 h-5" />
             </div>
             <div>
@@ -31,11 +46,11 @@ export const Navbar = ({ onToggleSidebar, isHealthy, uptime }) => {
               </div>
               <p className="text-[11px] text-slate-500 font-medium">Personal Expense Tracker</p>
             </div>
-          </div>
+          </button>
         </div>
 
-        {/* Center/Right: Live System Status & Account Preview */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        {/* Center/Right: System Status & User Actions */}
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Live Backend Connection Indicator */}
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-200/60">
             <Activity className="w-3.5 h-3.5 text-slate-400" />
@@ -48,19 +63,53 @@ export const Navbar = ({ onToggleSidebar, isHealthy, uptime }) => {
           {/* Currency Preference Pill */}
           <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100/80 rounded-lg text-xs font-semibold text-slate-700">
             <Globe className="w-3.5 h-3.5 text-slate-500" />
-            <span>ETB</span>
+            <span>{user?.currency || 'ETB'}</span>
           </div>
 
-          {/* User Placeholder */}
-          <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
-            <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold tracking-tight">
-              DC
+          {/* Auth State Switcher */}
+          {isAuthenticated && user ? (
+            <div className="flex items-center gap-3 pl-2 sm:pl-3 border-l border-slate-200">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-slate-900 text-white flex items-center justify-center text-xs font-bold tracking-tight shadow-sm">
+                  {getInitials(user.name)}
+                </div>
+                <div className="hidden lg:block text-left">
+                  <p className="text-xs font-semibold text-slate-800 leading-none">{user.name}</p>
+                  <p className="text-[10px] text-slate-500 font-medium mt-0.5 truncate max-w-[140px]">{user.email}</p>
+                </div>
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                icon={LogOut}
+                onClick={logout}
+                className="text-slate-600 hover:text-rose-600 hover:border-rose-200"
+              >
+                <span className="hidden sm:inline">Sign Out</span>
+              </Button>
             </div>
-            <div className="hidden lg:block text-left">
-              <p className="text-xs font-semibold text-slate-800 leading-none">DagnexCru</p>
-              <p className="text-[10px] text-slate-400 font-medium mt-0.5">Developer Mode</p>
+          ) : (
+            <div className="flex items-center gap-2 pl-2 sm:pl-3 border-l border-slate-200">
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={LogIn}
+                onClick={() => onNavigate && onNavigate('login')}
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                icon={UserPlus}
+                onClick={() => onNavigate && onNavigate('register')}
+              >
+                <span className="hidden sm:inline">Create Account</span>
+                <span className="sm:hidden">Join</span>
+              </Button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </header>
