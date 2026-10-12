@@ -12,6 +12,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import ProfileAvatar from '../profile/ProfileAvatar';
 
 export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
   const { user, isAuthenticated } = useAuth();
@@ -137,9 +138,12 @@ export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
         {/* Active Session & Database Footer */}
         <div className="p-4 border-t border-slate-800 bg-slate-950/40 space-y-3">
           {isAuthenticated && user && (
-            <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <div className="truncate">
+            <div
+              onClick={() => onNavigate && onNavigate('profile')}
+              className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs hover:border-slate-700 cursor-pointer transition-colors"
+            >
+              <ProfileAvatar name={user.name || 'User'} size="sm" showStatus={true} />
+              <div className="truncate flex-1">
                 <p className="font-semibold text-slate-200 truncate">{user.name}</p>
                 <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
               </div>
