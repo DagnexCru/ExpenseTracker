@@ -6,6 +6,7 @@ import PasswordInput from '../components/ui/PasswordInput';
 import Button from '../components/ui/Button';
 import Alert from '../components/ui/Alert';
 import Card, { CardContent } from '../components/ui/Card';
+import DemoCredentialsButton from '../components/auth/DemoCredentialsButton';
 
 export const RegisterPage = ({ onSwitchToLogin, onSuccess }) => {
   const { register, isLoading, error: authError, clearError } = useAuth();
@@ -179,6 +180,22 @@ export const RegisterPage = ({ onSwitchToLogin, onSuccess }) => {
             >
               Create Account
             </Button>
+
+            {/* Reviewer / Evaluator Demo Auto-Fill */}
+            <div className="pt-2">
+              <DemoCredentialsButton
+                mode="register"
+                onApply={({ name, email, password }) => {
+                  setFormData({
+                    name,
+                    email,
+                    password,
+                    confirmPassword: password,
+                  });
+                  setFormErrors({});
+                }}
+              />
+            </div>
           </form>
 
           {/* Switch to Login */}
