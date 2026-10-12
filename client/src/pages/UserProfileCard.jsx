@@ -5,6 +5,8 @@ import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import { getMeApi } from '../api/auth';
+import CurrencySelector from '../components/profile/CurrencySelector';
+import SecurityLogs from '../components/profile/SecurityLogs';
 
 export const UserProfileCard = () => {
   const { user, logout } = useAuth();
@@ -171,6 +173,12 @@ export const UserProfileCard = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Currency Preference Selector */}
+      <CurrencySelector currentCurrency={user.currency || 'ETB'} />
+
+      {/* Security and Architecture Compliance Audit */}
+      <SecurityLogs />
     </div>
   );
 };
