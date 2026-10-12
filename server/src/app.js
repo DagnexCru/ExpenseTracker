@@ -2,7 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import healthRoutes from './routes/health.routes.js';
+import authRoutes from './routes/auth.routes.js';
 import { notFoundHandler, errorHandler } from './middleware/error.middleware.js';
 
 // Load environment variables
@@ -26,9 +28,10 @@ app.use(
   })
 );
 
-// Body parsers
+// Body & Cookie parsers
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+app.use(cookieParser());
 
 // Base root endpoint
 app.get('/', (req, res) => {
@@ -42,6 +45,7 @@ app.get('/', (req, res) => {
 
 // Mount Routes
 app.use('/api/health', healthRoutes);
+app.use('/api/auth', authRoutes);
 
 // Centralized error handling
 app.use(notFoundHandler);
