@@ -7,11 +7,15 @@ import Badge from '../components/ui/Badge';
 import { getMeApi } from '../api/auth';
 import CurrencySelector from '../components/profile/CurrencySelector';
 import SecurityLogs from '../components/profile/SecurityLogs';
+import ProfileAvatar from '../components/profile/ProfileAvatar';
+import SecurityAuditBadge from '../components/auth/SecurityAuditBadge';
+import PasswordChangeModal from '../components/profile/PasswordChangeModal';
 
 export const UserProfileCard = () => {
   const { user, logout } = useAuth();
   const [isVerifying, setIsVerifying] = useState(false);
   const [verifyResult, setVerifyResult] = useState(null);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   const handleVerifySession = async () => {
     setIsVerifying(true);
@@ -43,9 +47,7 @@ export const UserProfileCard = () => {
         <CardContent className="p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-slate-900 text-white flex items-center justify-center text-xl font-bold tracking-tight shadow-md shadow-brand-500/20">
-                {user.name ? user.name.substring(0, 2).toUpperCase() : 'US'}
-              </div>
+              <ProfileAvatar name={user.name || 'User'} size="lg" showStatus={true} />
               <div>
                 <div className="flex items-center gap-2.5">
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
@@ -59,15 +61,26 @@ export const UserProfileCard = () => {
               </div>
             </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              icon={LogOut}
-              onClick={logout}
-              className="text-slate-600 hover:text-rose-600 hover:border-rose-200 self-start sm:self-auto"
-            >
-              Sign Out
-            </Button>
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <Button
+                variant="outline"
+                size="sm"
+                icon={Key}
+                onClick={() => setIsPasswordModalOpen(true)}
+                className="text-slate-600 hover:text-brand-600"
+              >
+                Change Password
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                icon={LogOut}
+                onClick={logout}
+                className="text-slate-600 hover:text-rose-600 hover:border-rose-200"
+              >
+                Sign Out
+              </Button>
+            </div>
           </div>
 
           {/* Account Details Grid */}
@@ -177,8 +190,17 @@ export const UserProfileCard = () => {
       {/* Currency Preference Selector */}
       <CurrencySelector currentCurrency={user.currency || 'ETB'} />
 
+      {/* Security Defenses Summary Badge */}
+      <SecurityAuditBadge />
+
       {/* Security and Architecture Compliance Audit */}
       <SecurityLogs />
+
+      {/* Password Change Dialog */}
+      <PasswordChangeModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      />
     </div>
   );
 };
