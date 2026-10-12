@@ -34,7 +34,10 @@ export const getAvatarGradient = (name) => {
   return gradients[index];
 };
 
+export const getAvatarColor = getAvatarGradient;
+
 export default {
   getInitials,
   getAvatarGradient,
+  getAvatarColor,
 };
