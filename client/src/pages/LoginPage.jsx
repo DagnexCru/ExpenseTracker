@@ -6,6 +6,8 @@ import PasswordInput from '../components/ui/PasswordInput';
 import Button from '../components/ui/Button';
 import Alert from '../components/ui/Alert';
 import Card, { CardContent } from '../components/ui/Card';
+import DemoCredentialsButton from '../components/auth/DemoCredentialsButton';
+import RememberMeCheckbox from '../components/auth/RememberMeCheckbox';
 
 export const LoginPage = ({ onSwitchToRegister, onSuccess }) => {
   const { login, isLoading, error: authError, clearError } = useAuth();
@@ -15,6 +17,7 @@ export const LoginPage = ({ onSwitchToRegister, onSuccess }) => {
     password: '',
   });
 
+  const [rememberMe, setRememberMe] = useState(true);
   const [formErrors, setFormErrors] = useState({});
   const [localAlert, setLocalAlert] = useState(null);
 
@@ -121,6 +124,14 @@ export const LoginPage = ({ onSwitchToRegister, onSuccess }) => {
               autoComplete="current-password"
             />
 
+            {/* Remember Me Option */}
+            <div className="flex items-center justify-between pt-1">
+              <RememberMeCheckbox
+                checked={rememberMe}
+                onChange={setRememberMe}
+              />
+            </div>
+
             {/* Submit Button */}
             <Button
               type="submit"
@@ -132,6 +143,17 @@ export const LoginPage = ({ onSwitchToRegister, onSuccess }) => {
             >
               Sign In
             </Button>
+
+            {/* Reviewer / Evaluator Demo Auto-Fill */}
+            <div className="pt-2">
+              <DemoCredentialsButton
+                mode="login"
+                onApply={({ email, password }) => {
+                  setFormData({ email, password });
+                  setFormErrors({});
+                }}
+              />
+            </div>
           </form>
 
           {/* Switch to Register */}
