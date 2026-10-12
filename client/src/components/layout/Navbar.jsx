@@ -3,6 +3,7 @@ import { Wallet, LogIn, LogOut, UserPlus, Activity, Menu, Globe, User } from 'lu
 import Badge from '../ui/Badge';
 import Button from '../ui/Button';
 import { useAuth } from '../../hooks/useAuth';
+import ProfileAvatar from '../profile/ProfileAvatar';
 
 export const Navbar = ({ onToggleSidebar, isHealthy, onNavigate }) => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -69,15 +70,18 @@ export const Navbar = ({ onToggleSidebar, isHealthy, onNavigate }) => {
           {/* Auth State Switcher */}
           {isAuthenticated && user ? (
             <div className="flex items-center gap-3 pl-2 sm:pl-3 border-l border-slate-200">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-slate-900 text-white flex items-center justify-center text-xs font-bold tracking-tight shadow-sm">
-                  {getInitials(user.name)}
-                </div>
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate('profile')}
+                className="flex items-center gap-2.5 text-left group p-1 -m-1 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
+                title="View Profile Details"
+              >
+                <ProfileAvatar name={user.name || 'User'} size="sm" showStatus={true} />
                 <div className="hidden lg:block text-left">
-                  <p className="text-xs font-semibold text-slate-800 leading-none">{user.name}</p>
+                  <p className="text-xs font-semibold text-slate-800 leading-none group-hover:text-brand-600 transition-colors">{user.name}</p>
                   <p className="text-[10px] text-slate-500 font-medium mt-0.5 truncate max-w-[140px]">{user.email}</p>
                 </div>
-              </div>
+              </button>
 
               <Button
                 variant="outline"
