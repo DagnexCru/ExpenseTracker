@@ -53,6 +53,9 @@ export const protect = async (req, res, next) => {
   }
 };
 
+export const authenticateToken = protect;
+
 export default {
   protect,
+  authenticateToken,
 };
