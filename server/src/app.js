@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import transactionRoutes from './routes/transaction.routes.js';
 import { notFoundHandler, errorHandler } from './middleware/error.middleware.js';
 
 // Load environment variables
@@ -46,6 +47,7 @@ app.get('/', (req, res) => {
 // Mount Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 // Centralized error handling
 app.use(notFoundHandler);
