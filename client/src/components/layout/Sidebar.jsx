@@ -34,13 +34,13 @@ export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
       id: 'transactions',
       name: 'Transactions CRUD',
       icon: Receipt,
-      phase: 'Phase 3 (Active)',
+      phase: 'Phase 3',
     },
     {
       id: 'dashboard',
       name: 'Dashboard & Charts',
       icon: LayoutDashboard,
-      phase: 'Phase 4',
+      phase: 'Phase 4 (Active)',
     },
     {
       id: 'filters',
