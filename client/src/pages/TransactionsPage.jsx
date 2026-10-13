@@ -14,7 +14,7 @@ import EmptyTransactionsState from '../components/transactions/EmptyTransactions
 import TransactionModal from '../components/transactions/TransactionModal';
 import DeleteConfirmModal from '../components/transactions/DeleteConfirmModal';
 import Button from '../components/ui/Button';
-import Alert from '../ui/Alert';
+import Alert from '../components/ui/Alert';
 import Spinner from '../components/ui/Spinner';
 
 export const TransactionsPage = () => {
