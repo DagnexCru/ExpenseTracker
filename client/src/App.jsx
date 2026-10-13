@@ -39,9 +39,10 @@ function MainApp() {
           subtitle: 'Phase 2: User authentication, JWT issuance, and secure cookie transport.',
         };
       case 'profile':
+      case 'settings':
         return {
-          title: 'User Profile & Authentication',
-          subtitle: 'Phase 2: Authenticated user details, display currency preference, and session verification.',
+          title: 'User Profile & Currency Preferences',
+          subtitle: 'Phase 6: Update display name, preferred currency, and manage account security.',
         };
       case 'dashboard':
         return {
@@ -49,15 +50,10 @@ function MainApp() {
           subtitle: 'Phase 4: Summary totals, monthly cashflow velocity, and category allocations.',
         };
       case 'transactions':
-        return {
-          title: 'Transaction Management',
-          subtitle: 'Phase 3: Core CRUD operations, income/expense records, and data isolation.',
-        };
       case 'filters':
-      case 'settings':
         return {
-          title: 'Advanced Filtering & Search',
-          subtitle: 'This feature will be introduced in Phase 5.',
+          title: 'Transaction Management & Filters',
+          subtitle: 'Phase 5: Search descriptions, filter by date range, category, and paginate.',
         };
       default:
         return {
@@ -106,7 +102,7 @@ function MainApp() {
             />
           )}
 
-          {currentView === 'profile' && (
+          {(currentView === 'profile' || currentView === 'settings') && (
             <ProtectedRoute onRequireLogin={() => setCurrentView('login')}>
               <UserProfileCard />
             </ProtectedRoute>
@@ -121,18 +117,9 @@ function MainApp() {
             </ProtectedRoute>
           )}
 
-          {currentView === 'transactions' && (
+          {(currentView === 'transactions' || currentView === 'filters') && (
             <ProtectedRoute onRequireLogin={() => setCurrentView('login')}>
               <TransactionsPage />
-            </ProtectedRoute>
-          )}
-
-          {(currentView === 'filters' || currentView === 'settings') && (
-            <ProtectedRoute onRequireLogin={() => setCurrentView('login')}>
-              <DashboardPage
-                onNavigate={handleNavigate}
-                userCurrency={user?.currency}
-              />
             </ProtectedRoute>
           )}
         </PageContainer>
