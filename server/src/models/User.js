@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { hashPassword, comparePassword } from '../utils/password.util.js';
+import { SUPPORTED_CURRENCY_CODES, DEFAULT_CURRENCY } from '../constants/currencies.js';
 
 const userSchema = new mongoose.Schema(
   {
@@ -30,11 +31,13 @@ const userSchema = new mongoose.Schema(
     },
     currency: {
       type: String,
-      default: 'ETB',
+      default: DEFAULT_CURRENCY,
       enum: {
-        values: ['ETB', 'USD', 'EUR', 'GBP'],
+        values: SUPPORTED_CURRENCY_CODES,
         message: '{VALUE} is not a supported currency preference',
       },
+      trim: true,
+      uppercase: true,
     },
   },
   {
