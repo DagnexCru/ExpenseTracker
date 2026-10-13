@@ -132,3 +132,162 @@ export const validateUpdateTransaction = (data = {}) => {
     errors,
   };
 };
+
+/**
+ * Middleware validating query parameters for GET /api/transactions
+ */
+export const validateTransactionListQuery = (req, res, next) => {
+  const {
+    type,
+    category,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount,
+    sortBy,
+    sortOrder,
+    page,
+    limit,
+  } = req.query;
+
+  // Type validation
+  if (type && ![TRANSACTION_TYPES.INCOME, TRANSACTION_TYPES.EXPENSE].includes(type)) {
+    return res.status(400).json({
+      success: false,
+      statusCode: 400,
+      message: "Filter 'type' must be either 'income' or 'expense'.",
+      error: { code: 'INVALID_TRANSACTION_TYPE' },
+    });
+  }
+
+  // Category validation
+  if (category && !ALL_CATEGORIES.includes(category)) {
+    return res.status(400).json({
+      success: false,
+      statusCode: 400,
+      message: `Invalid category filter: "${category}".`,
+      error: { code: 'INVALID_CATEGORY' },
+    });
+  }
+
+  // Date range validation
+  if (startDate) {
+    const start = new Date(startDate);
+    if (isNaN(start.getTime())) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'Invalid startDate format. Please provide a valid ISO date (YYYY-MM-DD).',
+        error: { code: 'INVALID_START_DATE' },
+      });
+    }
+  }
+
+  if (endDate) {
+    const end = new Date(endDate);
+    if (isNaN(end.getTime())) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'Invalid endDate format. Please provide a valid ISO date (YYYY-MM-DD).',
+        error: { code: 'INVALID_END_DATE' },
+      });
+    }
+  }
+
+  if (startDate && endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if (start > end) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'startDate cannot be after endDate.',
+        error: { code: 'INVALID_DATE_RANGE' },
+      });
+    }
+  }
+
+  // Amount range validation
+  if (minAmount !== undefined) {
+    const min = Number(minAmount);
+    if (isNaN(min) || min < 0) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'minAmount must be a non-negative number.',
+        error: { code: 'INVALID_MIN_AMOUNT' },
+      });
+    }
+  }
+
+  if (maxAmount !== undefined) {
+    const max = Number(maxAmount);
+    if (isNaN(max) || max < 0) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'maxAmount must be a non-negative number.',
+        error: { code: 'INVALID_MAX_AMOUNT' },
+      });
+    }
+  }
+
+  if (minAmount !== undefined && maxAmount !== undefined) {
+    if (Number(minAmount) > Number(maxAmount)) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'minAmount cannot be greater than maxAmount.',
+        error: { code: 'INVALID_AMOUNT_RANGE' },
+      });
+    }
+  }
+
+  // Sorting validation
+  const allowedSortFields = ['date', 'amount', 'createdAt', 'category'];
+  if (sortBy && !allowedSortFields.includes(sortBy)) {
+    return res.status(400).json({
+      success: false,
+      statusCode: 400,
+      message: `Invalid sortBy field. Allowed fields: ${allowedSortFields.join(', ')}.`,
+      error: { code: 'INVALID_SORT_FIELD' },
+    });
+  }
+
+  if (sortOrder && !['asc', 'desc'].includes(sortOrder.toLowerCase())) {
+    return res.status(400).json({
+      success: false,
+      statusCode: 400,
+      message: "sortOrder must be either 'asc' or 'desc'.",
+      error: { code: 'INVALID_SORT_ORDER' },
+    });
+  }
+
+  // Pagination validation
+  if (page !== undefined) {
+    const parsedPage = parseInt(page, 10);
+    if (isNaN(parsedPage) || parsedPage < 1) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'page must be a positive integer greater than or equal to 1.',
+        error: { code: 'INVALID_PAGE_NUMBER' },
+      });
+    }
+  }
+
+  if (limit !== undefined) {
+    const parsedLimit = parseInt(limit, 10);
+    if (isNaN(parsedLimit) || parsedLimit < 1 || parsedLimit > 100) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: 'limit must be an integer between 1 and 100.',
+        error: { code: 'INVALID_PAGE_LIMIT' },
+      });
+    }
+  }
+
+  next();
+};
