@@ -1,0 +1,258 @@
+{
+  "info": {
+    "_postman_id": "spendwise-phase-5-search-filtering-pagination",
+    "name": "SpendWise - Phase 5 (Transaction Search, Filtering, Sorting & Pagination)",
+    "description": "Comprehensive Postman test suite for Phase 5 of SpendWise Expense Tracker covering query validation, regex search, date ranges, sorting algorithms, and multi-page pagination.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Search Transactions by Description",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?search=groceries",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "search",
+              "value": "groceries",
+              "description": "Case-insensitive substring search for transaction description"
+            }
+          ]
+        },
+        "description": "Finds transactions where description matches 'groceries' (case-insensitive regex search)."
+      }
+    },
+    {
+      "name": "2. Filter Transactions by Type (Expense)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?type=expense",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "type",
+              "value": "expense",
+              "description": "Filter by transaction type: income or expense"
+            }
+          ]
+        },
+        "description": "Returns transactions isolated strictly to 'expense' records."
+      }
+    },
+    {
+      "name": "3. Filter Transactions by Category (Food)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?category=Food",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "category",
+              "value": "Food",
+              "description": "Filter by recognized category"
+            }
+          ]
+        },
+        "description": "Returns transactions belonging to the 'Food' category."
+      }
+    },
+    {
+      "name": "4. Date Range Filtering (March 2026)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?startDate=2026-03-01&endDate=2026-03-31",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "2026-03-01",
+              "description": "ISO start date (inclusive beginning of day)"
+            },
+            {
+              "key": "endDate",
+              "value": "2026-03-31",
+              "description": "ISO end date (inclusive 23:59:59.999 end of day)"
+            }
+          ]
+        },
+        "description": "Filters records whose transaction date falls within March 1 to March 31, 2026."
+      }
+    },
+    {
+      "name": "5. Amount Range Filtering (500 to 2000 ETB)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?minAmount=500&maxAmount=2000",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "minAmount",
+              "value": "500",
+              "description": "Minimum transaction amount bound"
+            },
+            {
+              "key": "maxAmount",
+              "value": "2000",
+              "description": "Maximum transaction amount bound"
+            }
+          ]
+        },
+        "description": "Filters records where amount >= 500 and amount <= 2000."
+      }
+    },
+    {
+      "name": "6. Sort by Amount (High to Low - Descending)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?sortBy=amount&sortOrder=desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "sortBy",
+              "value": "amount",
+              "description": "Sort field: date, amount, category, createdAt"
+            },
+            {
+              "key": "sortOrder",
+              "value": "desc",
+              "description": "Order: asc or desc"
+            }
+          ]
+        },
+        "description": "Sorts records by monetary amount in descending order."
+      }
+    },
+    {
+      "name": "7. Pagination (Page 1 with Limit 5)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?page=1&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1",
+              "description": "1-indexed page number"
+            },
+            {
+              "key": "limit",
+              "value": "5",
+              "description": "Page size limit"
+            }
+          ]
+        },
+        "description": "Retrieves the first page of 5 transactions along with pagination metadata."
+      }
+    },
+    {
+      "name": "8. Negative Validation: Unrecognized Sort Field (400 Bad Request)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?sortBy=dangerousField",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "sortBy",
+              "value": "dangerousField",
+              "description": "Invalid field that is not whitelisted"
+            }
+          ]
+        },
+        "description": "Verifies server returns 400 Bad Request when an unsupported sort field is provided."
+      }
+    },
+    {
+      "name": "9. Negative Validation: Inverted Date Range (400 Bad Request)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions?startDate=2026-12-31&endDate=2026-01-01",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "2026-12-31"
+            },
+            {
+              "key": "endDate",
+              "value": "2026-01-01"
+            }
+          ]
+        },
+        "description": "Verifies server returns 400 Bad Request when startDate > endDate."
+      }
+    }
+  ]
+}
