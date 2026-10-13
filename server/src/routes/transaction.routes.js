@@ -12,6 +12,7 @@ import {
   remove,
 } from '../controllers/transaction.controller.js';
 import { protect } from '../middleware/auth.middleware.js';
+import { validateTransactionListQuery } from '../validators/transaction.validator.js';
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.use(protect);
 
 router.route('/')
   .post(create)
-  .get(getAll);
+  .get(validateTransactionListQuery, getAll);
 
 router.route('/:id')
   .get(getById)
