@@ -34,3 +34,14 @@ export const PAYMENT_METHODS = [
   { id: 'debit_card', label: 'Debit Card' },
   { id: 'other', label: 'Other' },
 ];
+
+export const getCategoryMetadata = (categoryName) => {
+  const all = [...EXPENSE_CATEGORIES, ...INCOME_CATEGORIES];
+  return (
+    all.find((c) => c.name === categoryName) || {
+      name: categoryName,
+      icon: 'Tag',
+      color: 'bg-slate-500/10 text-slate-400 border-slate-700',
+    }
+  );
+};
