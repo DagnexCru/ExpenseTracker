@@ -1,0 +1,214 @@
+{
+  "info": {
+    "_postman_id": "c1f7b892-phase3-spendwise-transactions",
+    "name": "SpendWise — Phase 3 Transactions CRUD API",
+    "description": "Automated Postman Collection for Phase 3: Transaction CRUD and User Ownership Isolation testing.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Create Expense Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"expense\",\n  \"amount\": 1250.50,\n  \"category\": \"Food & Dining\",\n  \"description\": \"Supermarket groceries\",\n  \"paymentMethod\": \"cash\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201 Created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test('Transaction created successfully', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.success).to.eql(true);",
+              "    pm.expect(json.data.transaction.id).to.be.a('string');",
+              "    pm.environment.set('transactionId', json.data.transaction.id);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Create Income Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"income\",\n  \"amount\": 45000.00,\n  \"category\": \"Salary\",\n  \"description\": \"Monthly Software Engineering Salary\",\n  \"paymentMethod\": \"bank_transfer\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201 Created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test('Income created successfully', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.data.transaction.category).to.eql('Salary');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - List User Transactions",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Returns transaction list', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.success).to.eql(true);",
+              "    pm.expect(json.count).to.be.at.least(1);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Get Single Transaction by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{transactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{transactionId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Matches queried transactionId', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.data.transaction.id).to.eql(pm.environment.get('transactionId'));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Update Transaction",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 1350.00,\n  \"description\": \"Updated supermarket total\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{transactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{transactionId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Amount updated to 1350.00', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.data.transaction.amount).to.eql(1350.00);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Delete Transaction",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{transactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{transactionId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Deletion confirmed', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.success).to.eql(true);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}
