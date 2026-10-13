@@ -14,6 +14,36 @@ const apiClient = axios.create({
 });
 
 /**
+ * Global response interceptor:
+ * Catches 401 Unauthorized responses to notify the application of session expiration,
+ * preventing broken UI states without causing endless reload loops.
+ */
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Check if error is 401 Unauthorized from a protected resource
+    if (error.response && error.response.status === 401) {
+      // Don't trigger session-expired for public login/register attempts
+      const requestUrl = error.config?.url || '';
+      const isAuthEndpoint = requestUrl.includes('/auth/login') || requestUrl.includes('/auth/register');
+
+      if (!isAuthEndpoint && typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('spendwise:session-expired', {
+            detail: {
+              message: error.response.data?.message || 'Your session has expired. Please sign in again.',
+              statusCode: 401,
+            },
+          })
+        );
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+/**
  * Fetch backend and database health status
  */
 export const checkHealth = async () => {
