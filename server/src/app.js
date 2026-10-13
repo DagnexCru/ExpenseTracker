@@ -7,6 +7,7 @@ import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import transactionRoutes from './routes/transaction.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
+import userRoutes from './routes/user.routes.js';
 import { notFoundHandler, errorHandler } from './middleware/error.middleware.js';
 
 // Load environment variables
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 // Mount Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
