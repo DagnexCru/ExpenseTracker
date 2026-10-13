@@ -7,6 +7,7 @@ import HealthCheckPage from './pages/HealthCheckPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserProfileCard from './pages/UserProfileCard';
+import TransactionsPage from './pages/TransactionsPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 
 function MainApp() {
@@ -102,9 +103,15 @@ function MainApp() {
             </ProtectedRoute>
           )}
 
-          {(currentView === 'transactions' || currentView === 'dashboard' || currentView === 'filters' || currentView === 'settings') && (
+          {currentView === 'transactions' && (
             <ProtectedRoute onRequireLogin={() => setCurrentView('login')}>
-              <UserProfileCard />
+              <TransactionsPage />
+            </ProtectedRoute>
+          )}
+
+          {(currentView === 'dashboard' || currentView === 'filters' || currentView === 'settings') && (
+            <ProtectedRoute onRequireLogin={() => setCurrentView('login')}>
+              <TransactionsPage />
             </ProtectedRoute>
           )}
         </PageContainer>
