@@ -1,18 +1,28 @@
 /**
  * @file currencies.js
- * @description Frontend currency definitions, symbols, and formatting options
+ * @description Supported currencies configuration for SpendWise Client
  */
 
-export const CURRENCIES = [
-  { code: 'ETB', symbol: 'Br', name: 'Ethiopian Birr', flag: '🇪🇹' },
-  { code: 'USD', symbol: '$', name: 'US Dollar', flag: '🇺🇸' },
-  { code: 'EUR', symbol: '€', name: 'Euro', flag: '🇪🇺' },
-  { code: 'GBP', symbol: '£', name: 'British Pound', flag: '🇬🇧' },
+export const SUPPORTED_CURRENCIES = [
+  { code: 'ETB', name: 'Ethiopian Birr', symbol: 'Br', flag: '🇪🇹', isDefault: true },
+  { code: 'USD', name: 'United States Dollar', symbol: '$', flag: '🇺🇸', isDefault: false },
+  { code: 'EUR', name: 'Euro', symbol: '€', flag: '🇪🇺', isDefault: false },
+  { code: 'GBP', name: 'British Pound', symbol: '£', flag: '🇬🇧', isDefault: false },
+  { code: 'CAD', name: 'Canadian Dollar', symbol: 'CA$', flag: '🇨🇦', isDefault: false },
+  { code: 'AUD', name: 'Australian Dollar', symbol: 'A$', flag: '🇦🇺', isDefault: false },
+  { code: 'KES', name: 'Kenyan Shilling', symbol: 'KSh', flag: '🇰🇪', isDefault: false },
+  { code: 'JPY', name: 'Japanese Yen', symbol: '¥', flag: '🇯🇵', isDefault: false },
 ];
 
-export const DEFAULT_CURRENCY_CODE = 'ETB';
+export const DEFAULT_CURRENCY = 'ETB';
 
 export const getCurrencySymbol = (code) => {
-  const found = CURRENCIES.find((c) => c.code === code);
-  return found ? found.symbol : code;
+  const match = SUPPORTED_CURRENCIES.find((c) => c.code === code);
+  return match ? match.symbol : code || 'ETB';
+};
+
+export default {
+  SUPPORTED_CURRENCIES,
+  DEFAULT_CURRENCY,
+  getCurrencySymbol,
 };
