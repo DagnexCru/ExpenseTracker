@@ -2,22 +2,23 @@ import express from 'express';
 import { register, login, logout, getMe } from '../controllers/auth.controller.js';
 import { validateRegisterInput, validateLoginInput } from '../validators/auth.validator.js';
 import { protect } from '../middleware/auth.middleware.js';
+import { authRateLimiter } from '../middleware/rate_limiter.middleware.js';
 
 const router = express.Router();
 
 /**
  * @route   POST /api/auth/register
- * @desc    Register a new user account
+ * @desc    Register a new user account with rate limit protection
  * @access  Public
  */
-router.post('/register', validateRegisterInput, register);
+router.post('/register', authRateLimiter, validateRegisterInput, register);
 
 /**
  * @route   POST /api/auth/login
- * @desc    Authenticate user credentials and set auth cookie
+ * @desc    Authenticate user credentials with rate limit protection
  * @access  Public
  */
-router.post('/login', validateLoginInput, login);
+router.post('/login', authRateLimiter, validateLoginInput, login);
 
 /**
  * @route   POST /api/auth/logout
