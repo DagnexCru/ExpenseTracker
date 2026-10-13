@@ -24,28 +24,98 @@ export const createTransaction = async ({ userId, data }) => {
 };
 
 /**
- * Retrieves all transactions owned by the authenticated user with sorting.
+ * Retrieves transactions owned by the authenticated user with search, filtering, sorting, and pagination.
  *
  * @param {Object} params
  * @param {string} params.userId
  * @param {Object} [params.query]
- * @returns {Promise<{ transactions: Array<Object>, count: number }>}
+ * @returns {Promise<{ transactions: Array<Object>, count: number, pagination: Object }>}
  */
 export const getTransactions = async ({ userId, query = {} }) => {
+  const {
+    type,
+    category,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount,
+    search,
+    paymentMethod,
+    sortBy = 'date',
+    sortOrder = 'desc',
+    page = 1,
+    limit = 10,
+  } = query;
+
+  // 1. Build query filter strictly isolated by authenticated user
   const filter = { user: userId };
 
-  if (query.type) {
-    filter.type = query.type;
-  }
-  if (query.category) {
-    filter.category = query.category;
+  if (type) {
+    filter.type = type;
   }
 
-  const transactions = await Transaction.find(filter)
-    .sort({ date: -1, createdAt: -1 })
-    .lean({ virtuals: true });
+  if (category) {
+    filter.category = category;
+  }
 
-  // Map to clean id attribute
+  if (paymentMethod) {
+    filter.paymentMethod = paymentMethod;
+  }
+
+  // Date range filter
+  if (startDate || endDate) {
+    filter.date = {};
+    if (startDate) {
+      filter.date.$gte = new Date(startDate);
+    }
+    if (endDate) {
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999);
+      filter.date.$lte = end;
+    }
+  }
+
+  // Amount range filter
+  if (minAmount !== undefined || maxAmount !== undefined) {
+    filter.amount = {};
+    if (minAmount !== undefined && minAmount !== '') {
+      filter.amount.$gte = Number(minAmount);
+    }
+    if (maxAmount !== undefined && maxAmount !== '') {
+      filter.amount.$lte = Number(maxAmount);
+    }
+  }
+
+  // Case-insensitive description search with regex escaping
+  if (search && typeof search === 'string' && search.trim() !== '') {
+    const escaped = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    filter.description = { $regex: escaped, $options: 'i' };
+  }
+
+  // 2. Sorting options
+  const allowedSortFields = ['date', 'amount', 'createdAt', 'category'];
+  const sortField = allowedSortFields.includes(sortBy) ? sortBy : 'date';
+  const sortDirection = sortOrder && sortOrder.toLowerCase() === 'asc' ? 1 : -1;
+  const sortOptions = { [sortField]: sortDirection, _id: -1 };
+
+  // 3. Pagination calculation
+  const parsedPage = Math.max(parseInt(page, 10) || 1, 1);
+  const parsedLimit = Math.min(Math.max(parseInt(limit, 10) || 10, 1), 100);
+  const skip = (parsedPage - 1) * parsedLimit;
+
+  // Execute data query and total count in parallel
+  const [transactions, totalCount] = await Promise.all([
+    Transaction.find(filter)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(parsedLimit)
+      .lean(),
+    Transaction.countDocuments(filter),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / parsedLimit) || 1;
+
+  // Format id attribute
   const formatted = transactions.map((t) => ({
     ...t,
     id: t._id.toString(),
@@ -54,6 +124,14 @@ export const getTransactions = async ({ userId, query = {} }) => {
   return {
     transactions: formatted,
     count: formatted.length,
+    pagination: {
+      page: parsedPage,
+      limit: parsedLimit,
+      totalCount,
+      totalPages,
+      hasNextPage: parsedPage < totalPages,
+      hasPrevPage: parsedPage > 1,
+    },
   };
 };
 
