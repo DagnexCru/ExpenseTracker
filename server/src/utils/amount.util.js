@@ -15,6 +15,8 @@ export const normalizeAmount = (amount) => {
   return Math.round(parsed * 100) / 100;
 };
 
+export const roundMonetaryAmount = normalizeAmount;
+
 /**
  * Validates that an amount is a strictly positive, finite number.
  *
