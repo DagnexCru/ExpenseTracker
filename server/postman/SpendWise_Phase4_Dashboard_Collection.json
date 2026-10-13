@@ -1,0 +1,332 @@
+{
+  "info": {
+    "name": "SpendWise - Phase 4: Dashboard & Financial Calculations",
+    "_postman_id": "spendwise-phase-4-dashboard-collection",
+    "description": "Postman API Collection for testing SpendWise Phase 4 Dashboard Summary, Monthly Trend Aggregations, and Category Breakdown endpoints with automated test assertions.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Authenticate (Login & Capture Token)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Password123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "login"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Login returns 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "const jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.token) {",
+              "    pm.collectionVariables.set('token', jsonData.data.token);",
+              "    console.log('Token captured successfully');",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Get Financial Summary (All Time)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/summary",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "summary"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Summary contains required numeric fields', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.success).to.be.true;",
+              "    pm.expect(json.data.summary).to.have.property('totalIncome');",
+              "    pm.expect(json.data.summary).to.have.property('totalExpenses');",
+              "    pm.expect(json.data.summary).to.have.property('netBalance');",
+              "    pm.expect(json.data.summary).to.have.property('savingsRate');",
+              "    pm.expect(json.data.summary).to.have.property('transactionCount');",
+              "});",
+              "pm.test('Recent transactions is an array', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.data.recentTransactions).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Get Filtered Summary (Date Range)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/summary?startDate=2026-01-01&endDate=2026-12-31",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "summary"],
+          "query": [
+            { "key": "startDate", "value": "2026-01-01" },
+            { "key": "endDate", "value": "2026-12-31" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Filtered summary returns success', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.success).to.be.true;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Get Monthly Cashflow Trends",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/monthly?months=6",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "monthly"],
+          "query": [
+            { "key": "months", "value": "6" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Monthly trend returns continuous chronological slots', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.data.monthly).to.be.an('array');",
+              "    if (json.data.monthly.length > 0) {",
+              "        const slot = json.data.monthly[0];",
+              "        pm.expect(slot).to.have.property('monthKey');",
+              "        pm.expect(slot).to.have.property('income');",
+              "        pm.expect(slot).to.have.property('expenses');",
+              "        pm.expect(slot).to.have.property('net');",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Get Spending by Category (Expenses)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/categories?type=expense",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "categories"],
+          "query": [
+            { "key": "type", "value": "expense" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Category breakdown contains ranked percentages', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.data).to.have.property('totalAmount');",
+              "    pm.expect(json.data.categories).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Get Inflows by Category (Income)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/categories?type=income",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "categories"],
+          "query": [
+            { "key": "type", "value": "income" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Negative Test: Invalid Date Query (400)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/summary?startDate=not-a-date",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "summary"],
+          "query": [
+            { "key": "startDate", "value": "not-a-date" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400 Bad Request', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test('Error code is INVALID_START_DATE', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.error.code).to.eql('INVALID_START_DATE');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Negative Test: Inverted Date Boundaries (400)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/summary?startDate=2026-12-01&endDate=2026-01-01",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "summary"],
+          "query": [
+            { "key": "startDate", "value": "2026-12-01" },
+            { "key": "endDate", "value": "2026-01-01" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400 Bad Request', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test('Error code is INVALID_DATE_RANGE', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.error.code).to.eql('INVALID_DATE_RANGE');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 - Security Check: Unauthenticated Request (401)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/summary",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "summary"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 401 Unauthorized', function () {",
+              "    pm.response.to.have.status(401);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}
