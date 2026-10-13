@@ -58,7 +58,7 @@ export const create = async (req, res, next) => {
  */
 export const getAll = async (req, res, next) => {
   try {
-    const { transactions, count } = await getTransactions({
+    const { transactions, count, pagination } = await getTransactions({
       userId: req.user._id,
       query: req.query,
     });
@@ -66,6 +66,7 @@ export const getAll = async (req, res, next) => {
     res.status(200).json({
       success: true,
       count,
+      pagination,
       data: {
         transactions,
       },
