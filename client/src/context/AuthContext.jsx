@@ -96,6 +96,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Synchronize updated user profile across application state
+  const updateUser = useCallback((updatedUserData) => {
+    setUser((prev) => (prev ? { ...prev, ...updatedUserData } : updatedUserData));
+  }, []);
+
   const value = {
     user,
     isAuthenticated: Boolean(user),
@@ -104,6 +109,7 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
+    updateUser,
     clearError,
     checkAuthStatus,
   };
