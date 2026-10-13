@@ -35,6 +35,23 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, [checkAuthStatus]);
 
+  // Gracefully handle session expiration from Axios interceptors
+  useEffect(() => {
+    const handleSessionExpired = (event) => {
+      setUser((currentUser) => {
+        if (currentUser) {
+          setError(event.detail?.message || 'Your session has expired. Please sign in again.');
+        }
+        return null;
+      });
+    };
+
+    window.addEventListener('spendwise:session-expired', handleSessionExpired);
+    return () => {
+      window.removeEventListener('spendwise:session-expired', handleSessionExpired);
+    };
+  }, []);
+
   // Handle User Registration
   const register = async ({ name, email, password }) => {
     setError(null);
