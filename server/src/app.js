@@ -9,11 +9,18 @@ import transactionRoutes from './routes/transaction.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
 import userRoutes from './routes/user.routes.js';
 import { notFoundHandler, errorHandler } from './middleware/error.middleware.js';
+import { securityHeaders, sanitizeNoSql } from './middleware/security.middleware.js';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
+
+// Security hardening: Disable fingerprinting header
+app.disable('x-powered-by');
+
+// Apply OWASP Security Headers (nosniff, frame-options, xss, permissions)
+app.use(securityHeaders);
 
 // HTTP request logger
 if (process.env.NODE_ENV !== 'test') {
@@ -35,6 +42,9 @@ app.use(
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 app.use(cookieParser());
+
+// Anti-NoSQL Query Injection sanitizer
+app.use(sanitizeNoSql);
 
 // Base root endpoint
 app.get('/', (req, res) => {
