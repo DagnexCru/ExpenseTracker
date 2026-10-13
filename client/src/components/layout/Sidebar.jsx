@@ -28,13 +28,13 @@ export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
       id: isAuthenticated ? 'profile' : 'login',
       name: isAuthenticated ? 'User Profile & Auth' : 'Authentication',
       icon: Lock,
-      phase: 'Phase 2 (Active)',
+      phase: 'Phase 2',
     },
     {
       id: 'transactions',
       name: 'Transactions CRUD',
       icon: Receipt,
-      phase: 'Phase 3',
+      phase: 'Phase 3 (Active)',
     },
     {
       id: 'dashboard',
