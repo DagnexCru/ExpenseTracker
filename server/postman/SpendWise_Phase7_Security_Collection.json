@@ -1,0 +1,230 @@
+{
+  "info": {
+    "_postman_id": "spendwise-phase-7-security-audit-collection",
+    "name": "SpendWise - Phase 7 (Validation, Security & Automated Testing)",
+    "description": "Comprehensive Postman test suite for Phase 7 of SpendWise Expense Tracker verifying OWASP security headers, brute-force rate limiting, NoSQL injection defenses, cross-tenant IDOR boundaries, JWT tampering protection, and zero password hash exposure.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. OWASP Security Headers & Fingerprint Suppression",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "health"]
+        },
+        "description": "Verifies that responses contain X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block, and suppress the X-Powered-By fingerprinting header."
+      }
+    },
+    {
+      "name": "2. Authentication Rate Limiting (Brute-Force Defense)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"attacker@example.com\",\n  \"password\": \"WrongPassword123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Verifies that repeatedly submitting failed authentication attempts triggers 429 Too Many Requests with a Retry-After header."
+      }
+    },
+    {
+      "name": "3. NoSQL Query Injection Neutralization",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"expense\",\n  \"amount\": 50.00,\n  \"category\": \"Food & Dining\",\n  \"date\": \"2026-03-20\",\n  \"description\": \"Coffee test\",\n  \"$ne\": \"malicious_payload\",\n  \"$where\": \"sleep(1000)\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"]
+        },
+        "description": "Verifies that request body keys starting with $ or containing . are stripped by sanitizeNoSql middleware."
+      }
+    },
+    {
+      "name": "4. IDOR Defense: Cross-Tenant Read (404 Not Found)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{victimTransactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{victimTransactionId}}"]
+        },
+        "description": "Verifies that querying another user's transaction ID returns 404 Not Found without leaking existence."
+      }
+    },
+    {
+      "name": "5. IDOR Defense: Cross-Tenant Update (404 Not Found)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"expense\",\n  \"amount\": 99999,\n  \"category\": \"Food & Dining\",\n  \"date\": \"2026-03-20\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{victimTransactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{victimTransactionId}}"]
+        },
+        "description": "Verifies that attempting to alter another user's transaction fails with 404 Not Found."
+      }
+    },
+    {
+      "name": "6. IDOR Defense: Cross-Tenant Deletion (404 Not Found)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{victimTransactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{victimTransactionId}}"]
+        },
+        "description": "Verifies that attempting to delete another user's transaction fails with 404 Not Found."
+      }
+    },
+    {
+      "name": "7. JWT Signature Tampering Defense (401 Unauthorized)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.tampered_payload.fake_signature"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "me"]
+        },
+        "description": "Verifies that a tampered or invalid JWT signature is immediately rejected with 401 Unauthorized."
+      }
+    },
+    {
+      "name": "8. Malformed Authorization Header Defense (401 Unauthorized)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic YWRtaW46cGFzc3dvcmQ="
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "me"]
+        },
+        "description": "Verifies that non-Bearer authorization formats are rejected with 401 Unauthorized."
+      }
+    },
+    {
+      "name": "9. Protected Field Defense (Immutable Email 400)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"takeover@target.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "me"]
+        },
+        "description": "Verifies that attempts to mutate immutable user properties return 400 Bad Request."
+      }
+    },
+    {
+      "name": "10. Zero Password Exposure Audit (200 OK)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "me"]
+        },
+        "description": "Verifies that user profile responses never contain password, passwordHash, or internal fields."
+      }
+    }
+  ]
+}
