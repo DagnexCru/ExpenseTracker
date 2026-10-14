@@ -39,8 +39,8 @@ app.use(
 );
 
 // Body & Cookie parsers
-app.use(express.json({ limit: '1mb' }));
-app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
 // Anti-NoSQL Query Injection sanitizer

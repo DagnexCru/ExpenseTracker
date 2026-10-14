@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema(
       trim: true,
       uppercase: true,
     },
+    avatar: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,

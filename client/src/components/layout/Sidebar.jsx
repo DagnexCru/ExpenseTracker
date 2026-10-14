@@ -1,173 +1,259 @@
 import React from 'react';
 import {
-  Home,
+  Wallet,
   LayoutDashboard,
   Receipt,
+  Target,
   PieChart,
-  User,
-  Activity,
-  Layers,
-  Database,
-  Lock,
-  X,
+  Settings,
+  LogOut,
+  PlusCircle,
+  Camera,
+  ChevronLeft,
+  ChevronRight,
   ShieldCheck,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import ProfileAvatar from '../profile/ProfileAvatar';
 
-export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
-  const { user, isAuthenticated } = useAuth();
+export const Sidebar = ({
+  currentView,
+  onNavigate,
+  onOpenPhotoModal,
+  onOpenAddTransaction,
+  isCollapsed = false,
+  onToggleCollapse,
+  isMobileOpen = false,
+  onCloseMobile,
+}) => {
+  const { user, logout } = useAuth();
 
-  const navigationItems = [
-    {
-      id: 'home',
-      name: 'Home & Welcome',
-      icon: Home,
-      phase: 'Landing',
-    },
+  const navItems = [
     {
       id: 'dashboard',
-      name: 'Financial Dashboard',
+      label: 'Dashboard',
       icon: LayoutDashboard,
-      phase: 'Overview',
+      badge: null,
     },
     {
       id: 'transactions',
-      name: 'Transaction Ledger',
+      label: 'Ledger',
       icon: Receipt,
-      phase: 'CRUD & Live',
+      badge: 'Live',
     },
     {
-      id: 'filters',
-      name: 'Search & Filtering',
-      icon: PieChart,
-      phase: 'Query Studio',
+      id: 'budget',
+      label: 'Budgets & Goals',
+      icon: Target,
+      badge: 'New',
     },
     {
-      id: isAuthenticated ? 'profile' : 'login',
-      name: isAuthenticated ? 'Profile & Preferences' : 'Sign In / Register',
-      icon: User,
-      phase: 'Account',
-    },
-    {
-      id: 'health',
-      name: 'System Health & Shell',
-      icon: Activity,
-      phase: 'Diagnostics',
+      id: 'profile',
+      label: 'Profile & Security',
+      icon: Settings,
+      badge: null,
     },
   ];
 
+  const handleNavClick = (viewId) => {
+    if (onNavigate) onNavigate(viewId);
+    if (onCloseMobile) onCloseMobile();
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    if (onNavigate) onNavigate('home');
+    if (onCloseMobile) onCloseMobile();
+  };
+
   return (
     <>
-      {/* Mobile backdrop overlay */}
-      {isOpen && (
+      {/* Mobile Backdrop Overlay */}
+      {isMobileOpen && (
         <div
-          onClick={onClose}
-          className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden transition-opacity"
+          onClick={onCloseMobile}
+          className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs lg:hidden transition-opacity"
         />
       )}
 
-      {/* Sidebar container */}
+      {/* Sidebar Container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white flex flex-col transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:z-auto ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed top-0 bottom-0 left-0 z-50 bg-[#FAF5F0] border-r border-[#EDE4D9] flex flex-col justify-between transition-all duration-300 ease-in-out shadow-xl lg:shadow-none ${
+          /* Responsive Mobile state */
+          isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        } ${
+          /* Desktop collapsed vs expanded */
+          isCollapsed ? 'lg:w-20' : 'lg:w-72'
+        } w-72`}
       >
-        {/* Sidebar Header */}
-        <div className="p-5 flex items-center justify-between border-b border-slate-800">
-          <button
-            type="button"
-            onClick={() => {
-              if (onNavigate) onNavigate('home');
-              if (onClose) onClose();
-            }}
-            className="flex items-center gap-3 text-left group cursor-pointer"
-          >
-            <div className="w-8 h-8 rounded-lg bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 group-hover:scale-105 transition-transform">
-              <Layers className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm font-semibold tracking-wide text-white group-hover:text-brand-300 transition-colors">SpendWise Core</h2>
-              <p className="text-[11px] text-slate-400">Personal Expense Tracker</p>
-            </div>
-          </button>
-          <button
-            onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg lg:hidden"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+        {/* TOP SECTION: Brand Logo & UserProfile Card */}
+        <div className="flex flex-col p-4 sm:p-5 space-y-4">
+          {/* SpendWise Brand Header */}
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => handleNavClick('dashboard')}
+              className={`flex items-center gap-3 text-left group cursor-pointer ${
+                isCollapsed ? 'justify-center w-full' : ''
+              }`}
+            >
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform shrink-0">
+                <Wallet className="w-5 h-5" />
+              </div>
+              {!isCollapsed && (
+                <div className="overflow-hidden">
+                  <span className="font-extrabold text-slate-900 tracking-tight text-xl leading-none block group-hover:text-brand-600 transition-colors">
+                    SpendWise
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
+                    Personal Expense Tracker
+                  </span>
+                </div>
+              )}
+            </button>
 
-        {/* Navigation list */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-            Roadmap Navigation
+            {/* Desktop Collapse Button */}
+            <button
+              type="button"
+              onClick={onToggleCollapse}
+              className="hidden lg:flex p-1.5 rounded-xl border border-[#EDE4D9] bg-white hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            </button>
           </div>
 
-          {navigationItems.map((item) => {
-            const Icon = item.icon;
-            const isActive =
-              currentView === item.id ||
-              (item.id === 'login' && (currentView === 'login' || currentView === 'register'));
-
-            return (
-              <button
-                key={item.name}
-                type="button"
-                onClick={() => {
-                  if (onNavigate) onNavigate(item.id);
-                  if (onClose) onClose();
-                }}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                  isActive
-                    ? 'bg-brand-600 text-white shadow-sm shadow-brand-500/20'
-                    : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                  <span>{item.name}</span>
-                </div>
-                <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
-                    isActive
-                      ? 'bg-brand-700/80 text-brand-100'
-                      : 'bg-slate-800 text-slate-400'
-                  }`}
+          {/* USER PROFILE CARD (TOP LEFT SIDEBAR) */}
+          <div
+            className={`bg-white rounded-2xl border border-[#EDE4D9] shadow-xs transition-all relative overflow-hidden group ${
+              isCollapsed ? 'p-2 flex flex-col items-center' : 'p-3.5'
+            }`}
+          >
+            <div className={`flex items-center ${isCollapsed ? 'flex-col gap-2' : 'gap-3'}`}>
+              {/* Profile Avatar with Photo or Initials */}
+              <div className="relative shrink-0">
+                <ProfileAvatar
+                  name={user?.name || 'User'}
+                  avatar={user?.avatar}
+                  size={isCollapsed ? 'md' : 'lg'}
+                  showStatus={true}
+                />
+                {/* Camera Overlay Icon to Set / Update Photo */}
+                <button
+                  type="button"
+                  onClick={onOpenPhotoModal}
+                  className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-md hover:bg-brand-700 transition-transform active:scale-95 cursor-pointer"
+                  title="Set or update photo"
                 >
-                  {item.phase}
-                </span>
-              </button>
-            );
-          })}
+                  <Camera className="w-3 h-3" />
+                </button>
+              </div>
+
+              {/* User Name, Email, and Action */}
+              {!isCollapsed && (
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-black text-slate-900 text-sm truncate block">
+                      {user?.name || 'User'}
+                    </span>
+                    <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                      Active
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 truncate">
+                    {user?.email}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={onOpenPhotoModal}
+                    className="mt-1 text-[11px] font-bold text-brand-600 hover:text-brand-700 underline decoration-brand-300 transition-colors cursor-pointer block"
+                  >
+                    Update Photo & Info
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Action: New Transaction Button */}
+          {onOpenAddTransaction && (
+            <button
+              type="button"
+              onClick={onOpenAddTransaction}
+              className={`w-full rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold transition-all shadow-md shadow-brand-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] ${
+                isCollapsed ? 'p-2.5' : 'py-2.5 px-3.5 text-xs sm:text-sm'
+              }`}
+              title="Add New Transaction"
+            >
+              <PlusCircle className="w-4 h-4 shrink-0" />
+              {!isCollapsed && <span>New Transaction</span>}
+            </button>
+          )}
+
+          {/* NAVIGATION LINKS */}
+          <nav className="space-y-1 pt-1">
+            <div className={`px-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 ${isCollapsed ? 'text-center' : ''}`}>
+              {!isCollapsed ? 'Navigation' : '•••'}
+            </div>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                currentView === item.id ||
+                (item.id === 'transactions' && (currentView === 'transactions' || currentView === 'filters')) ||
+                (item.id === 'profile' && (currentView === 'profile' || currentView === 'settings'));
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => handleNavClick(item.id)}
+                  className={`w-full flex items-center gap-3 rounded-xl transition-all font-semibold cursor-pointer ${
+                    isCollapsed ? 'justify-center p-3' : 'px-3.5 py-2.5 text-sm'
+                  } ${
+                    isActive
+                      ? 'bg-white text-brand-700 shadow-xs border border-[#EDE4D9]'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  }`}
+                  title={item.label}
+                >
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-brand-600' : 'text-slate-400'}`} />
+                  {!isCollapsed && (
+                    <div className="flex-1 flex items-center justify-between min-w-0">
+                      <span className="truncate">{item.label}</span>
+                      {item.badge && (
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-brand-50 text-brand-600 border border-brand-200">
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Active Session & Database Footer */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/40 space-y-3">
-          {isAuthenticated && user && (
-            <div
-              onClick={() => onNavigate && onNavigate('profile')}
-              className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs hover:border-slate-700 cursor-pointer transition-colors"
-            >
-              <ProfileAvatar name={user.name || 'User'} size="sm" showStatus={true} />
-              <div className="truncate flex-1">
-                <p className="font-semibold text-slate-200 truncate">{user.name}</p>
-                <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
-              </div>
+        {/* BOTTOM SECTION: Currency, Security & Sign Out */}
+        <div className="p-4 sm:p-5 border-t border-[#EDE4D9] space-y-3 bg-[#FAF5F0]/80">
+          {!isCollapsed && (
+            <div className="px-2 py-1.5 rounded-xl bg-white/70 border border-[#EDE4D9] flex items-center justify-between text-xs text-slate-600">
+              <span className="font-medium text-slate-500">Currency</span>
+              <span className="font-extrabold text-slate-900">{user?.currency || 'ETB'}</span>
             </div>
           )}
 
-          <div className="flex items-center gap-2.5 text-xs">
-            <Database className="w-4 h-4 text-emerald-400" />
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <span className="text-slate-300 font-medium">MongoDB Local</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              </div>
-              <span className="text-[10px] text-slate-400 font-mono">localhost:27017</span>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className={`w-full rounded-xl border border-[#EDE4D9] bg-white hover:bg-rose-50 hover:border-rose-200 text-slate-600 hover:text-rose-600 font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              isCollapsed ? 'p-2.5' : 'py-2 px-3 text-xs sm:text-sm'
+            }`}
+            title="Sign out of account"
+          >
+            <LogOut className="w-4 h-4 shrink-0" />
+            {!isCollapsed && <span>Sign Out</span>}
+          </button>
         </div>
       </aside>
     </>

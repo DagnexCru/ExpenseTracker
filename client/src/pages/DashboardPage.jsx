@@ -6,6 +6,9 @@ import {
   PlusCircle,
   AlertCircle,
   Filter,
+  Target,
+  ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 import SummaryCards from '../components/dashboard/SummaryCards';
 import MonthlyTrendChart from '../components/dashboard/MonthlyTrendChart';
@@ -190,6 +193,50 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
         <>
           {/* KPI Summary Cards */}
           <SummaryCards summary={summaryData?.summary} currency={currency} />
+
+          {/* Monthly Budget Velocity Bar & Quick Navigator */}
+          <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#EDE4D9] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5 flex-1 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-purple-50 text-brand-600 border border-purple-200/80 flex items-center justify-center shrink-0">
+                <Target className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+                  <span className="flex items-center gap-1.5">
+                    <span>Monthly Spending Cap</span>
+                    <span className="text-[10px] font-semibold text-brand-600 bg-brand-50 px-1.5 py-0.2 rounded">
+                      Smart Budgeting
+                    </span>
+                  </span>
+                  <span className="text-slate-500 font-semibold">
+                    {(summaryData?.summary?.totalExpenses || 0).toLocaleString()} / 25,000 {currency}
+                  </span>
+                </div>
+                <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/50">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-brand-500 to-indigo-600 transition-all duration-700"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        Math.max(5, Math.round(((summaryData?.summary?.totalExpenses || 0) / 25000) * 100))
+                      )}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {onNavigate && (
+              <button
+                type="button"
+                onClick={() => onNavigate('budget')}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FAF5F0] hover:bg-brand-50 border border-[#EDE4D9] text-xs font-bold text-brand-700 hover:text-brand-800 transition-colors cursor-pointer shrink-0"
+              >
+                <span>Manage Budgets & Goals</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
 
           {/* Chart Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

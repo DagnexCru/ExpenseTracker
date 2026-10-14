@@ -61,14 +61,15 @@ export const validateUpdateProfile = (req, res, next) => {
   // 3. Ensure at least one allowed field is present
   const hasName = body.name !== undefined;
   const hasCurrency = body.currency !== undefined;
+  const hasAvatar = body.avatar !== undefined;
 
-  if (!hasName && !hasCurrency) {
+  if (!hasName && !hasCurrency && !hasAvatar) {
     return res.status(400).json({
       success: false,
       message: 'Validation failed',
       errors: [
         {
-          message: 'No valid update fields provided. Only "name" and "currency" can be updated.',
+          message: 'No valid update fields provided. Only "name", "currency", or "avatar" can be updated.',
         },
       ],
     });
@@ -104,6 +105,15 @@ export const validateUpdateProfile = (req, res, next) => {
       } else {
         req.body.currency = code;
       }
+    }
+  }
+
+  // 6. Validate avatar (if provided)
+  if (hasAvatar) {
+    if (body.avatar !== null && typeof body.avatar !== 'string') {
+      errors.push({ field: 'avatar', message: 'Avatar must be a valid image string or null.' });
+    } else {
+      req.body.avatar = body.avatar;
     }
   }
 

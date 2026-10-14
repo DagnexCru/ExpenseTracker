@@ -16,6 +16,8 @@ export const SUPPORTED_CURRENCIES = [
 
 export const DEFAULT_CURRENCY = 'ETB';
 
+export const SUPPORTED_CURRENCY_CODES = SUPPORTED_CURRENCIES.map((c) => c.code);
+
 export const getCurrencySymbol = (code) => {
   const match = SUPPORTED_CURRENCIES.find((c) => c.code === code);
   return match ? match.symbol : code || 'ETB';
@@ -23,6 +25,7 @@ export const getCurrencySymbol = (code) => {
 
 export default {
   SUPPORTED_CURRENCIES,
+  SUPPORTED_CURRENCY_CODES,
   DEFAULT_CURRENCY,
   getCurrencySymbol,
 };

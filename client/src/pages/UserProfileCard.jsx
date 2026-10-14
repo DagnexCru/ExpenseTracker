@@ -12,6 +12,7 @@ import {
   Save,
   RotateCcw,
   Sparkles,
+  Camera,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card';
@@ -25,6 +26,7 @@ import SecurityLogs from '../components/profile/SecurityLogs';
 import ProfileAvatar from '../components/profile/ProfileAvatar';
 import SecurityAuditBadge from '../components/auth/SecurityAuditBadge';
 import PasswordChangeModal from '../components/profile/PasswordChangeModal';
+import EditProfilePhotoModal from '../components/profile/EditProfilePhotoModal';
 
 export const UserProfileCard = () => {
   const { user, updateUser, logout } = useAuth();
@@ -40,6 +42,7 @@ export const UserProfileCard = () => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [verifyResult, setVerifyResult] = useState(null);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
 
   // Sync state if user changes externally
   useEffect(() => {
@@ -127,7 +130,23 @@ export const UserProfileCard = () => {
         <CardContent className="p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
             <div className="flex items-center gap-4">
-              <ProfileAvatar name={user.name || 'User'} size="lg" showStatus={true} />
+              <div className="relative group">
+                <ProfileAvatar
+                  name={user.name || 'User'}
+                  avatar={user.avatar}
+                  size="xl"
+                  showStatus={true}
+                />
+                <button
+                  type="button"
+                  onClick={() => setIsPhotoModalOpen(true)}
+                  className="absolute bottom-0 right-0 p-1.5 rounded-xl bg-brand-600 text-white shadow-md hover:bg-brand-700 transition-colors cursor-pointer"
+                  title="Change photo"
+                >
+                  <Camera className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
               <div>
                 <div className="flex items-center gap-2.5 flex-wrap">
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
@@ -141,10 +160,26 @@ export const UserProfileCard = () => {
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{user.email}</p>
+                <button
+                  type="button"
+                  onClick={() => setIsPhotoModalOpen(true)}
+                  className="text-xs font-bold text-brand-600 hover:text-brand-700 underline mt-1 cursor-pointer block"
+                >
+                  Change Profile Photo
+                </button>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 self-start sm:self-auto">
+            <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+              <Button
+                variant="outline"
+                size="sm"
+                icon={Camera}
+                onClick={() => setIsPhotoModalOpen(true)}
+                className="text-brand-700 border-brand-200 bg-brand-50 hover:bg-brand-100"
+              >
+                Update Photo
+              </Button>
               <Button
                 variant="outline"
                 size="sm"
@@ -404,6 +439,12 @@ export const UserProfileCard = () => {
       <PasswordChangeModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
+      />
+
+      {/* Edit Profile & Photo Dialog */}
+      <EditProfilePhotoModal
+        isOpen={isPhotoModalOpen}
+        onClose={() => setIsPhotoModalOpen(false)}
       />
     </div>
   );

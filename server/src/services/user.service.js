@@ -47,6 +47,10 @@ export const updateUserProfile = async (userId, updateData = {}) => {
     user.currency = updateData.currency;
   }
 
+  if (updateData.avatar !== undefined) {
+    user.avatar = updateData.avatar;
+  }
+
   await user.save();
 
   // Return clean JSON representation without password or internal fields

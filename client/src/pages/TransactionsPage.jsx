@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Plus, RefreshCw, Receipt } from 'lucide-react';
+import { Plus, RefreshCw, Receipt, Download } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import {
   getTransactionsApi,
@@ -206,6 +206,29 @@ export const TransactionsPage = () => {
     }
   };
 
+  const handleExportCSV = () => {
+    if (!transactions.length) return;
+    const headers = ['ID', 'Date', 'Type', 'Category', 'Amount', 'Description', 'PaymentMethod'];
+    const rows = transactions.map((t) => [
+      t._id || t.id,
+      t.date ? new Date(t.date).toISOString().split('T')[0] : '',
+      t.type,
+      `"${(t.category || '').replace(/"/g, '""')}"`,
+      t.amount,
+      `"${(t.description || '').replace(/"/g, '""')}"`,
+      `"${(t.paymentMethod || '').replace(/"/g, '""')}"`,
+    ]);
+    const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `SpendWise_Transactions_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const hasActiveFilters =
     typeFilter !== 'all' ||
     categoryFilter !== '' ||
@@ -234,6 +257,18 @@ export const TransactionsPage = () => {
         </div>
 
         <div className="flex items-center gap-2.5">
+          <Button
+            variant="outline"
+            size="sm"
+            icon={Download}
+            onClick={handleExportCSV}
+            disabled={!transactions.length}
+            className="text-slate-600 bg-white hover:bg-slate-50"
+            title="Download CSV spreadsheet of visible transactions"
+          >
+            Export CSV
+          </Button>
+
           <Button
             variant="outline"
             size="sm"
