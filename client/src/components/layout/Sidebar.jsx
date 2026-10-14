@@ -6,7 +6,6 @@ import {
   Target,
   Settings,
   LogOut,
-  PlusCircle,
   Camera,
   ChevronLeft,
   ChevronRight,
@@ -131,7 +130,7 @@ export const Sidebar = ({
                   name={user?.name || 'User'}
                   avatar={user?.avatar}
                   size={isCollapsed ? 'md' : 'lg'}
-                  showStatus={true}
+                  showStatus={false}
                 />
                 {/* Camera Overlay Icon to Set / Update Photo */}
                 <button
@@ -151,9 +150,6 @@ export const Sidebar = ({
                     <span className="font-black text-slate-900 text-base truncate block">
                       {user?.name || 'User'}
                     </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
-                      Active
-                    </span>
                   </div>
                   <p className="text-xs text-slate-400 truncate mt-0.5">
                     {user?.email}
@@ -169,21 +165,6 @@ export const Sidebar = ({
               )}
             </div>
           </div>
-
-          {/* LARGE "NEW TRANSACTION" ACTION BUTTON */}
-          {onOpenAddTransaction && (
-            <button
-              type="button"
-              onClick={onOpenAddTransaction}
-              className={`w-full rounded-2xl bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white font-extrabold transition-all shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/35 flex items-center justify-center gap-3 cursor-pointer ${
-                isCollapsed ? 'p-3.5' : 'py-3.5 sm:py-4 px-5 text-base sm:text-lg'
-              }`}
-              title="Add New Transaction"
-            >
-              <PlusCircle className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
-              {!isCollapsed && <span className="tracking-tight">New Transaction</span>}
-            </button>
-          )}
 
           {/* LARGE NAVIGATION BUTTONS (Live and New Badges Removed) */}
           <nav className="space-y-2.5 pt-1">
