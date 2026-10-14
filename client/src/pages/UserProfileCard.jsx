@@ -17,7 +17,6 @@ import { useAuth } from '../hooks/useAuth';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
-import Badge from '../components/ui/Badge';
 import Alert from '../components/ui/Alert';
 import { updateUserProfileApi } from '../api/user';
 import CurrencySelector from '../components/profile/CurrencySelector';
@@ -110,7 +109,7 @@ export const UserProfileCard = () => {
                   name={user.name || 'User'}
                   avatar={user.avatar}
                   size="xl"
-                  showStatus={true}
+                  showStatus={false}
                 />
                 <button
                   type="button"
@@ -127,9 +126,6 @@ export const UserProfileCard = () => {
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                     {user.name}
                   </h2>
-                  <Badge variant="success" dot={true}>
-                    Active
-                  </Badge>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">{user.email}</p>
                 <button
