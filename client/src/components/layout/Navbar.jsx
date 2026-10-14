@@ -21,22 +21,21 @@ export const Navbar = ({ currentView, onNavigate }) => {
   const { user, isAuthenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Concise navigation tabs replacing the left sidebar items
+  // Concise navigation tabs available ONLY after user login
   const navTabs = [
-    { id: 'home', name: 'Home', icon: Home },
     { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
     { id: 'transactions', name: 'Ledger', icon: Receipt },
     { id: 'filters', name: 'Search & Filters', icon: PieChart },
   ];
 
   const handleTabClick = (viewId) => {
-    const protectedViews = ['dashboard', 'transactions', 'filters', 'profile', 'settings'];
-    if (!isAuthenticated && protectedViews.includes(viewId)) {
-      if (onNavigate) onNavigate('login');
-      setMobileMenuOpen(false);
-      return;
-    }
     if (onNavigate) onNavigate(viewId);
+    setMobileMenuOpen(false);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    if (onNavigate) onNavigate('home');
     setMobileMenuOpen(false);
   };
 
@@ -46,9 +45,9 @@ export const Navbar = ({ currentView, onNavigate }) => {
         {/* Left: SpendWise Brand Logo & Title */}
         <button
           type="button"
-          onClick={() => handleTabClick('home')}
+          onClick={() => handleTabClick(isAuthenticated ? 'dashboard' : 'home')}
           className="flex items-center gap-2.5 text-left group cursor-pointer"
-          title="Go to SpendWise Home"
+          title={isAuthenticated ? 'Go to Financial Dashboard' : 'Go to SpendWise Home'}
         >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
             <Wallet className="w-5 h-5" />
@@ -61,32 +60,34 @@ export const Navbar = ({ currentView, onNavigate }) => {
           </div>
         </button>
 
-        {/* Center: Concise Navigation Tabs (Replaces Left Sidebar) */}
-        <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-xl border border-slate-200/60 shadow-inner">
-          {navTabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive =
-              currentView === tab.id ||
-              (tab.id === 'transactions' && currentView === 'transactions') ||
-              (tab.id === 'filters' && currentView === 'filters');
+        {/* Center: Navigation Tabs (ONLY available after user logs in) */}
+        {isAuthenticated && (
+          <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-xl border border-slate-200/60 shadow-inner">
+            {navTabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive =
+                currentView === tab.id ||
+                (tab.id === 'transactions' && currentView === 'transactions') ||
+                (tab.id === 'filters' && currentView === 'filters');
 
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => handleTabClick(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-white text-brand-700 shadow-xs border border-slate-200/60'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600' : 'text-slate-400'}`} />
-                <span>{tab.name}</span>
-              </button>
-            );
-          })}
-        </nav>
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => handleTabClick(tab.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-white text-brand-700 shadow-xs border border-slate-200/60'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600' : 'text-slate-400'}`} />
+                  <span>{tab.name}</span>
+                </button>
+              );
+            })}
+          </nav>
+        )}
 
         {/* Right: User Authentication & Profile Actions */}
         <div className="flex items-center gap-2.5">
@@ -112,7 +113,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
                 variant="outline"
                 size="md"
                 icon={LogOut}
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-slate-600 hover:text-rose-600 hover:border-rose-200"
               >
                 <span className="hidden sm:inline">Sign Out</span>
@@ -141,20 +142,22 @@ export const Navbar = ({ currentView, onNavigate }) => {
             </div>
           )}
 
-          {/* Mobile Menu Toggle Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg md:hidden"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Mobile Menu Toggle Button (Only for Authenticated Users) */}
+          {isAuthenticated && (
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg md:hidden"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Mobile Collapsible Navigation Menu */}
-      {mobileMenuOpen && (
+      {/* Mobile Collapsible Navigation Menu (Only when authenticated) */}
+      {isAuthenticated && mobileMenuOpen && (
         <div className="md:hidden mt-3 pt-3 border-t border-slate-200/80 space-y-1.5 animate-fade-in">
           <div className="px-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
             Navigation Tabs

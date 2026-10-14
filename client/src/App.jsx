@@ -15,6 +15,12 @@ function MainApp() {
   const [currentView, setCurrentView] = useState('home');
   const { user, isAuthenticated } = useAuth();
 
+  React.useEffect(() => {
+    if (isAuthenticated && (currentView === 'login' || currentView === 'register')) {
+      setCurrentView('dashboard');
+    }
+  }, [isAuthenticated, currentView]);
+
   const handleNavigate = (view) => {
     setCurrentView(view);
   };
