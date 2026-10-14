@@ -45,7 +45,7 @@ export const Input = ({
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined}
           className={`block w-full rounded-lg text-sm transition-all duration-150 py-2.5 ${
-            Icon ? 'pl-9.5 pr-3.5' : 'px-3.5'
+            Icon ? 'pl-11 pr-3.5' : 'px-3.5'
           } ${
             error
               ? 'border-rose-300 text-rose-900 placeholder-rose-300 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 bg-rose-50/30'
