@@ -118,14 +118,14 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-3">
-          {/* Period Filter Dropdown */}
-          <div className="flex items-center gap-1.5 bg-white border border-[#EDE4D9] rounded-xl px-2.5 py-1.5 text-xs text-slate-700 shadow-sm">
-            <Calendar className="w-3.5 h-3.5 text-slate-500" />
+        <div className="flex items-center gap-3 flex-wrap">
+          {/* Period Filter Dropdown (Large Size) */}
+          <div className="flex items-center gap-2.5 bg-white border border-[#EDE4D9] rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base text-slate-700 shadow-sm hover:border-slate-300 transition-colors">
+            <Calendar className="w-5 h-5 text-slate-500 shrink-0" />
             <select
               value={periodFilter}
               onChange={(e) => setPeriodFilter(e.target.value)}
-              className="bg-transparent border-none text-slate-800 text-xs font-medium focus:ring-0 focus:outline-none cursor-pointer"
+              className="bg-transparent border-none text-slate-900 text-sm sm:text-base font-bold focus:ring-0 focus:outline-none cursor-pointer pr-1"
             >
               <option value="all" className="bg-white text-slate-800">
                 All Time
@@ -142,25 +142,25 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
             </select>
           </div>
 
-          {/* Refresh Button */}
+          {/* Refresh Button (Large Size) */}
           <button
             type="button"
             onClick={() => loadDashboardData(true)}
             disabled={refreshing || loading}
-            className="p-2 rounded-xl bg-white border border-[#EDE4D9] text-slate-600 hover:text-slate-900 hover:bg-[#FAF5F0] shadow-sm transition-colors disabled:opacity-50 cursor-pointer"
+            className="p-3 sm:p-3.5 rounded-2xl bg-white border border-[#EDE4D9] text-slate-600 hover:text-slate-900 hover:bg-[#FAF5F0] shadow-sm hover:shadow-md transition-all disabled:opacity-50 cursor-pointer active:scale-95"
             title="Refresh calculations"
           >
-            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin text-emerald-600' : ''}`} />
+            <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin text-emerald-600' : ''}`} />
           </button>
 
-          {/* New Transaction CTA */}
+          {/* New Transaction CTA (Large Size) */}
           {onNavigate && (
             <button
               type="button"
               onClick={() => onNavigate('transactions')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-semibold text-xs shadow-sm hover:bg-emerald-500 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm sm:text-base shadow-md shadow-emerald-500/25 hover:shadow-lg transition-all cursor-pointer active:scale-95"
             >
-              <PlusCircle className="w-4 h-4" />
+              <PlusCircle className="w-5 h-5 shrink-0" />
               <span>Add Transaction</span>
             </button>
           )}
