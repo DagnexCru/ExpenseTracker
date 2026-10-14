@@ -198,86 +198,98 @@ export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess 
 
         {/* 2-COLUMN SECTION: Live Fintech Showcase & Authentication Card at the EXACT SAME HEIGHT & LEVEL */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-stretch flex-1">
-          {/* LEFT COLUMN: Modern Fintech Dashboard Feature Showcase (Replaces Cartoon Illustration) */}
+          {/* LEFT COLUMN: Modern Fintech Dashboard Feature Showcase (Harmonized White Card matching Right Column & App Theme) */}
           <div className="lg:col-span-6 flex flex-col h-full">
-            <div className="h-full w-full rounded-[32px] sm:rounded-[42px] overflow-hidden shadow-2xl shadow-indigo-950/15 border border-indigo-900/30 bg-gradient-to-br from-[#110D2C] via-[#1B1545] to-[#0A071E] text-white p-7 sm:p-9 lg:p-10 flex flex-col justify-between relative min-h-[500px] group">
-              {/* Subtle ambient lighting orbs */}
-              <div className="absolute -top-16 -right-16 w-56 h-56 bg-brand-500/25 rounded-full blur-3xl pointer-events-none group-hover:bg-brand-500/35 transition-all duration-700" />
-              <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-purple-500/20 rounded-full blur-3xl pointer-events-none group-hover:bg-purple-500/30 transition-all duration-700" />
-
+            <div className="h-full w-full rounded-[32px] sm:rounded-[42px] overflow-hidden shadow-xl shadow-slate-900/5 border border-[#EDE4D9] bg-white p-7 sm:p-9 lg:p-10 flex flex-col justify-between relative min-h-[500px]">
+              
               {/* Top: Brand pill & Core Value Proposition */}
-              <div className="relative z-10 space-y-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold text-indigo-200 backdrop-blur-md">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-100 text-xs font-bold text-brand-700">
+                  <Sparkles className="w-3.5 h-3.5 text-brand-600" />
                   <span>Designed for Real-World Financial Velocity</span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-snug">
                   Master Your Money With{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-purple-300 to-indigo-200">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600">
                     Precision & Absolute Privacy.
                   </span>
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed">
                   Real-time cashflow intelligence, automated ledger categorization, and zero data leakage.
                 </p>
               </div>
 
-              {/* Center: Live Financial Snapshot Card (Matches Home Screen & Dashboard Metrics) */}
-              <div className="relative z-10 my-4 space-y-3">
-                <div className="rounded-2xl bg-white/10 border border-white/15 p-4 sm:p-5 backdrop-blur-xl shadow-xl space-y-3 hover:bg-white/[0.13] transition-all">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-200">
+              {/* Center: Live Financial Snapshot Card (Matches Home Screen Card 3 Gradient) */}
+              <div className="my-4 space-y-3">
+                <div className="rounded-2xl bg-gradient-to-tr from-brand-700 via-indigo-700 to-brand-800 text-white p-5 sm:p-6 shadow-xl shadow-brand-500/20 border border-brand-600 space-y-3.5 relative overflow-hidden group">
+                  {/* Top gradient glow bar */}
+                  <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-brand-300 via-indigo-200 to-emerald-300 opacity-60" />
+
+                  {/* Ambient subtle glow */}
+                  <div className="absolute -right-8 -bottom-8 w-28 h-28 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="text-xs font-bold text-brand-200 uppercase tracking-wider">
                       Net Operating Balance
                     </span>
-                    <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
+                    <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
                       +92% Retained
                     </span>
                   </div>
 
-                  <div className="flex items-baseline justify-between">
+                  <div className="flex items-baseline justify-between relative z-10">
                     <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                      +43,400.00 <span className="text-xs sm:text-sm font-semibold text-indigo-300">ETB</span>
+                      +43,400.00 <span className="text-xs sm:text-sm font-semibold text-brand-200">ETB</span>
                     </span>
                     <span className="text-xs text-emerald-300 font-semibold flex items-center gap-1">
                       <TrendingUp className="w-3.5 h-3.5" /> Healthy Inflow
                     </span>
                   </div>
 
-                  <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                  <div className="w-full bg-white/15 rounded-full h-2 overflow-hidden relative z-10">
                     <div className="bg-gradient-to-r from-emerald-400 to-teal-300 h-full rounded-full w-[86%]" />
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] text-slate-300 pt-1">
+                  <div className="flex items-center justify-between text-xs text-brand-100 pt-1 relative z-10">
                     <span>Total Inflow: <strong className="text-white">+50,000 ETB</strong></span>
                     <span>Expenses: <strong className="text-white">-6,600 ETB</strong></span>
                   </div>
                 </div>
 
                 {/* 3 Pillars of Security & Privacy */}
-                <div className="grid grid-cols-3 gap-2 text-center pt-1">
-                  <div className="bg-white/5 rounded-xl p-2.5 border border-white/10 backdrop-blur-sm">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
-                    <span className="text-[11px] font-bold text-slate-200 block">Bank-Grade</span>
-                    <span className="text-[10px] text-slate-400 block">Encryption</span>
+                <div className="grid grid-cols-3 gap-2.5 text-center">
+                  <div className="bg-[#FAF5F0] rounded-xl p-3 border border-[#EDE4D9] shadow-2xs">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-1.5">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-800 block">Bank-Grade</span>
+                    <span className="text-[10px] text-slate-500 block">Encryption</span>
                   </div>
-                  <div className="bg-white/5 rounded-xl p-2.5 border border-white/10 backdrop-blur-sm">
-                    <Lock className="w-4 h-4 text-purple-300 mx-auto mb-1" />
-                    <span className="text-[11px] font-bold text-slate-200 block">100% Private</span>
-                    <span className="text-[10px] text-slate-400 block">Zero Leakage</span>
+                  <div className="bg-[#FAF5F0] rounded-xl p-3 border border-[#EDE4D9] shadow-2xs">
+                    <div className="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center mx-auto mb-1.5">
+                      <Lock className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-800 block">100% Private</span>
+                    <span className="text-[10px] text-slate-500 block">Zero Leakage</span>
                   </div>
-                  <div className="bg-white/5 rounded-xl p-2.5 border border-white/10 backdrop-blur-sm">
-                    <Sparkles className="w-4 h-4 text-amber-300 mx-auto mb-1" />
-                    <span className="text-[11px] font-bold text-slate-200 block">Real-Time</span>
-                    <span className="text-[10px] text-slate-400 block">Analytics</span>
+                  <div className="bg-[#FAF5F0] rounded-xl p-3 border border-[#EDE4D9] shadow-2xs">
+                    <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-1.5">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-800 block">Real-Time</span>
+                    <span className="text-[10px] text-slate-500 block">Analytics</span>
                   </div>
                 </div>
               </div>
 
               {/* Bottom: Guarantee Footer */}
-              <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-indigo-200/80">
+              <div className="pt-3 border-t border-[#EDE4D9] flex items-center justify-between text-xs text-slate-500">
                 <span>Multi-Tenant Isolated Session</span>
-                <span className="font-bold text-white">SpendWise Protected Session</span>
+                <span className="font-bold text-slate-700 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  SpendWise Protected
+                </span>
               </div>
             </div>
           </div>
