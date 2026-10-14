@@ -26,6 +26,7 @@ router.route('/')
 router.route('/:id')
   .get(getById)
   .put(update)
+  .patch(update)
   .delete(remove);
 
 export default router;
