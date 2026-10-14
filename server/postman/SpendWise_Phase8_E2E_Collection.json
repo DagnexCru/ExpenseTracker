@@ -1,0 +1,357 @@
+{
+  "info": {
+    "name": "SpendWise Phase 8: End-to-End Verification Collection",
+    "description": "Complete 11-step manual verification test sequence for SpendWise Personal Expense Tracker covering Registration, Login, Income creation, Expense creation, Dashboard aggregates, Search & Filtering, Transaction update, Transaction deletion, Profile preferences, Logout/Re-login, and Cross-Session Data Persistence.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Step 1: User Registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"E2E Manual Tester\",\n  \"email\": \"e2e_manual_{{$timestamp}}@spendwise.com\",\n  \"password\": \"SecurePass123!\",\n  \"currency\": \"ETB\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Step 1 of E2E Journey: Registers a new user account with hashed password and initial ETB currency."
+      }
+    },
+    {
+      "name": "Step 2: User Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"e2e_manual_{{$timestamp}}@spendwise.com\",\n  \"password\": \"SecurePass123!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Step 2 of E2E Journey: Authenticates user, issues JWT in HTTP-only cookie and bearer response."
+      }
+    },
+    {
+      "name": "Step 3: Create Income Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"income\",\n  \"amount\": 50000,\n  \"category\": \"Salary\",\n  \"description\": \"Senior Full-Stack Engineering Retainer\",\n  \"paymentMethod\": \"bank_transfer\",\n  \"date\": \"2026-10-14T08:00:00.000Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/transactions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions"]
+        },
+        "description": "Step 3 of E2E Journey: Records a positive income transaction tied to the user."
+      }
+    },
+    {
+      "name": "Step 4A: Create Expense - Housing",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"expense\",\n  \"amount\": 4500,\n  \"category\": \"Housing & Rent\",\n  \"description\": \"Studio Apartment Monthly Lease\",\n  \"paymentMethod\": \"bank_transfer\",\n  \"date\": \"2026-10-14T08:15:00.000Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/transactions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions"]
+        },
+        "description": "Step 4A of E2E Journey: Records Housing expense."
+      }
+    },
+    {
+      "name": "Step 4B: Create Expense - Food",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"expense\",\n  \"amount\": 1250,\n  \"category\": \"Food & Dining\",\n  \"description\": \"Weekly organic groceries\",\n  \"paymentMethod\": \"credit_card\",\n  \"date\": \"2026-10-14T08:30:00.000Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/transactions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions"]
+        },
+        "description": "Step 4B of E2E Journey: Records Food expense."
+      }
+    },
+    {
+      "name": "Step 4C: Create Expense - Utilities",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"expense\",\n  \"amount\": 850,\n  \"category\": \"Utilities\",\n  \"description\": \"Gigabit fiber internet connection\",\n  \"paymentMethod\": \"cash\",\n  \"date\": \"2026-10-14T08:45:00.000Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/transactions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions"]
+        },
+        "description": "Step 4C of E2E Journey: Records Utilities expense."
+      }
+    },
+    {
+      "name": "Step 5: Review Dashboard Summary",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/dashboard/summary",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "dashboard", "summary"]
+        },
+        "description": "Step 5 of E2E Journey: Verifies totalIncome (50,000), totalExpenses (6,600), and netBalance (43,400)."
+      }
+    },
+    {
+      "name": "Step 6: Search & Filter Ledger",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/transactions?search=organic&category=Food%20%26%20Dining&sortBy=amount&sortOrder=desc&page=1&limit=10",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions"],
+          "query": [
+            { "key": "search", "value": "organic" },
+            { "key": "category", "value": "Food & Dining" },
+            { "key": "sortBy", "value": "amount" },
+            { "key": "sortOrder", "value": "desc" },
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" }
+          ]
+        },
+        "description": "Step 6 of E2E Journey: Multi-criteria search and filter verification."
+      }
+    },
+    {
+      "name": "Step 7: Edit Transaction (PATCH)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 1500,\n  \"description\": \"Weekly organic wholefood market groceries and bakery\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/transactions/{{grocery_tx_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions", "{{grocery_tx_id}}"]
+        },
+        "description": "Step 7 of E2E Journey: Updates transaction amount to 1,500 and checks automatic recalculation."
+      }
+    },
+    {
+      "name": "Step 8: Delete Transaction",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/transactions/{{utility_tx_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions", "{{utility_tx_id}}"]
+        },
+        "description": "Step 8 of E2E Journey: Deletes transaction and verifies dashboard totalExpenses drops to 6,000."
+      }
+    },
+    {
+      "name": "Step 9: Update User Profile & Currency",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"E2E Lead Auditor\",\n  \"currency\": \"USD\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/users/me",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "users", "me"]
+        },
+        "description": "Step 9 of E2E Journey: Updates display name and preferred currency to USD."
+      }
+    },
+    {
+      "name": "Step 10A: Logout Session",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/auth/logout",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Step 10A of E2E Journey: Invalidates session cookie and terminates authorization."
+      }
+    },
+    {
+      "name": "Step 10B: Re-Login Session",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"e2e_manual_{{$timestamp}}@spendwise.com\",\n  \"password\": \"SecurePass123!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Step 10B of E2E Journey: Re-authenticates to obtain a fresh token."
+      }
+    },
+    {
+      "name": "Step 11: Cross-Session Data Persistence Verification",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{new_jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/transactions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "transactions"]
+        },
+        "description": "Step 11 of E2E Journey: Confirms all transactions remain intact across logout/re-login cycles."
+      }
+    }
+  ]
+}
