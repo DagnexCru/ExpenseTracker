@@ -17,37 +17,37 @@ import { updateUserProfileApi } from '../../api/user';
 import { useAuth } from '../../hooks/useAuth';
 import { SUPPORTED_CURRENCY_CODES } from '../../constants/currencies';
 
-// 6 Curated High-Definition Preset Avatars (SVG Data URIs)
+// 6 Curated High-Definition Preset Avatars (SVG Data URIs - Circular Format)
 const PRESET_AVATARS = [
   {
     id: 'preset-1',
     label: 'Cosmic Violet',
-    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g1' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%238A70D6'/><stop offset='100%' stop-color='%234F46E5'/></linearGradient></defs><rect width='100' height='100' rx='28' fill='url(%23g1)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
+    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g1' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%238A70D6'/><stop offset='100%' stop-color='%234F46E5'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g1)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
   },
   {
     id: 'preset-2',
     label: 'Emerald Mint',
-    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2310B981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='100' height='100' rx='28' fill='url(%23g2)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
+    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2310B981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g2)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
   },
   {
     id: 'preset-3',
     label: 'Sunset Coral',
-    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23F43F5E'/><stop offset='100%' stop-color='%23FB923C'/></linearGradient></defs><rect width='100' height='100' rx='28' fill='url(%23g3)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
+    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23F43F5E'/><stop offset='100%' stop-color='%23FB923C'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g3)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
   },
   {
     id: 'preset-4',
     label: 'Ocean Cyan',
-    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g4' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2306B6D4'/><stop offset='100%' stop-color='%232563EB'/></linearGradient></defs><rect width='100' height='100' rx='28' fill='url(%23g4)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
+    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g4' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2306B6D4'/><stop offset='100%' stop-color='%232563EB'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g4)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
   },
   {
     id: 'preset-5',
     label: 'Golden Amber',
-    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g5' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23F59E0B'/><stop offset='100%' stop-color='%23D97706'/></linearGradient></defs><rect width='100' height='100' rx='28' fill='url(%23g5)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
+    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g5' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23F59E0B'/><stop offset='100%' stop-color='%23D97706'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g5)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
   },
   {
     id: 'preset-6',
     label: 'Midnight Slate',
-    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g6' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23334155'/><stop offset='100%' stop-color='%230F172A'/></linearGradient></defs><rect width='100' height='100' rx='28' fill='url(%23g6)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
+    url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g6' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23334155'/><stop offset='100%' stop-color='%230F172A'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g6)'/><circle cx='50' cy='38' r='18' fill='%23FFFFFF'/><path d='M22 84 C22 62, 34 56, 50 56 C66 56, 78 62, 78 84 Z' fill='%23FFFFFF' opacity='0.92'/></svg>",
   },
 ];
 
@@ -252,7 +252,7 @@ export const EditProfilePhotoModal = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="absolute bottom-0 right-0 p-2 rounded-xl bg-brand-600 text-white shadow-md hover:bg-brand-700 transition-colors cursor-pointer"
+                className="absolute bottom-0 right-0 p-2 rounded-full bg-brand-600 text-white shadow-md hover:bg-brand-700 transition-colors cursor-pointer"
                 title="Upload Photo"
               >
                 <Camera className="w-4 h-4" />
@@ -353,7 +353,7 @@ export const EditProfilePhotoModal = ({ isOpen, onClose }) => {
                     key={preset.id}
                     type="button"
                     onClick={() => handleSelectPreset(preset.url)}
-                    className={`relative p-1 rounded-2xl border-2 transition-all cursor-pointer group ${
+                    className={`relative p-1 rounded-full border-2 transition-all cursor-pointer group ${
                       isSelected
                         ? 'border-brand-600 ring-2 ring-brand-500/20 scale-105 shadow-sm'
                         : 'border-transparent hover:border-slate-300'
@@ -363,7 +363,7 @@ export const EditProfilePhotoModal = ({ isOpen, onClose }) => {
                     <img
                       src={preset.url}
                       alt={preset.label}
-                      className="w-12 h-12 rounded-xl object-cover shadow-xs"
+                      className="w-12 h-12 rounded-full object-cover shadow-xs"
                     />
                     {isSelected && (
                       <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-600 text-white flex items-center justify-center text-[10px]">
