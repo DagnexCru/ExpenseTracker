@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {
   Wallet,
-  LayoutDashboard,
-  Receipt,
-  Target,
   Menu,
   X,
   Camera,
@@ -20,12 +17,6 @@ export const Navbar = ({
 }) => {
   const { user, isAuthenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const navTabs = [
-    { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
-    { id: 'transactions', name: 'Ledger', icon: Receipt },
-    { id: 'budget', name: 'Budgets & Goals', icon: Target },
-  ];
 
   const handleTabClick = (viewId) => {
     if (onNavigate) onNavigate(viewId);
@@ -58,7 +49,7 @@ export const Navbar = ({
             </button>
           </div>
         ) : (
-          /* Authenticated Header: Mobile menu trigger + Brand on left, Navigation tabs in middle, User Profile & Actions on right */
+          /* Authenticated Header: Mobile menu trigger + Brand on left, User Profile on right */
           <div className="flex items-center justify-between gap-4">
             {/* Left: Mobile Sidebar Drawer Button & SpendWise Logo */}
             <div className="flex items-center gap-3">
@@ -105,34 +96,6 @@ export const Navbar = ({
                 </span>
               </div>
             </div>
-
-            {/* Center: Quick Navigation Tabs */}
-            <nav className="hidden md:flex items-center gap-1.5 bg-[#F2ECE3]/80 p-1.5 rounded-xl border border-[#EDE4D9] shadow-inner">
-              {navTabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive =
-                  currentView === tab.id ||
-                  (tab.id === 'transactions' && (currentView === 'transactions' || currentView === 'filters'));
-
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => handleTabClick(tab.id)}
-                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-white text-brand-700 shadow-xs border border-[#EDE4D9]'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600' : 'text-slate-400'}`} />
-                    <span>{tab.name}</span>
-                  </button>
-                );
-              })}
-            </nav>
-
-            {/* Right: Quick Add Transaction, User profile & Sign Out */}
             {/* Right: User Profile Pill */}
             <div className="flex items-center gap-2.5">
               {/* Top-Right Profile Pill with Photo Avatar (Click opens Photo & Profile Modal) */}
