@@ -138,7 +138,7 @@ function MainApp() {
           isAuthenticated
             ? isSidebarCollapsed
               ? 'lg:pl-20'
-              : 'lg:pl-72'
+              : 'lg:pl-80'
             : ''
         }`}
       >
