@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Wallet,
   ArrowRight,
+  ArrowUpRight,
   TrendingUp,
   TrendingDown,
   LayoutDashboard,
@@ -26,6 +27,14 @@ export const HomePage = ({ onNavigate }) => {
       description:
         'Quickly record income or categorized expenses with payment method and optional description notes.',
       icon: Receipt,
+      glowGradient: 'from-brand-500 via-indigo-500 to-purple-500',
+      borderHover: 'hover:border-brand-300 hover:shadow-brand-500/15',
+      ambientBg: 'bg-brand-500/10',
+      numberColor: 'text-brand-600 group-hover:text-brand-700',
+      iconBox: 'bg-brand-50 text-brand-600 group-hover:bg-brand-600 group-hover:text-white group-hover:shadow-brand-500/30',
+      badge: 'Zero Friction',
+      actionText: isAuthenticated ? 'Open Ledger' : 'Get Started',
+      target: isAuthenticated ? 'transactions' : 'register',
     },
     {
       step: '02',
@@ -33,6 +42,14 @@ export const HomePage = ({ onNavigate }) => {
       description:
         'Review interactive monthly cashflow bar charts and proportional spending category donut visualizations.',
       icon: BarChart3,
+      glowGradient: 'from-blue-500 via-indigo-500 to-cyan-500',
+      borderHover: 'hover:border-indigo-300 hover:shadow-indigo-500/15',
+      ambientBg: 'bg-indigo-500/10',
+      numberColor: 'text-indigo-600 group-hover:text-indigo-700',
+      iconBox: 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-indigo-500/30',
+      badge: 'Visual Insights',
+      actionText: isAuthenticated ? 'View Charts' : 'Explore Free',
+      target: isAuthenticated ? 'dashboard' : 'register',
     },
     {
       step: '03',
@@ -40,6 +57,14 @@ export const HomePage = ({ onNavigate }) => {
       description:
         'Make data-driven budgeting choices with clear net-worth metrics and isolated multi-tenant records.',
       icon: TrendingUp,
+      glowGradient: 'from-emerald-500 via-teal-500 to-green-500',
+      borderHover: 'hover:border-emerald-300 hover:shadow-emerald-500/15',
+      ambientBg: 'bg-emerald-500/10',
+      numberColor: 'text-emerald-600 group-hover:text-emerald-700',
+      iconBox: 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white group-hover:shadow-emerald-500/30',
+      badge: 'Financial Growth',
+      actionText: isAuthenticated ? 'Track Velocity' : 'Start Today',
+      target: isAuthenticated ? 'dashboard' : 'register',
     },
   ];
 
@@ -164,64 +189,144 @@ export const HomePage = ({ onNavigate }) => {
         {/* Live Mock Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Card 1: Total Income */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
+            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-emerald-500/15 hover:border-emerald-300 transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          >
+            {/* Top gradient glow bar */}
+            <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Ambient blur glow */}
+            <div className="absolute -right-8 -bottom-8 w-28 h-28 bg-emerald-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
+            <div className="flex items-center justify-between relative z-10">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-emerald-700 transition-colors">
                 Total Monthly Inflow
               </span>
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <TrendingUp className="w-5 h-5" />
+              <div className="flex items-center gap-1.5">
+                <ArrowUpRight className="w-4 h-4 text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center transition-all duration-300 group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md group-hover:shadow-emerald-500/30">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+
+            <div className="mt-4 relative z-10">
+              <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight group-hover:text-emerald-950 transition-colors">
                 +50,000.00 <span className="text-xs font-medium text-slate-500">{currency}</span>
               </p>
-              <div className="flex items-center gap-1.5 mt-2 text-xs font-medium text-emerald-600">
-                <Sparkles className="w-3.5 h-3.5" />
+              <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold text-emerald-600 group-hover:translate-x-1 transition-transform duration-200">
+                <Sparkles className="w-3.5 h-3.5 group-hover:animate-spin" />
                 <span>Primary salary retainer confirmed</span>
               </div>
+            </div>
+
+            {/* Micro action bar on hover */}
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 group-hover:text-emerald-600 transition-colors relative z-10">
+              <span className="font-medium">Live Cash Inflow</span>
+              <span className="font-semibold flex items-center gap-1">
+                Explore Analytics <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </div>
           </div>
 
           {/* Card 2: Total Expenses */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => onNavigate && onNavigate(isAuthenticated ? 'transactions' : 'register')}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(isAuthenticated ? 'transactions' : 'register')}
+            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-rose-500/15 hover:border-rose-300 transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-rose-400"
+          >
+            {/* Top gradient glow bar */}
+            <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-rose-400 via-pink-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Ambient blur glow */}
+            <div className="absolute -right-8 -bottom-8 w-28 h-28 bg-rose-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
+            <div className="flex items-center justify-between relative z-10">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-rose-700 transition-colors">
                 Total Outflow Expenses
               </span>
-              <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <TrendingDown className="w-5 h-5" />
+              <div className="flex items-center gap-1.5">
+                <ArrowUpRight className="w-4 h-4 text-rose-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center transition-all duration-300 group-hover:bg-rose-500 group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 group-hover:shadow-md group-hover:shadow-rose-500/30">
+                  <TrendingDown className="w-5 h-5" />
+                </div>
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+
+            <div className="mt-4 relative z-10">
+              <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight group-hover:text-rose-950 transition-colors">
                 -6,600.00 <span className="text-xs font-medium text-slate-500">{currency}</span>
               </p>
-              <div className="flex items-center gap-1.5 mt-2 text-xs font-medium text-slate-500">
-                <span>Housing (68%), Food (19%), Utilities (13%)</span>
+              <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                <span className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 group-hover:bg-rose-50 group-hover:text-rose-700 transition-colors">
+                  Housing (68%)
+                </span>
+                <span className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 group-hover:bg-amber-50 group-hover:text-amber-700 transition-colors">
+                  Food (19%)
+                </span>
+                <span className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-700 transition-colors">
+                  Utilities (13%)
+                </span>
               </div>
+            </div>
+
+            {/* Micro action bar on hover */}
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 group-hover:text-rose-600 transition-colors relative z-10">
+              <span className="font-medium">Categorized Spend</span>
+              <span className="font-semibold flex items-center gap-1">
+                View Ledger <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </div>
           </div>
 
           {/* Card 3: Net Cashflow Balance */}
-          <div className="bg-gradient-to-tr from-brand-700 to-indigo-800 text-white p-6 rounded-2xl border border-brand-600 shadow-md relative overflow-hidden group">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-brand-200 uppercase tracking-wider">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
+            className="bg-gradient-to-tr from-brand-700 via-indigo-700 to-brand-800 text-white p-6 rounded-2xl border border-brand-600 shadow-md hover:shadow-2xl hover:shadow-brand-500/35 hover:border-brand-400 transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-300"
+          >
+            {/* Top gradient glow bar */}
+            <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-brand-300 via-indigo-200 to-emerald-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Ambient blur glow */}
+            <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
+            <div className="flex items-center justify-between relative z-10">
+              <span className="text-xs font-bold text-brand-200 uppercase tracking-wider group-hover:text-white transition-colors">
                 Net Operating Balance
               </span>
-              <div className="w-9 h-9 rounded-xl bg-white/10 text-brand-200 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Wallet className="w-5 h-5" />
+              <div className="flex items-center gap-1.5">
+                <ArrowUpRight className="w-4 h-4 text-emerald-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                <div className="w-10 h-10 rounded-xl bg-white/15 text-white flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-brand-700 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-lg group-hover:shadow-white/20">
+                  <Wallet className="w-5 h-5" />
+                </div>
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+
+            <div className="mt-4 relative z-10">
+              <p className="text-2xl sm:text-3xl font-extrabold tracking-tight group-hover:tracking-wide transition-all">
                 +43,400.00 <span className="text-xs font-medium text-brand-200">{currency}</span>
               </p>
-              <div className="flex items-center gap-1.5 mt-2 text-xs font-medium text-emerald-300">
+              <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold text-emerald-300 group-hover:text-emerald-200 group-hover:translate-x-1 transition-all duration-200">
                 <TrendingUp className="w-3.5 h-3.5" />
                 <span>86.8% Savings retention velocity</span>
               </div>
+            </div>
+
+            {/* Micro action bar on hover */}
+            <div className="mt-4 pt-3 border-t border-white/15 flex items-center justify-between text-xs text-brand-200 group-hover:text-white transition-colors relative z-10">
+              <span className="font-medium">Total Capital Velocity</span>
+              <span className="font-semibold flex items-center gap-1">
+                Net Analysis <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </div>
           </div>
         </div>
@@ -245,19 +350,58 @@ export const HomePage = ({ onNavigate }) => {
           {workflowSteps.map((step) => {
             const Icon = step.icon;
             return (
-              <div key={step.step} className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-black text-brand-600 font-mono">
+              <div
+                key={step.step}
+                role="button"
+                tabIndex={0}
+                onClick={() => onNavigate && onNavigate(step.target)}
+                onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(step.target)}
+                className={`bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl ${step.borderHover} transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out space-y-3 relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-400`}
+              >
+                {/* Top gradient glow bar */}
+                <div
+                  className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${step.glowGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                />
+
+                {/* Ambient blur glow */}
+                <div
+                  className={`absolute -right-8 -bottom-8 w-28 h-28 ${step.ambientBg} rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none`}
+                />
+
+                <div className="flex items-center justify-between relative z-10">
+                  <span
+                    className={`text-2xl font-black font-mono transition-transform duration-300 group-hover:scale-110 origin-left inline-block ${step.numberColor}`}
+                  >
                     {step.step}
                   </span>
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
-                    <Icon className="w-4 h-4" />
+                  <div className="flex items-center gap-1.5">
+                    <ArrowUpRight className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                    <div
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md ${step.iconBox}`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </div>
                   </div>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">{step.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed">
-                  {step.description}
-                </p>
+
+                <div className="relative z-10 space-y-1">
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-slate-950 transition-colors">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+
+                {/* Action footer */}
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-slate-700 transition-colors relative z-10">
+                  <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400 group-hover:text-brand-600 transition-colors">
+                    {step.badge}
+                  </span>
+                  <span className="flex items-center gap-1 group-hover:text-brand-600 transition-colors">
+                    {step.actionText} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
               </div>
             );
           })}
