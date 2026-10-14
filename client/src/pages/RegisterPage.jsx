@@ -113,13 +113,63 @@ export const RegisterPage = ({ onSwitchToLogin, onSwitchToGoogleAuth, onSuccess 
   const handleGoogleError = (errorResponse) => {
     console.error('Google OAuth error:', errorResponse);
     setIsGoogleLoading(false);
-    setLocalAlert('Google Sign-In was cancelled or failed. Please check permissions and try again.');
+    if (errorResponse?.type === 'popup_closed' || errorResponse?.error === 'popup_closed_by_user') {
+      setLocalAlert('Google sign-in popup was closed before completing.');
+    } else {
+      setLocalAlert('Google Sign-In failed. Please ensure test user access and try again.');
+    }
   };
 
   const triggerGoogleLogin = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
     onError: handleGoogleError,
+    onNonOAuthError: handleGoogleError,
   });
+
+  const handleGoogleButtonClick = () => {
+    setLocalAlert(null);
+    clearError();
+    setIsGoogleLoading(true);
+
+    const googleClientId =
+      import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+      '197519387650-bi4vo6qid359of0l8c72278rie53n3hk.apps.googleusercontent.com';
+
+    // 1. Direct Google Identity Services Token Client
+    if (window.google?.accounts?.oauth2) {
+      try {
+        const client = window.google.accounts.oauth2.initTokenClient({
+          client_id: googleClientId,
+          scope: 'openid profile email',
+          callback: (response) => {
+            if (response.error) {
+              handleGoogleError(response);
+            } else {
+              handleGoogleSuccess(response);
+            }
+          },
+          error_callback: (nonOAuthErr) => {
+            console.error('Non-OAuth error:', nonOAuthErr);
+            handleGoogleError(nonOAuthErr);
+          },
+        });
+        client.requestAccessToken({ prompt: 'select_account' });
+        return;
+      } catch (err) {
+        console.warn('Direct initTokenClient error, attempting hook fallback:', err);
+      }
+    }
+
+    // 2. Hook fallback
+    try {
+      triggerGoogleLogin();
+    } catch (err) {
+      console.error('Google OAuth trigger error:', err);
+      setIsGoogleLoading(false);
+      setLocalAlert('Google Sign-In script could not load. Please check your internet connection or ad-blocker settings.');
+    }
+  };
+
 
 
   return (
@@ -365,11 +415,7 @@ export const RegisterPage = ({ onSwitchToLogin, onSwitchToGoogleAuth, onSuccess 
               <div>
                 <button
                   type="button"
-                  onClick={() => {
-                    setLocalAlert(null);
-                    clearError();
-                    triggerGoogleLogin();
-                  }}
+                  onClick={handleGoogleButtonClick}
                   disabled={isGoogleLoading || isLoading}
                   className="w-full py-3.5 sm:py-4 px-6 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl text-sm sm:text-base font-bold text-slate-700 flex items-center justify-center gap-3 transition-all shadow-sm active:scale-[0.99] cursor-pointer disabled:opacity-50"
                   title="Sign in with your Google Account"
