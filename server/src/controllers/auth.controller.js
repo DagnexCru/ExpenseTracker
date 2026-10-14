@@ -106,17 +106,21 @@ export const getMe = async (req, res, next) => {
  */
 export const googleLogin = async (req, res, next) => {
   try {
-    const { email, name } = req.body;
-    const { user, token } = await authService.googleAuthUser({ email, name });
+    const { email, name, token, accessToken, credential } = req.body;
+    const { user, token: authToken } = await authService.googleAuthUser({
+      email,
+      name,
+      token: token || accessToken || credential,
+    });
 
-    sendAuthCookie(res, token);
+    sendAuthCookie(res, authToken);
 
     res.status(200).json({
       success: true,
       message: 'Google authentication successful',
       data: {
         user,
-        token,
+        token: authToken,
       },
     });
   } catch (error) {
@@ -126,6 +130,7 @@ export const googleLogin = async (req, res, next) => {
     next(error);
   }
 };
+
 
 export default {
   register,

@@ -12,8 +12,9 @@ import { useAuth } from '../hooks/useAuth';
 import Alert from '../components/ui/Alert';
 import DemoCredentialsButton from '../components/auth/DemoCredentialsButton';
 import RememberMeCheckbox from '../components/auth/RememberMeCheckbox';
+import { useGoogleLogin } from '@react-oauth/google';
 import { validateLoginForm } from '../utils/validation';
-import { GoogleAccountChooserModal, GoogleIcon } from '../components/auth/GoogleAccountChooserModal';
+import { GoogleIcon } from '../components/auth/GoogleAccountChooserModal';
 
 export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess }) => {
   const { login, loginWithGoogle, isLoading, error: authError, clearError } = useAuth();
@@ -27,7 +28,6 @@ export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess 
   const [rememberMe, setRememberMe] = useState(true);
   const [formErrors, setFormErrors] = useState({});
   const [localAlert, setLocalAlert] = useState(null);
-  const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const validate = () => {
@@ -66,29 +66,43 @@ export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess 
     }
   };
 
-  // Google Sign-In Account Selection Handler
-  const handleGoogleAccountSelected = async ({ email, name }) => {
+  // Real Google OAuth Handler using @react-oauth/google
+  const handleGoogleSuccess = async (tokenResponse) => {
     setIsGoogleLoading(true);
     setLocalAlert(null);
     clearError();
 
     try {
-      const result = await loginWithGoogle({ email, name });
+      const accessToken = tokenResponse?.access_token;
+      if (!accessToken) {
+        throw new Error('Google did not return an access token');
+      }
+
+      const result = await loginWithGoogle({ accessToken });
 
       if (result.success) {
-        setShowGoogleModal(false);
         if (onSuccess) onSuccess(result.user, 'dashboard');
       } else {
         setLocalAlert(result.message || 'Google Sign-In failed');
-        setShowGoogleModal(false);
       }
     } catch (err) {
       setLocalAlert(err.message || 'An error occurred during Google Sign-In');
-      setShowGoogleModal(false);
     } finally {
       setIsGoogleLoading(false);
     }
   };
+
+  const handleGoogleError = (errorResponse) => {
+    console.error('Google OAuth error:', errorResponse);
+    setIsGoogleLoading(false);
+    setLocalAlert('Google Sign-In was cancelled or failed. Please check permissions and try again.');
+  };
+
+  const triggerGoogleLogin = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: handleGoogleError,
+  });
+
 
   return (
     <div className="w-full flex items-center justify-center py-6 sm:py-10 lg:py-12 animate-fade-in">
@@ -257,20 +271,16 @@ export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess 
                   onClick={() => {
                     setLocalAlert(null);
                     clearError();
-                    if (onSwitchToGoogleAuth) {
-                      onSwitchToGoogleAuth();
-                    } else {
-                      setShowGoogleModal(true);
-                    }
+                    triggerGoogleLogin();
                   }}
                   disabled={isGoogleLoading || isLoading}
                   className="w-full py-3.5 sm:py-4 px-6 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl text-sm sm:text-base font-bold text-slate-700 flex items-center justify-center gap-3 transition-all shadow-sm active:scale-[0.99] cursor-pointer disabled:opacity-50"
-                  title="Choose an account to sign in with Google"
+                  title="Sign in with your Google Account"
                 >
                   {isGoogleLoading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin text-[#4285F4]" />
-                      <span>Signing in with Google...</span>
+                      <span>Connecting to Google...</span>
                     </>
                   ) : (
                     <>
@@ -307,16 +317,9 @@ export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess 
           </div>
         </div>
       </div>
-
-      {/* Interactive Google Account Chooser Modal */}
-      <GoogleAccountChooserModal
-        isOpen={showGoogleModal}
-        onClose={() => setShowGoogleModal(false)}
-        onSelectAccount={handleGoogleAccountSelected}
-        isLoading={isGoogleLoading}
-      />
     </div>
   );
 };
+
 
 export default LoginPage;

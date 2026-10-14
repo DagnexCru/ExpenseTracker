@@ -100,14 +100,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Handle Google Single Sign-In
-  const loginWithGoogle = async ({ email, name } = {}) => {
+  const loginWithGoogle = async (googlePayload = {}) => {
     setError(null);
     setIsLoading(true);
     try {
-      const payload = {
-        email: email || 'dagnew.google@spendwise.et',
-        name: name || 'Dagnew Cru',
-      };
+      const payload =
+        typeof googlePayload === 'string'
+          ? { token: googlePayload }
+          : googlePayload;
       const data = await googleAuthApi(payload);
       if (data && data.data && data.data.user) {
         setUser(data.data.user);
@@ -125,6 +125,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
+
 
   // Handle User Logout
   const logout = async () => {
