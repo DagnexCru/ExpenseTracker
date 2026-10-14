@@ -9,14 +9,14 @@ import React from 'react';
  */
 export const RememberMeCheckbox = ({ checked, onChange }) => {
   return (
-    <label className="flex items-center gap-2 cursor-pointer select-none text-xs text-slate-400 hover:text-slate-300 transition-colors">
+    <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-medium text-slate-600 hover:text-slate-800 transition-colors">
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-1 cursor-pointer accent-emerald-500"
+        className="w-4 h-4 rounded border-slate-300 text-[#8A70D6] focus:ring-[#8A70D6]/30 cursor-pointer accent-[#8A70D6]"
       />
-      <span>Remember me on this browser</span>
+      <span>Remember me</span>
     </label>
   );
 };

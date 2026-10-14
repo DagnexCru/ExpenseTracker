@@ -29,14 +29,14 @@ function MainApp() {
       case 'register':
         return {
           title: 'Create Account',
-          subtitle: 'Register your private account with industry-standard bcrypt encryption and secure sessions.',
-          showHeader: true,
+          subtitle: '',
+          showHeader: false,
         };
       case 'login':
         return {
-          title: 'Sign In to SpendWise',
-          subtitle: 'Secure authentication with HTTP-only cookies and token verification.',
-          showHeader: true,
+          title: 'Sign In',
+          subtitle: '',
+          showHeader: false,
         };
       case 'profile':
       case 'settings':

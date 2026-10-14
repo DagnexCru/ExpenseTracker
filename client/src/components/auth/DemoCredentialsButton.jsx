@@ -27,11 +27,11 @@ export const DemoCredentialsButton = ({ onApply, mode = 'login' }) => {
     <button
       type="button"
       onClick={handleClick}
-      className="w-full py-2.5 px-4 text-xs font-semibold text-emerald-400 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-800/60 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer shadow-sm"
+      className="w-full py-2.5 px-4 text-xs font-semibold text-[#7A5EC5] bg-[#F7F3FC] hover:bg-[#EFE8F9] border border-[#E4D8F4] rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer shadow-2xs"
       title="Fill test credentials with one click"
     >
       <svg
-        className="w-4 h-4 text-emerald-400 group-hover:rotate-12 transition-transform duration-200"
+        className="w-4 h-4 text-[#8A70D6] group-hover:rotate-12 transition-transform duration-200"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
