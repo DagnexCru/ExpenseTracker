@@ -67,58 +67,57 @@ export const HomePage = ({ onNavigate }) => {
   return (
     <div className="space-y-16 pb-12 animate-fade-in">
       {/* --------------------------------------------------------------------- */}
-      {/* HERO SECTION                                                          */}
+      {/* HERO SECTION (Open & Warm Design System)                              */}
       {/* --------------------------------------------------------------------- */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white p-8 sm:p-12 lg:p-16 border border-slate-800 shadow-2xl">
-        {/* Subtle decorative glow circles */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative overflow-hidden pt-4 pb-6 sm:pt-8 sm:pb-10 lg:pt-10 lg:pb-12 text-center">
+        {/* Soft atmospheric ambient glow blurs */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[380px] bg-gradient-to-tr from-purple-200/40 via-brand-200/35 to-emerald-200/30 rounded-full blur-3xl pointer-events-none -z-10" />
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-medium text-slate-300 backdrop-blur-md shadow-inner">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-semibold text-white">SpendWise v1.0</span>
-            <span className="text-slate-500">•</span>
-            <span>Personal Expense Tracker</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-[#EDE4D9] text-xs font-semibold text-slate-700 shadow-xs backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-bold text-slate-900">SpendWise v1.0</span>
+            <span className="text-slate-300">•</span>
+            <span className="text-slate-600">Personal Expense Tracker</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] text-slate-900 max-w-4xl mx-auto">
             Master Your Money With{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-indigo-300 to-emerald-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600">
               Precision & Absolute Privacy.
             </span>
           </h1>
 
           {/* Subheading */}
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 tracking-tight max-w-3xl mx-auto">
             Ready to Take Control of Your Financial Future?
           </h2>
 
           {/* Combined Description */}
-          <p className="text-slate-300 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
+          <p className="text-slate-600 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
             Join thousands tracking their daily transactions with zero hassle, instant categorization, and complete data privacy.
           </p>
 
           {/* Action Button Row */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-3">
             {isAuthenticated ? (
               <>
                 <Button
                   size="lg"
                   icon={LayoutDashboard}
                   onClick={() => onNavigate && onNavigate('dashboard')}
-                  className="bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-lg shadow-brand-500/30"
+                  className="bg-brand-600 hover:bg-brand-700 text-white font-bold shadow-lg shadow-brand-500/25 px-7 py-3.5 text-base cursor-pointer"
                 >
                   Go to Financial Dashboard
                 </Button>
                 <button
                   type="button"
                   onClick={() => onNavigate && onNavigate('transactions')}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-slate-800 bg-white hover:bg-[#F5EFEB] border border-[#EDE4D9] shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
                 >
-                  <Receipt className="w-4 h-4 text-slate-300" />
+                  <Receipt className="w-4 h-4 text-slate-600" />
                   <span>View Live Ledger</span>
                 </button>
               </>
@@ -128,16 +127,16 @@ export const HomePage = ({ onNavigate }) => {
                   size="lg"
                   icon={ArrowRight}
                   onClick={() => onNavigate && onNavigate('register')}
-                  className="bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-lg shadow-brand-500/30"
+                  className="bg-brand-600 hover:bg-brand-700 text-white font-bold shadow-lg shadow-brand-500/25 px-7 py-3.5 text-base cursor-pointer"
                 >
                   Get Started Today
                 </Button>
                 <button
                   type="button"
                   onClick={() => onNavigate && onNavigate('login')}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-slate-800 bg-white hover:bg-[#F5EFEB] border border-[#EDE4D9] shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
                 >
-                  <Lock className="w-4 h-4 text-slate-300" />
+                  <Lock className="w-4 h-4 text-slate-600" />
                   <span>Sign In</span>
                 </button>
               </>
@@ -145,21 +144,21 @@ export const HomePage = ({ onNavigate }) => {
           </div>
 
           {/* Trust Guarantees */}
-          <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs text-slate-400 border-t border-slate-800/80">
+          <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-medium text-slate-500 border-t border-[#EDE4D9] max-w-3xl mx-auto">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>100% Private Multi-Tenant Isolation</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Bcrypt Salted Encryption</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Multi-Currency (ETB, USD, EUR, GBP)</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Zero Third-Party Trackers</span>
             </div>
           </div>
