@@ -47,13 +47,13 @@ export const ProfileAvatar = ({
       <div
         className={`${
           sizeClasses[size] || sizeClasses.md
-        } rounded-2xl bg-gradient-to-tr ${colorClass} text-slate-950 font-bold flex items-center justify-center shadow-md select-none overflow-hidden relative border border-white/60`}
+        } rounded-full bg-gradient-to-tr ${colorClass} text-slate-950 font-bold flex items-center justify-center shadow-md select-none overflow-hidden relative border-2 border-white ring-1 ring-slate-200/60`}
       >
         {avatar ? (
           <img
             src={avatar}
             alt={name}
-            className="w-full h-full object-cover rounded-2xl transition-transform duration-200 group-hover:scale-105"
+            className="w-full h-full object-cover rounded-full transition-transform duration-200 group-hover:scale-105"
             onError={(e) => {
               // Fallback to initials if image link breaks
               e.currentTarget.style.display = 'none';
