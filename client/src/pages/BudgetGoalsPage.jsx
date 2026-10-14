@@ -153,9 +153,9 @@ export const BudgetGoalsPage = ({ onNavigate }) => {
           <button
             type="button"
             onClick={() => setShowAddGoal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-500/25 transition-all cursor-pointer"
+            className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-2.5 sm:py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-brand-500/25 hover:shadow-lg transition-all cursor-pointer active:scale-95"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-5 h-5 shrink-0" />
             <span>Create New Goal</span>
           </button>
         </div>
