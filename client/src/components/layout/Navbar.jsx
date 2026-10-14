@@ -4,7 +4,6 @@ import {
   LogOut,
   LayoutDashboard,
   Receipt,
-  PieChart,
   Menu,
   X,
 } from 'lucide-react';
@@ -20,7 +19,6 @@ export const Navbar = ({ currentView, onNavigate }) => {
   const navTabs = [
     { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
     { id: 'transactions', name: 'Ledger', icon: Receipt },
-    { id: 'filters', name: 'Search & Filters', icon: PieChart },
   ];
 
   const handleTabClick = (viewId) => {
@@ -86,8 +84,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
                 const Icon = tab.icon;
                 const isActive =
                   currentView === tab.id ||
-                  (tab.id === 'transactions' && currentView === 'transactions') ||
-                  (tab.id === 'filters' && currentView === 'filters');
+                  (tab.id === 'transactions' && (currentView === 'transactions' || currentView === 'filters'));
 
                 return (
                   <button
@@ -159,8 +156,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
             const Icon = tab.icon;
             const isActive =
               currentView === tab.id ||
-              (tab.id === 'transactions' && currentView === 'transactions') ||
-              (tab.id === 'filters' && currentView === 'filters');
+              (tab.id === 'transactions' && (currentView === 'transactions' || currentView === 'filters'));
 
             return (
               <button

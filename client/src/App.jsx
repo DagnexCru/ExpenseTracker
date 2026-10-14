@@ -61,8 +61,8 @@ function MainApp() {
       case 'transactions':
       case 'filters':
         return {
-          title: 'Transaction Management & Filters',
-          subtitle: 'Full CRUD ledger with multi-field search, date range filters, and pagination.',
+          title: 'Financial Ledger & Transaction Management',
+          subtitle: 'Comprehensive ledger with real-time multi-field search, date range filters, category analytics, and pagination.',
           showHeader: true,
         };
       default:
