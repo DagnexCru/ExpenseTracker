@@ -85,14 +85,14 @@ function MainApp() {
           {currentView === 'register' && (
             <RegisterPage
               onSwitchToLogin={() => setCurrentView('login')}
-              onSuccess={() => setCurrentView('profile')}
+              onSuccess={() => setCurrentView('dashboard')}
             />
           )}
 
           {currentView === 'login' && (
             <LoginPage
               onSwitchToRegister={() => setCurrentView('register')}
-              onSuccess={() => setCurrentView('profile')}
+              onSuccess={() => setCurrentView('dashboard')}
             />
           )}
 
