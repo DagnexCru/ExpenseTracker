@@ -4,22 +4,12 @@ import {
   ArrowRight,
   TrendingUp,
   TrendingDown,
-  ShieldCheck,
   LayoutDashboard,
   Receipt,
-  PieChart,
-  Globe,
   Lock,
-  Database,
-  Activity,
   CheckCircle2,
   Sparkles,
-  Zap,
   BarChart3,
-  Layers,
-  Clock,
-  ChevronRight,
-  DollarSign,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Button from '../components/ui/Button';
@@ -28,63 +18,6 @@ import Badge from '../components/ui/Badge';
 export const HomePage = ({ onNavigate }) => {
   const { isAuthenticated, user } = useAuth();
   const currency = user?.currency || 'ETB';
-
-  const features = [
-    {
-      icon: LayoutDashboard,
-      title: 'Real-Time Financial Dashboard',
-      description:
-        'MongoDB aggregation pipelines compute net balance, monthly income, and category expenditures in sub-30ms execution times.',
-      tag: 'Analytics',
-      color: 'from-blue-500 to-indigo-600',
-      badgeBg: 'bg-blue-50 text-blue-700 border-blue-200/60',
-    },
-    {
-      icon: Receipt,
-      title: 'Full Transaction Ledger CRUD',
-      description:
-        'Record income and expenses with automatic category affinity, payment method tracking, and strict floating-point precision guarantees.',
-      tag: 'Ledger',
-      color: 'from-emerald-500 to-teal-600',
-      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
-    },
-    {
-      icon: PieChart,
-      title: 'Dynamic Search & Filter Studio',
-      description:
-        'Multi-criteria search with 300ms input debouncing, date range selectors, category filters, and paginated query results.',
-      tag: 'Query Engine',
-      color: 'from-purple-500 to-indigo-600',
-      badgeBg: 'bg-purple-50 text-purple-700 border-purple-200/60',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Enterprise Defense & Privacy',
-      description:
-        'Protected by bcrypt salted hashing, HTTP-only SameSite JWT cookies, OWASP security headers, and recursive NoSQL injection sanitizers.',
-      tag: 'Security',
-      color: 'from-rose-500 to-pink-600',
-      badgeBg: 'bg-rose-50 text-rose-700 border-rose-200/60',
-    },
-    {
-      icon: Globe,
-      title: 'Multi-Currency Customization',
-      description:
-        'First-class support for ETB (Ethiopian Birr), USD, EUR, and GBP with persistent user preference storage and localized formatting.',
-      tag: 'Preferences',
-      color: 'from-amber-500 to-orange-600',
-      badgeBg: 'bg-amber-50 text-amber-700 border-amber-200/60',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Smart Financial Budgeting',
-      description:
-        'Track net cashflow retention velocity, analyze spending ratios, and maintain full control over your financial habits.',
-      tag: 'Budgeting',
-      color: 'from-emerald-500 to-teal-600',
-      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
-    },
-  ];
 
   const workflowSteps = [
     {
@@ -290,53 +223,6 @@ export const HomePage = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* --------------------------------------------------------------------- */}
-      {/* CORE FEATURES GRID                                                    */}
-      {/* --------------------------------------------------------------------- */}
-      <section className="space-y-6">
-        <div className="text-center max-w-2xl mx-auto">
-          <Badge variant="indigo" className="mb-2">
-            Engineered Capabilities
-          </Badge>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-            Everything You Need to Master Your Personal Finances
-          </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            Built from scratch with strict software engineering practices and production MERN fundamentals.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={feature.title}
-                className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 space-y-4 flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div
-                      className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${feature.color} flex items-center justify-center text-white shadow-sm`}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${feature.badgeBg}`}>
-                      {feature.tag}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-bold text-slate-900 leading-snug">
-                    {feature.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
 
       {/* --------------------------------------------------------------------- */}
       {/* 3-STEP WORKFLOW                                                       */}
@@ -409,38 +295,12 @@ export const HomePage = ({ onNavigate }) => {
       {/* --------------------------------------------------------------------- */}
       {/* FOOTER                                                                */}
       {/* --------------------------------------------------------------------- */}
-      <footer className="pt-8 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-md bg-brand-600 text-white flex items-center justify-center font-bold text-[10px]">
-            SW
-          </div>
-          <span className="font-semibold text-slate-800">SpendWise Personal Expense Tracker</span>
-          <span>© 2026 All Rights Reserved.</span>
+      <footer className="pt-8 border-t border-slate-200/80 flex items-center justify-center gap-2 text-xs text-slate-500 text-center">
+        <div className="w-5 h-5 rounded-md bg-brand-600 text-white flex items-center justify-center font-bold text-[10px]">
+          SW
         </div>
-
-        <div className="flex items-center gap-4 text-xs font-medium text-slate-600">
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate('home')}
-            className="hover:text-brand-600 transition-colors"
-          >
-            Home
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate('dashboard')}
-            className="hover:text-brand-600 transition-colors"
-          >
-            Dashboard
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate('transactions')}
-            className="hover:text-brand-600 transition-colors"
-          >
-            Transactions
-          </button>
-        </div>
+        <span className="font-semibold text-slate-800">SpendWise Personal Expense Tracker</span>
+        <span>© 2026 All Rights Reserved.</span>
       </footer>
     </div>
   );
