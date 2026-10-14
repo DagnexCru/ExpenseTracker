@@ -77,8 +77,42 @@ export const getUserProfile = async (userId) => {
   return user.toJSON();
 };
 
+/**
+ * Authenticates or registers a user via Google Sign-In
+ * @param {object} googleData - { email, name }
+ * @returns {Promise<{ user: object, token: string }>}
+ */
+export const googleAuthUser = async ({ email, name }) => {
+  if (!email) {
+    const error = new Error('Google authentication requires a valid email');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  let user = await User.findOne({ email: normalizedEmail });
+
+  if (!user) {
+    // Generate secure random password for Google-provisioned account
+    const randomPassword = `GAuth_${Math.random().toString(36).slice(-8)}_${Date.now()}!`;
+    user = await User.create({
+      name: name?.trim() || normalizedEmail.split('@')[0],
+      email: normalizedEmail,
+      password: randomPassword,
+    });
+  }
+
+  const token = generateToken({ id: user._id, email: user.email });
+
+  return {
+    user: user.toJSON(),
+    token,
+  };
+};
+
 export default {
   registerUser,
   loginUser,
   getUserProfile,
+  googleAuthUser,
 };

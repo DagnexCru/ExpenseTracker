@@ -45,9 +45,23 @@ export const getMeApi = async () => {
   return response.data;
 };
 
+/**
+ * Authenticate or register user via Google Sign-In
+ * @param {object} payload - { email, name }
+ * @returns {Promise<object>} response data containing user and token
+ */
+export const googleAuthApi = async ({ email, name }) => {
+  const response = await apiClient.post('/auth/google', {
+    email,
+    name,
+  });
+  return response.data;
+};
+
 export default {
   registerApi,
   loginApi,
   logoutApi,
   getMeApi,
+  googleAuthApi,
 };

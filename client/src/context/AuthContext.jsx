@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { registerApi, loginApi, logoutApi, getMeApi } from '../api/auth';
+import { registerApi, loginApi, logoutApi, getMeApi, googleAuthApi } from '../api/auth';
 
 export const AuthContext = createContext(null);
 
@@ -99,6 +99,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Handle Google Single Sign-In
+  const loginWithGoogle = async ({ email, name } = {}) => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      const payload = {
+        email: email || 'dagnew.google@spendwise.et',
+        name: name || 'Dagnew Cru',
+      };
+      const data = await googleAuthApi(payload);
+      if (data && data.data && data.data.user) {
+        setUser(data.data.user);
+        return { success: true, user: data.data.user };
+      }
+      return { success: false, message: 'Invalid response from Google auth' };
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        'Google authentication failed. Please try again.';
+      setError(message);
+      return { success: false, message };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Handle User Logout
   const logout = async () => {
     setIsLoading(true);
@@ -125,6 +152,7 @@ export const AuthProvider = ({ children }) => {
     error,
     register,
     login,
+    loginWithGoogle,
     logout,
     updateUser,
     clearError,

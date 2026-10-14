@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, logout, getMe } from '../controllers/auth.controller.js';
+import { register, login, logout, getMe, googleLogin } from '../controllers/auth.controller.js';
 import { validateRegisterInput, validateLoginInput } from '../validators/auth.validator.js';
 import { protect } from '../middleware/auth.middleware.js';
 import { authRateLimiter } from '../middleware/rate_limiter.middleware.js';
@@ -19,6 +19,13 @@ router.post('/register', authRateLimiter, validateRegisterInput, register);
  * @access  Public
  */
 router.post('/login', authRateLimiter, validateLoginInput, login);
+
+/**
+ * @route   POST /api/auth/google
+ * @desc    Authenticate or register user via Google Sign-In
+ * @access  Public
+ */
+router.post('/google', authRateLimiter, googleLogin);
 
 /**
  * @route   POST /api/auth/logout

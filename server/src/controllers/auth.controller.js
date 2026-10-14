@@ -99,9 +99,38 @@ export const getMe = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Authenticate or register user via Google Sign-In
+ * @route   POST /api/auth/google
+ * @access  Public
+ */
+export const googleLogin = async (req, res, next) => {
+  try {
+    const { email, name } = req.body;
+    const { user, token } = await authService.googleAuthUser({ email, name });
+
+    sendAuthCookie(res, token);
+
+    res.status(200).json({
+      success: true,
+      message: 'Google authentication successful',
+      data: {
+        user,
+        token,
+      },
+    });
+  } catch (error) {
+    if (error.statusCode) {
+      res.status(error.statusCode);
+    }
+    next(error);
+  }
+};
+
 export default {
   register,
   login,
   logout,
   getMe,
+  googleLogin,
 };
