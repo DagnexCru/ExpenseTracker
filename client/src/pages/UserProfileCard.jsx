@@ -6,13 +6,12 @@ import {
   Globe,
   Calendar,
   Key,
-  RefreshCw,
   LogOut,
-  CheckCircle2,
   Save,
   RotateCcw,
   Sparkles,
   Camera,
+  CheckCircle,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card';
@@ -20,11 +19,9 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Badge from '../components/ui/Badge';
 import Alert from '../components/ui/Alert';
-import { getUserProfileApi, updateUserProfileApi } from '../api/user';
+import { updateUserProfileApi } from '../api/user';
 import CurrencySelector from '../components/profile/CurrencySelector';
-import SecurityLogs from '../components/profile/SecurityLogs';
 import ProfileAvatar from '../components/profile/ProfileAvatar';
-import SecurityAuditBadge from '../components/auth/SecurityAuditBadge';
 import PasswordChangeModal from '../components/profile/PasswordChangeModal';
 import EditProfilePhotoModal from '../components/profile/EditProfilePhotoModal';
 
@@ -38,9 +35,7 @@ export const UserProfileCard = () => {
   const [saveSuccess, setSaveSuccess] = useState(null);
   const [saveError, setSaveError] = useState(null);
 
-  // Live session check states
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [verifyResult, setVerifyResult] = useState(null);
+  // Dialog states
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
 
@@ -100,37 +95,17 @@ export const UserProfileCard = () => {
     setSaveSuccess(null);
   };
 
-  const handleVerifySession = async () => {
-    setIsVerifying(true);
-    try {
-      const data = await getUserProfileApi();
-      setVerifyResult({
-        success: true,
-        message: 'Successfully verified live session with GET /api/users/me',
-        timestamp: new Date().toLocaleTimeString(),
-        userData: data.data.user,
-      });
-    } catch (err) {
-      setVerifyResult({
-        success: false,
-        message: err.response?.data?.message || err.message,
-        timestamp: new Date().toLocaleTimeString(),
-      });
-    } finally {
-      setIsVerifying(false);
-    }
-  };
-
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      {/* Top Profile Header Card */}
-      <Card className="shadow-elevation border-slate-200">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in pb-12">
+      {/* TOP PROFILE HEADER CARD */}
+      <Card className="border-[#EDE4D9] rounded-3xl shadow-xs bg-white overflow-hidden">
         <CardContent className="p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-[#EDE4D9]">
+            {/* User Avatar & Identity */}
             <div className="flex items-center gap-4">
-              <div className="relative group">
+              <div className="relative group shrink-0">
                 <ProfileAvatar
                   name={user.name || 'User'}
                   avatar={user.avatar}
@@ -141,7 +116,7 @@ export const UserProfileCard = () => {
                   type="button"
                   onClick={() => setIsPhotoModalOpen(true)}
                   className="absolute bottom-0 right-0 p-1.5 rounded-xl bg-brand-600 text-white shadow-md hover:bg-brand-700 transition-colors cursor-pointer"
-                  title="Change photo"
+                  title="Update profile photo"
                 >
                   <Camera className="w-3.5 h-3.5" />
                 </button>
@@ -149,34 +124,32 @@ export const UserProfileCard = () => {
 
               <div>
                 <div className="flex items-center gap-2.5 flex-wrap">
-                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                     {user.name}
                   </h2>
                   <Badge variant="success" dot={true}>
-                    Authenticated
+                    Active
                   </Badge>
-                  <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    Phase 6 Active
-                  </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{user.email}</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">{user.email}</p>
                 <button
                   type="button"
                   onClick={() => setIsPhotoModalOpen(true)}
-                  className="text-xs font-bold text-brand-600 hover:text-brand-700 underline mt-1 cursor-pointer block"
+                  className="text-xs font-bold text-brand-600 hover:text-brand-700 underline mt-1.5 cursor-pointer block"
                 >
-                  Change Profile Photo
+                  Set or Update Profile Photo
                 </button>
               </div>
             </div>
 
+            {/* Quick Profile Actions */}
             <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
               <Button
                 variant="outline"
                 size="sm"
                 icon={Camera}
                 onClick={() => setIsPhotoModalOpen(true)}
-                className="text-brand-700 border-brand-200 bg-brand-50 hover:bg-brand-100"
+                className="text-brand-700 border-brand-200 bg-brand-50 hover:bg-brand-100 font-bold"
               >
                 Update Photo
               </Button>
@@ -185,7 +158,7 @@ export const UserProfileCard = () => {
                 size="sm"
                 icon={Key}
                 onClick={() => setIsPasswordModalOpen(true)}
-                className="text-slate-600 hover:text-brand-600"
+                className="text-slate-600 hover:text-brand-600 border-[#EDE4D9] bg-white hover:bg-slate-50"
               >
                 Change Password
               </Button>
@@ -194,7 +167,7 @@ export const UserProfileCard = () => {
                 size="sm"
                 icon={LogOut}
                 onClick={logout}
-                className="text-slate-600 hover:text-rose-600 hover:border-rose-200"
+                className="text-slate-600 hover:text-rose-600 border-[#EDE4D9] hover:border-rose-200 bg-white hover:bg-rose-50"
               >
                 Sign Out
               </Button>
@@ -203,81 +176,91 @@ export const UserProfileCard = () => {
 
           {/* Account Snapshot Badges */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
-            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
-              <Globe className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
+              <div className="w-8 h-8 rounded-xl bg-white text-brand-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
+                <Globe className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Active Currency
                 </span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5 font-mono">
+                <p className="text-sm font-extrabold text-slate-900 mt-0.5 font-mono">
                   {user.currency || 'ETB'}
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Persisted in DB</p>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Default Format</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
-              <Calendar className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
+              <div className="w-8 h-8 rounded-xl bg-white text-emerald-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
+                <Calendar className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Member Since
                 </span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5">
-                  {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Today'}
+                <p className="text-sm font-extrabold text-slate-900 mt-0.5">
+                  {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Active User'}
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Account Created</p>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Account Created</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
-              <Key className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
+              <div className="w-8 h-8 rounded-xl bg-white text-amber-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
+                <Key className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Session Guard
                 </span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5">
-                  HTTP-only JWT
+                <p className="text-sm font-extrabold text-slate-900 mt-0.5">
+                  HTTP-Only JWT
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Anti-XSS Storage</p>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Secure Cookies</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
+              <div className="w-8 h-8 rounded-xl bg-white text-indigo-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
               <div>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Data Isolation
                 </span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5">
+                <p className="text-sm font-extrabold text-slate-900 mt-0.5">
                   Multi-Tenant
                 </p>
-                <p className="text-[10px] text-slate-400 mt-0.5">Zero Data Leakage</p>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Zero Data Leakage</p>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Editable Profile & Currency Settings Form */}
-      <Card className="border-slate-200 shadow-sm">
+      {/* EDITABLE PROFILE & CURRENCY SETTINGS FORM */}
+      <Card className="border-[#EDE4D9] rounded-3xl shadow-xs bg-white overflow-hidden">
         <form onSubmit={handleSaveProfile}>
-          <CardHeader>
+          <CardHeader className="border-b border-[#EDE4D9]">
             <div className="flex items-center justify-between w-full">
               <div>
-                <CardTitle className="text-lg">Profile Details & Currency Preferences</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-lg font-black text-slate-900">
+                  Profile Details & Currency Preferences
+                </CardTitle>
+                <CardDescription className="text-xs text-slate-500">
                   Modify your display name and default currency preference below. Changes take effect across your dashboard immediately.
                 </CardDescription>
               </div>
               {hasChanges && (
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">
+                <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">
                   Unsaved Changes
                 </span>
               )}
             </div>
           </CardHeader>
 
-          <CardContent className="space-y-6">
+          <CardContent className="p-6 sm:p-8 space-y-6">
             {saveSuccess && (
               <Alert variant="success" title="Success" onClose={() => setSaveSuccess(null)}>
                 {saveSuccess}
@@ -291,7 +274,7 @@ export const UserProfileCard = () => {
             )}
 
             {/* Inputs: Display Name & Email */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="space-y-1.5">
                 <Input
                   label="Display Name"
@@ -304,13 +287,13 @@ export const UserProfileCard = () => {
                   required
                 />
                 <p className="text-[11px] text-slate-400">
-                  Visible on your navigation bar, welcome banners, and receipts.
+                  Visible on your navigation bar, welcome banners, and ledger.
                 </p>
               </div>
 
               <div className="space-y-1.5">
                 <div className="space-y-1">
-                  <label className="block text-xs font-semibold text-slate-700">
+                  <label className="block text-xs font-bold text-slate-700">
                     Account Email (Primary ID)
                   </label>
                   <div className="relative">
@@ -318,24 +301,24 @@ export const UserProfileCard = () => {
                       type="email"
                       value={user.email}
                       disabled
-                      className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 text-sm cursor-not-allowed select-none"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF5F0] border border-[#EDE4D9] rounded-xl text-slate-600 font-medium text-sm cursor-not-allowed select-none"
                     />
                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <span className="text-[10px] font-semibold text-slate-400 bg-slate-200/80 px-2 py-0.5 rounded-md">
+                      <span className="text-[10px] font-bold text-slate-400 bg-slate-200/70 px-2 py-0.5 rounded-md">
                         Immutable
                       </span>
                     </div>
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-400">
-                  Protected field. Email is strictly locked to prevent account takeover.
+                  Protected credential. Email is locked to ensure account security.
                 </p>
               </div>
             </div>
 
             {/* Interactive Currency Selector */}
-            <div className="space-y-2">
-              <label className="block text-xs font-semibold text-slate-700">
+            <div className="space-y-2 pt-2">
+              <label className="block text-xs font-bold text-slate-700">
                 Select Preferred Display Currency
               </label>
               <CurrencySelector
@@ -346,11 +329,11 @@ export const UserProfileCard = () => {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#FBF8F5] border-t border-[#EDE4D9] px-6 py-4">
-            <span className="text-xs text-slate-500">
+          <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#FAF5F0] border-t border-[#EDE4D9] px-6 sm:px-8 py-4">
+            <span className="text-xs text-slate-500 font-medium">
               {hasChanges
-                ? 'You have unsaved adjustments. Click Save to persist them to MongoDB.'
-                : 'Your profile settings are up to date with the server.'}
+                ? 'You have unsaved adjustments. Click Save to persist them.'
+                : 'Your profile settings are up to date.'}
             </span>
 
             <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
@@ -361,6 +344,7 @@ export const UserProfileCard = () => {
                 icon={RotateCcw}
                 onClick={handleResetForm}
                 disabled={!hasChanges || isSaving}
+                className="bg-white border-[#EDE4D9] hover:bg-slate-50 text-slate-600"
               >
                 Discard
               </Button>
@@ -372,6 +356,7 @@ export const UserProfileCard = () => {
                 icon={Save}
                 isLoading={isSaving}
                 disabled={!hasChanges}
+                className="bg-brand-600 hover:bg-brand-700 text-white font-bold shadow-md shadow-brand-500/25"
               >
                 Save Preferences
               </Button>
@@ -379,61 +364,6 @@ export const UserProfileCard = () => {
           </CardFooter>
         </form>
       </Card>
-
-      {/* Live Cookie & API Verification Card */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between w-full">
-            <div>
-              <CardTitle>Verify Live Profile Session (GET /api/users/me)</CardTitle>
-              <CardDescription>
-                Dispatches an authenticated query to <code className="text-brand-600 font-mono">GET /api/users/me</code> to verify database state.
-              </CardDescription>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              isLoading={isVerifying}
-              icon={RefreshCw}
-              onClick={handleVerifySession}
-            >
-              Verify Endpoint
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {verifyResult ? (
-            <div
-              className={`p-4 rounded-xl border text-xs font-mono space-y-2 ${
-                verifyResult.success
-                  ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                  : 'bg-rose-50 border-rose-200 text-rose-900'
-              }`}
-            >
-              <div className="flex items-center justify-between font-sans font-semibold">
-                <span>{verifyResult.success ? '✅ Session & Profile Verified' : '❌ Verification Failed'}</span>
-                <span className="text-[10px] text-slate-500 font-normal">{verifyResult.timestamp}</span>
-              </div>
-              <p>{verifyResult.message}</p>
-              {verifyResult.userData && (
-                <pre className="bg-white/80 p-3 rounded-lg overflow-x-auto text-[11px] border border-emerald-100">
-                  {JSON.stringify(verifyResult.userData, null, 2)}
-                </pre>
-              )}
-            </div>
-          ) : (
-            <div className="p-4 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] text-slate-500 text-xs">
-              Click &quot;Verify Endpoint&quot; to test your active session against the newly mounted Express endpoint.
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Security Defenses Summary Badge */}
-      <SecurityAuditBadge />
-
-      {/* Security and Architecture Compliance Audit */}
-      <SecurityLogs />
 
       {/* Password Change Dialog */}
       <PasswordChangeModal

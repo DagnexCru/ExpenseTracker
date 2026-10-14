@@ -10,7 +10,7 @@ export const CurrencySelector = ({
   disabled = false,
 }) => {
   return (
-    <Card className="border-slate-200">
+    <Card className="border-[#EDE4D9] rounded-2xl shadow-xs">
       <CardHeader>
         <div className="flex items-center justify-between w-full">
           <div>
@@ -19,7 +19,7 @@ export const CurrencySelector = ({
               Choose your preferred display currency for transactions, reports, and summary cards.
             </CardDescription>
           </div>
-          <Badge variant="info" className="shrink-0">
+          <Badge variant="info" className="shrink-0 bg-brand-50 text-brand-700 border-brand-200">
             Default: ETB (Br)
           </Badge>
         </div>
@@ -37,9 +37,9 @@ export const CurrencySelector = ({
                 onClick={() => onChange && onChange(curr.code)}
                 className={`p-3.5 rounded-xl border text-left flex items-center justify-between transition-all ${
                   isSelected
-                    ? 'border-brand-600 bg-brand-50/50 ring-2 ring-brand-500/20 shadow-sm'
-                    : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/60'
-                } ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                    ? 'border-brand-600 bg-brand-50/60 ring-2 ring-brand-500/20 shadow-xs'
+                    : 'border-[#EDE4D9] hover:border-[#D8C7B5] bg-white hover:bg-[#FAF5F0]/70'
+                } ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer active:scale-[0.99]'}`}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-2xl shrink-0">{curr.flag}</span>
