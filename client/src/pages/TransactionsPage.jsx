@@ -256,14 +256,14 @@ export const TransactionsPage = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3 flex-wrap">
           <Button
             variant="outline"
-            size="sm"
+            size="lg"
             icon={Download}
             onClick={handleExportCSV}
             disabled={!transactions.length}
-            className="text-slate-600 bg-white hover:bg-slate-50"
+            className="text-slate-700 bg-white hover:bg-slate-50 border-[#EDE4D9] shadow-sm font-bold"
             title="Download CSV spreadsheet of visible transactions"
           >
             Export CSV
@@ -271,23 +271,24 @@ export const TransactionsPage = () => {
 
           <Button
             variant="outline"
-            size="sm"
+            size="lg"
             icon={RefreshCw}
             onClick={fetchTransactions}
             isLoading={isLoading}
-            className="text-slate-600"
+            className="text-slate-700 bg-white hover:bg-slate-50 border-[#EDE4D9] shadow-sm font-bold"
           >
             Refresh
           </Button>
 
           <Button
             variant="primary"
-            size="sm"
+            size="lg"
             icon={Plus}
             onClick={() => {
               setEditingTransaction(null);
               setIsModalOpen(true);
             }}
+            className="shadow-md shadow-brand-500/25 hover:shadow-lg font-extrabold"
           >
             Add Transaction
           </Button>
