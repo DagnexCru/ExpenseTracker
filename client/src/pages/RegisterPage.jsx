@@ -174,56 +174,59 @@ export const RegisterPage = ({ onSwitchToLogin, onSwitchToGoogleAuth, onSuccess 
   return (
     <div className="w-full flex items-center justify-center py-6 sm:py-10 lg:py-12 animate-fade-in">
       {/* Enlarged Outer Rounded Container with Warm Pastel Peach/Cream Styling */}
-      <div className="w-full max-w-6xl xl:max-w-7xl bg-[#FAF5F0] rounded-[36px] sm:rounded-[48px] p-8 sm:p-12 lg:p-14 xl:p-16 shadow-2xl border border-[#EDE4D9] grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center relative overflow-hidden">
+      <div className="w-full max-w-6xl xl:max-w-7xl bg-[#FAF5F0] rounded-[36px] sm:rounded-[48px] p-6 sm:p-10 lg:p-12 xl:p-14 shadow-2xl border border-[#EDE4D9] flex flex-col space-y-6 sm:space-y-8 relative overflow-hidden">
         
-        {/* LEFT COLUMN: Brand, Greeting, and Enlarged Custom 3D Illustration */}
-        <div className="lg:col-span-6 flex flex-col justify-between h-full space-y-8">
-          {/* Top Brand Logo */}
+        {/* Top Brand Logo & Welcome Message Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#EDE4D9]">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-2xl bg-[#8A70D6] text-white flex items-center justify-center shadow-lg shadow-purple-500/25">
               <Flower2 className="w-6 h-6 fill-white" />
             </div>
-            <span className="font-extrabold text-slate-800 text-2xl sm:text-3xl tracking-tight">
-              SpendWise
-            </span>
+            <div>
+              <span className="font-extrabold text-slate-800 text-2xl sm:text-3xl tracking-tight block">
+                SpendWise
+              </span>
+              <p className="text-slate-500 text-xs sm:text-sm font-medium">
+                Personal Financial Management
+              </p>
+            </div>
           </div>
 
-          {/* Welcome Message */}
-          <div className="space-y-3 pt-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          <div className="sm:text-right space-y-0.5">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
               Welcome to SpendWise! 🌸
             </h1>
-            <p className="text-slate-600 text-base sm:text-lg font-normal leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm font-normal">
               Create your account and start your amazing financial journey with us.
             </p>
           </div>
-
-          {/* Enlarged Custom 3D Character Illustration Card */}
-          <div className="rounded-3xl sm:rounded-[36px] overflow-hidden shadow-2xl border border-purple-100/90 bg-white group">
-            <img
-              src="/assets/auth_illustration.jpg"
-              alt="SpendWise Customized Character at desk"
-              className="w-full h-auto object-cover max-h-[520px] lg:max-h-[580px] group-hover:scale-[1.02] transition-transform duration-300"
-            />
-          </div>
-
-          <div className="text-xs sm:text-sm text-slate-500 text-center font-medium">
-            100% Private • Bank-Grade Multi-Tenant Isolation • Real-Time Tracking
-          </div>
         </div>
 
-        {/* RIGHT COLUMN: Floating White Account Form Card (Enlarged) */}
-        <div className="lg:col-span-6">
-          <div className="bg-white rounded-[32px] sm:rounded-[42px] p-8 sm:p-10 lg:p-12 shadow-2xl shadow-purple-950/8 border border-purple-100/80 space-y-6">
-            {/* Form Title & Subtitle */}
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Create your account
-              </h2>
-              <p className="text-sm sm:text-base text-slate-500 font-medium">
-                Let's get started! Fill in your details below. 💜
-              </p>
+        {/* 2-COLUMN SECTION: Image of People & Authentication Card at the EXACT SAME HEIGHT & LEVEL */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-stretch flex-1">
+          {/* LEFT COLUMN: The Image of People Card (Matched Height Level) */}
+          <div className="lg:col-span-6 flex flex-col h-full">
+            <div className="h-full w-full rounded-[32px] sm:rounded-[42px] overflow-hidden shadow-2xl shadow-purple-950/8 border border-purple-100/90 bg-white group flex flex-col justify-center relative min-h-[520px]">
+              <img
+                src="/assets/auth_illustration.jpg"
+                alt="SpendWise Team and Financial Growth"
+                className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+              />
             </div>
+          </div>
+
+          {/* RIGHT COLUMN: Floating White Account Form Card (Matched Height Level) */}
+          <div className="lg:col-span-6 flex flex-col h-full">
+            <div className="h-full bg-white rounded-[32px] sm:rounded-[42px] p-8 sm:p-10 lg:p-12 shadow-2xl shadow-purple-950/8 border border-purple-100/80 flex flex-col justify-between space-y-6">
+              {/* Form Title & Subtitle */}
+              <div className="text-center space-y-2">
+                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                  Create your account
+                </h2>
+                <p className="text-sm sm:text-base text-slate-500 font-medium">
+                  Let's get started! Fill in your details below. 💜
+                </p>
+              </div>
 
             {/* Error or Alert Notifications */}
             {(localAlert || authError) && (
@@ -446,6 +449,12 @@ export const RegisterPage = ({ onSwitchToLogin, onSwitchToGoogleAuth, onSuccess 
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+        {/* Bottom Trust Badge */}
+        <div className="text-xs sm:text-sm text-slate-500 text-center font-medium pt-2">
+          100% Private • Bank-Grade Multi-Tenant Isolation • Real-Time Tracking
         </div>
       </div>
     </div>
