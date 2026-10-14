@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import {
   Wallet,
-  LogOut,
   LayoutDashboard,
   Receipt,
   Target,
   Menu,
   X,
-  PlusCircle,
   Camera,
 } from 'lucide-react';
-import Button from '../ui/Button';
 import { useAuth } from '../../hooks/useAuth';
 import ProfileAvatar from '../profile/ProfileAvatar';
 
@@ -32,12 +29,6 @@ export const Navbar = ({
 
   const handleTabClick = (viewId) => {
     if (onNavigate) onNavigate(viewId);
-    setMobileMenuOpen(false);
-  };
-
-  const handleLogout = async () => {
-    await logout();
-    if (onNavigate) onNavigate('home');
     setMobileMenuOpen(false);
   };
 
@@ -142,20 +133,8 @@ export const Navbar = ({
             </nav>
 
             {/* Right: Quick Add Transaction, User profile & Sign Out */}
+            {/* Right: User Profile Pill */}
             <div className="flex items-center gap-2.5">
-              {/* Quick Add Transaction Button */}
-              {onOpenAddTransaction && (
-                <button
-                  type="button"
-                  onClick={onOpenAddTransaction}
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm shadow-brand-500/25 transition-all cursor-pointer active:scale-95"
-                  title="Add Transaction"
-                >
-                  <PlusCircle className="w-4 h-4" />
-                  <span>+ New</span>
-                </button>
-              )}
-
               {/* Top-Right Profile Pill with Photo Avatar (Click opens Photo & Profile Modal) */}
               <button
                 type="button"
@@ -167,7 +146,7 @@ export const Navbar = ({
                   name={user?.name || 'User'}
                   avatar={user?.avatar}
                   size="sm"
-                  showStatus={true}
+                  showStatus={false}
                 />
                 <div className="text-left hidden sm:block">
                   <span className="text-xs font-bold text-slate-800 max-w-[110px] truncate block leading-tight">
@@ -178,17 +157,6 @@ export const Navbar = ({
                   </span>
                 </div>
               </button>
-
-              <Button
-                variant="outline"
-                size="sm"
-                icon={LogOut}
-                onClick={handleLogout}
-                className="text-slate-600 hover:text-rose-600 border-[#EDE4D9] bg-white hover:bg-[#F5EFEB]"
-                title="Sign Out"
-              >
-                <span className="hidden md:inline">Sign Out</span>
-              </Button>
             </div>
           </div>
         )}
