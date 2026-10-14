@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
-import Sidebar from './components/layout/Sidebar';
 import PageContainer from './components/layout/PageContainer';
 import HomePage from './pages/HomePage';
 import HealthCheckPage from './pages/HealthCheckPage';
@@ -13,13 +12,11 @@ import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 
 function MainApp() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentView, setCurrentView] = useState('home');
   const { user, isAuthenticated } = useAuth();
 
   const handleNavigate = (view) => {
     setCurrentView(view);
-    setSidebarOpen(false);
   };
 
   const getPageTitle = () => {
@@ -80,25 +77,15 @@ function MainApp() {
   const { title, subtitle, showHeader } = getPageTitle();
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
-      {/* Sidebar navigation */}
-      <Sidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      {/* Top Header Navbar with concise navigation tabs (no left sidebar) */}
+      <Navbar
         currentView={currentView}
         onNavigate={handleNavigate}
       />
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top Navbar */}
-        <Navbar
-          onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-          isHealthy={true}
-          onNavigate={handleNavigate}
-        />
-
-        {/* Dynamic Page Container */}
+      {/* Main dynamic content container */}
+      <div className="flex-1 flex flex-col min-w-0">
         <PageContainer title={title} subtitle={subtitle} showHeader={showHeader}>
           {currentView === 'home' && <HomePage onNavigate={handleNavigate} />}
 
