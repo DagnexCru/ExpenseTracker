@@ -3,7 +3,6 @@ import {
   LayoutDashboard,
   Calendar,
   RefreshCw,
-  PlusCircle,
   AlertCircle,
   Filter,
   Target,
@@ -152,18 +151,6 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
           >
             <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin text-emerald-600' : ''}`} />
           </button>
-
-          {/* New Transaction CTA (Large Size) */}
-          {onNavigate && (
-            <button
-              type="button"
-              onClick={() => onNavigate('transactions')}
-              className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm sm:text-base shadow-md shadow-emerald-500/25 hover:shadow-lg transition-all cursor-pointer active:scale-95"
-            >
-              <PlusCircle className="w-5 h-5 shrink-0" />
-              <span>Add Transaction</span>
-            </button>
-          )}
         </div>
       </div>
 
