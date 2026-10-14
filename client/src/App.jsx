@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage';
 import UserProfileCard from './pages/UserProfileCard';
 import TransactionsPage from './pages/TransactionsPage';
 import DashboardPage from './pages/DashboardPage';
+import GoogleAccountChooserPage from './pages/GoogleAccountChooserPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 
 function MainApp() {
@@ -69,6 +70,15 @@ function MainApp() {
 
   const { title, subtitle, showHeader } = getPageTitle();
 
+  if (currentView === 'google-account-chooser') {
+    return (
+      <GoogleAccountChooserPage
+        onNavigate={handleNavigate}
+        returnView="login"
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       {/* Top Header Navbar with concise navigation tabs (no left sidebar) */}
@@ -85,6 +95,7 @@ function MainApp() {
           {currentView === 'register' && (
             <RegisterPage
               onSwitchToLogin={() => setCurrentView('login')}
+              onSwitchToGoogleAuth={() => setCurrentView('google-account-chooser')}
               onSuccess={() => setCurrentView('dashboard')}
             />
           )}
@@ -92,6 +103,7 @@ function MainApp() {
           {currentView === 'login' && (
             <LoginPage
               onSwitchToRegister={() => setCurrentView('register')}
+              onSwitchToGoogleAuth={() => setCurrentView('google-account-chooser')}
               onSuccess={() => setCurrentView('dashboard')}
             />
           )}

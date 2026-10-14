@@ -16,7 +16,7 @@ import DemoCredentialsButton from '../components/auth/DemoCredentialsButton';
 import { validateRegisterForm } from '../utils/validation';
 import { GoogleAccountChooserModal, GoogleIcon } from '../components/auth/GoogleAccountChooserModal';
 
-export const RegisterPage = ({ onSwitchToLogin, onSuccess }) => {
+export const RegisterPage = ({ onSwitchToLogin, onSwitchToGoogleAuth, onSuccess }) => {
   const { register, loginWithGoogle, isLoading, error: authError, clearError } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -354,7 +354,11 @@ export const RegisterPage = ({ onSwitchToLogin, onSuccess }) => {
                   onClick={() => {
                     setLocalAlert(null);
                     clearError();
-                    setShowGoogleModal(true);
+                    if (onSwitchToGoogleAuth) {
+                      onSwitchToGoogleAuth();
+                    } else {
+                      setShowGoogleModal(true);
+                    }
                   }}
                   disabled={isGoogleLoading || isLoading}
                   className="w-full py-3.5 sm:py-4 px-6 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl text-sm sm:text-base font-bold text-slate-700 flex items-center justify-center gap-3 transition-all shadow-sm active:scale-[0.99] cursor-pointer disabled:opacity-50"
