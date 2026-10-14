@@ -48,15 +48,10 @@ export const Navbar = ({ currentView, onNavigate }) => {
             <Wallet className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-slate-900 tracking-tight text-lg leading-none">
-                SpendWise
-              </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider bg-brand-50 text-brand-700 px-1.5 py-0.5 rounded border border-brand-200/60">
-                MERN
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-500 font-medium">Personal Expense Tracker</p>
+            <span className="font-bold text-slate-900 tracking-tight text-lg leading-none">
+              SpendWise
+            </span>
+            <p className="text-[11px] text-slate-500 font-medium mt-0.5">Personal Expense Tracker</p>
           </div>
         </button>
 

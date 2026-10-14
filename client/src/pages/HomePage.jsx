@@ -110,15 +110,6 @@ export const HomePage = ({ onNavigate }) => {
     },
   ];
 
-  const techStack = [
-    { name: 'MongoDB', role: 'Database & Aggregations', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
-    { name: 'Express.js', role: 'RESTful API & Middleware', color: 'text-slate-700 bg-slate-100 border-slate-200' },
-    { name: 'React 18', role: 'Vite Component UI', color: 'text-blue-600 bg-blue-50 border-blue-200' },
-    { name: 'Node.js', role: 'Secure Runtime Server', color: 'text-green-700 bg-green-50 border-green-200' },
-    { name: 'Tailwind CSS', role: 'Modern Design System', color: 'text-sky-600 bg-sky-50 border-sky-200' },
-    { name: 'JWT & Cookies', role: 'HTTP-Only Sessions', color: 'text-purple-600 bg-purple-50 border-purple-200' },
-  ];
-
   return (
     <div className="space-y-16 pb-12 animate-fade-in">
       {/* --------------------------------------------------------------------- */}
@@ -135,7 +126,7 @@ export const HomePage = ({ onNavigate }) => {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="font-semibold text-white">SpendWise v1.0</span>
             <span className="text-slate-500">•</span>
-            <span>Production MERN Personal Expense Tracker</span>
+            <span>Personal Expense Tracker</span>
           </div>
 
           {/* Main Headline */}
@@ -164,15 +155,14 @@ export const HomePage = ({ onNavigate }) => {
                 >
                   Go to Financial Dashboard
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  icon={Receipt}
+                <button
+                  type="button"
                   onClick={() => onNavigate && onNavigate('transactions')}
-                  className="bg-slate-800/80 border-slate-700 text-white hover:bg-slate-800 font-semibold"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
                 >
-                  View Live Ledger
-                </Button>
+                  <Receipt className="w-4 h-4 text-slate-300" />
+                  <span>View Live Ledger</span>
+                </button>
               </>
             ) : (
               <>
@@ -184,15 +174,14 @@ export const HomePage = ({ onNavigate }) => {
                 >
                   Create Free Account
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  icon={Lock}
+                <button
+                  type="button"
                   onClick={() => onNavigate && onNavigate('login')}
-                  className="bg-slate-800/80 border-slate-700 text-white hover:bg-slate-800 font-semibold"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
                 >
-                  Sign In to Account
-                </Button>
+                  <Lock className="w-4 h-4 text-slate-300" />
+                  <span>Sign In to Account</span>
+                </button>
               </>
             )}
           </div>
@@ -386,26 +375,6 @@ export const HomePage = ({ onNavigate }) => {
       </section>
 
       {/* --------------------------------------------------------------------- */}
-      {/* TECHNOLOGY STACK BADGES                                               */}
-      {/* --------------------------------------------------------------------- */}
-      <section className="space-y-4 text-center">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-          Built on Proven Modern Technologies
-        </h3>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {techStack.map((tech) => (
-            <div
-              key={tech.name}
-              className={`px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-2 ${tech.color}`}
-            >
-              <span>{tech.name}</span>
-              <span className="text-[10px] opacity-75 font-normal">({tech.role})</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* --------------------------------------------------------------------- */}
       {/* FINAL CALL TO ACTION BANNER                                           */}
       {/* --------------------------------------------------------------------- */}
       <section className="bg-gradient-to-r from-brand-900 via-indigo-950 to-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-brand-800/60 shadow-xl text-center space-y-6 relative overflow-hidden">
@@ -425,15 +394,14 @@ export const HomePage = ({ onNavigate }) => {
             >
               {isAuthenticated ? 'Open Financial Dashboard' : 'Get Started Free Today'}
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              icon={Receipt}
+            <button
+              type="button"
               onClick={() => onNavigate && onNavigate(isAuthenticated ? 'transactions' : 'login')}
-              className="border-slate-700 text-white hover:bg-slate-800 font-semibold"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
             >
-              {isAuthenticated ? 'Manage Transactions' : 'Sign In'}
-            </Button>
+              <Receipt className="w-4 h-4 text-slate-300" />
+              <span>{isAuthenticated ? 'Manage Transactions' : 'Sign In'}</span>
+            </button>
           </div>
         </div>
       </section>
