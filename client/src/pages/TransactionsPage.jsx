@@ -224,8 +224,8 @@ export const TransactionsPage = () => {
             <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Transactions Management
             </h1>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60">
-              Phase 5 Active - Search & Filters
+            <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs">
+              Live Ledger & Filters Active
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
