@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wallet, LogIn, LogOut, UserPlus, Activity, Menu, Globe, User } from 'lucide-react';
+import { Wallet, LogIn, LogOut, UserPlus, Activity, Menu, Globe, User, Home } from 'lucide-react';
 import Badge from '../ui/Badge';
 import Button from '../ui/Button';
 import { useAuth } from '../../hooks/useAuth';
@@ -30,8 +30,9 @@ export const Navbar = ({ onToggleSidebar, isHealthy, onNavigate }) => {
           </button>
 
           <button
-            onClick={() => onNavigate && onNavigate('health')}
-            className="flex items-center gap-2.5 text-left group"
+            onClick={() => onNavigate && onNavigate('home')}
+            className="flex items-center gap-2.5 text-left group cursor-pointer"
+            title="Go to SpendWise Home"
           >
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
               <Wallet className="w-5 h-5" />
@@ -52,6 +53,17 @@ export const Navbar = ({ onToggleSidebar, isHealthy, onNavigate }) => {
 
         {/* Center/Right: System Status & User Actions */}
         <div className="flex items-center gap-2 sm:gap-4">
+          {/* Quick Home Link */}
+          <button
+            type="button"
+            onClick={() => onNavigate && onNavigate('home')}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+            title="Return to Home"
+          >
+            <Home className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Home</span>
+          </button>
+
           {/* Live Backend Connection Indicator */}
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-200/60">
             <Activity className="w-3.5 h-3.5 text-slate-400" />
