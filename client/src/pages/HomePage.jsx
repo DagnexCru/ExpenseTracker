@@ -76,13 +76,13 @@ export const HomePage = ({ onNavigate }) => {
       badgeBg: 'bg-amber-50 text-amber-700 border-amber-200/60',
     },
     {
-      icon: Activity,
-      title: 'System Telemetry & Diagnostics',
+      icon: TrendingUp,
+      title: 'Smart Financial Budgeting',
       description:
-        'Live health-check endpoint monitoring Mongoose connection state, database latency, and Express server uptime in real time.',
-      tag: 'Diagnostics',
-      color: 'from-cyan-500 to-blue-600',
-      badgeBg: 'bg-cyan-50 text-cyan-700 border-cyan-200/60',
+        'Track net cashflow retention velocity, analyze spending ratios, and maintain full control over your financial habits.',
+      tag: 'Budgeting',
+      color: 'from-emerald-500 to-teal-600',
+      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
     },
   ];
 
@@ -195,16 +195,6 @@ export const HomePage = ({ onNavigate }) => {
                 </Button>
               </>
             )}
-
-            <Button
-              variant="ghost"
-              size="lg"
-              icon={Activity}
-              onClick={() => onNavigate && onNavigate('health')}
-              className="text-slate-400 hover:text-white font-medium"
-            >
-              System Telemetry
-            </Button>
           </div>
 
           {/* Trust Guarantees */}
@@ -481,13 +471,6 @@ export const HomePage = ({ onNavigate }) => {
             className="hover:text-brand-600 transition-colors"
           >
             Transactions
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate('health')}
-            className="hover:text-brand-600 transition-colors"
-          >
-            Diagnostics
           </button>
         </div>
       </footer>

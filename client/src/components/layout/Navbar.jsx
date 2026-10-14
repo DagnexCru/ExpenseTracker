@@ -27,7 +27,6 @@ export const Navbar = ({ currentView, onNavigate }) => {
     { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
     { id: 'transactions', name: 'Ledger', icon: Receipt },
     { id: 'filters', name: 'Search & Filters', icon: PieChart },
-    { id: 'health', name: 'Diagnostics', icon: Activity },
   ];
 
   const handleTabClick = (viewId) => {

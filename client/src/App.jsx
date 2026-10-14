@@ -3,7 +3,6 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
 import PageContainer from './components/layout/PageContainer';
 import HomePage from './pages/HomePage';
-import HealthCheckPage from './pages/HealthCheckPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserProfileCard from './pages/UserProfileCard';
@@ -26,12 +25,6 @@ function MainApp() {
           title: '',
           subtitle: '',
           showHeader: false,
-        };
-      case 'health':
-        return {
-          title: 'System Architecture & Telemetry',
-          subtitle: 'Real-time Mongoose health checks, database latency, and system telemetry.',
-          showHeader: true,
         };
       case 'register':
         return {
@@ -88,8 +81,6 @@ function MainApp() {
       <div className="flex-1 flex flex-col min-w-0">
         <PageContainer title={title} subtitle={subtitle} showHeader={showHeader}>
           {currentView === 'home' && <HomePage onNavigate={handleNavigate} />}
-
-          {currentView === 'health' && <HealthCheckPage />}
 
           {currentView === 'register' && (
             <RegisterPage
