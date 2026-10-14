@@ -115,7 +115,7 @@ export const UserProfileCard = () => {
                 <button
                   type="button"
                   onClick={() => setIsPhotoModalOpen(true)}
-                  className="absolute bottom-0 right-0 p-1.5 rounded-xl bg-brand-600 text-white shadow-md hover:bg-brand-700 transition-colors cursor-pointer"
+                  className="absolute bottom-0 right-0 p-1.5 rounded-full bg-brand-600 text-white shadow-md hover:bg-brand-700 transition-colors cursor-pointer"
                   title="Update profile photo"
                 >
                   <Camera className="w-3.5 h-3.5" />
