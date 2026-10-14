@@ -139,11 +139,11 @@ export const TransactionModal = ({
           <label className="block text-xs font-semibold text-slate-700 mb-1.5">
             Transaction Type
           </label>
-          <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
+          <div className="grid grid-cols-2 gap-2 p-1 bg-[#FAF5F0] border border-[#EDE4D9] rounded-xl">
             <button
               type="button"
               onClick={() => handleTypeChange('expense')}
-              className={`py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 type === 'expense'
                   ? 'bg-rose-500 text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
@@ -154,9 +154,9 @@ export const TransactionModal = ({
             <button
               type="button"
               onClick={() => handleTypeChange('income')}
-              className={`py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 type === 'income'
-                  ? 'bg-emerald-500 text-white shadow-sm'
+                  ? 'bg-emerald-600 text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -185,8 +185,8 @@ export const TransactionModal = ({
                 if (formErrors.amount) setFormErrors((p) => ({ ...p, amount: null }));
               }}
               required
-              className={`w-full pl-12 pr-3 py-2 bg-slate-50 border rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all ${
-                formErrors.amount ? 'border-rose-400' : 'border-slate-200'
+              className={`w-full pl-12 pr-3 py-2 bg-[#FAF5F0]/60 hover:bg-white focus:bg-white border rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all ${
+                formErrors.amount ? 'border-rose-400' : 'border-[#EDE4D9]'
               }`}
             />
           </div>
@@ -206,7 +206,7 @@ export const TransactionModal = ({
                 if (formErrors.category) setFormErrors((p) => ({ ...p, category: null }));
               }}
               required
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all cursor-pointer"
+              className="w-full px-3 py-2 bg-[#FAF5F0]/60 hover:bg-white focus:bg-white border border-[#EDE4D9] rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all cursor-pointer"
             >
               {currentCategoryList.map((cat) => (
                 <option key={cat.name} value={cat.name}>
@@ -227,7 +227,7 @@ export const TransactionModal = ({
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all cursor-pointer"
+              className="w-full px-3 py-2 bg-[#FAF5F0]/60 hover:bg-white focus:bg-white border border-[#EDE4D9] rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all cursor-pointer"
             />
           </div>
 
@@ -239,7 +239,7 @@ export const TransactionModal = ({
             <select
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all cursor-pointer"
+              className="w-full px-3 py-2 bg-[#FAF5F0]/60 hover:bg-white focus:bg-white border border-[#EDE4D9] rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all cursor-pointer"
             >
               {PAYMENT_METHODS.map((pm) => (
                 <option key={pm.id} value={pm.id}>
@@ -261,12 +261,12 @@ export const TransactionModal = ({
             maxLength={200}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs placeholder:text-slate-400 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
+            className="w-full px-3 py-2 bg-[#FAF5F0]/60 hover:bg-white focus:bg-white border border-[#EDE4D9] rounded-xl text-xs placeholder:text-slate-400 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
           />
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-slate-100">
+        <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-[#EDE4D9]">
           <Button variant="ghost" size="sm" type="button" onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>

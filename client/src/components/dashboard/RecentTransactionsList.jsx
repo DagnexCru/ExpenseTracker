@@ -25,17 +25,17 @@ export default function RecentTransactionsList({
   };
 
   return (
-    <div className="rounded-2xl bg-slate-900/80 border border-slate-700/60 p-6 shadow-xl backdrop-blur-md">
+    <div className="rounded-2xl bg-white border border-[#EDE4D9] p-6 shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Clock className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-base font-semibold text-slate-100">Recent Transactions</h3>
+          <Clock className="w-5 h-5 text-indigo-600" />
+          <h3 className="text-base font-semibold text-slate-900">Recent Transactions</h3>
         </div>
         {onViewAll && (
           <button
             type="button"
             onClick={onViewAll}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+            className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors cursor-pointer"
           >
             <span>View All</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -48,7 +48,7 @@ export default function RecentTransactionsList({
           No recent activity recorded yet.
         </div>
       ) : (
-        <div className="divide-y divide-slate-800/80">
+        <div className="divide-y divide-[#EDE4D9]/60">
           {transactions.map((tx) => {
             const isIncome = tx.type === 'income';
             const meta = getCategoryMetadata(tx.category);
@@ -56,14 +56,14 @@ export default function RecentTransactionsList({
             return (
               <div
                 key={tx.id || tx._id}
-                className="py-3 flex items-center justify-between gap-4 hover:bg-slate-800/30 px-2 -mx-2 rounded-xl transition-colors"
+                className="py-3 flex items-center justify-between gap-4 hover:bg-[#FAF5F0] px-3 -mx-3 rounded-xl transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div
-                    className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
                       isIncome
-                        ? 'bg-emerald-500/10 text-emerald-400'
-                        : 'bg-rose-500/10 text-rose-400'
+                        ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                        : 'bg-rose-50 text-rose-600 border-rose-100'
                     }`}
                   >
                     {isIncome ? (
@@ -74,10 +74,10 @@ export default function RecentTransactionsList({
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-xs font-semibold text-slate-200 truncate">
+                      <p className="text-xs font-semibold text-slate-900 truncate">
                         {tx.description || tx.category}
                       </p>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/50">
+                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#FAF5F0] text-slate-600 border border-[#EDE4D9] font-medium">
                         {tx.category}
                       </span>
                     </div>
@@ -93,13 +93,13 @@ export default function RecentTransactionsList({
                 <div className="text-right shrink-0">
                   <span
                     className={`text-xs font-bold font-mono ${
-                      isIncome ? 'text-emerald-400' : 'text-rose-400'
+                      isIncome ? 'text-emerald-600' : 'text-slate-900'
                     }`}
                   >
                     {isIncome ? '+' : '-'}
                     {formatMoney(tx.amount)}
                   </span>
-                  <p className="text-[10px] text-slate-500">{currency}</p>
+                  <p className="text-[10px] text-slate-400">{currency}</p>
                 </div>
               </div>
             );

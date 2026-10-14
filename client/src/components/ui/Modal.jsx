@@ -24,23 +24,23 @@ export const Modal = ({ isOpen, onClose, title, children }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-fadeIn"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6 relative animate-scaleUp"
+        className="w-full max-w-md bg-white border border-[#EDE4D9] rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-7 relative animate-scaleUp"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-          <h3 id="modal-title" className="text-lg font-semibold text-slate-100">
+        <div className="flex items-center justify-between pb-4 border-b border-[#EDE4D9] mb-4">
+          <h3 id="modal-title" className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
             {title}
           </h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-[#FAF5F0] transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

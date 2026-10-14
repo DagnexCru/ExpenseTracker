@@ -54,29 +54,29 @@ export default function CategoryBreakdownChart({
   const hasData = categories.length > 0 && totalAmount > 0;
 
   return (
-    <div className="rounded-2xl bg-slate-900/80 border border-slate-700/60 p-6 shadow-xl backdrop-blur-md">
+    <div className="rounded-2xl bg-white border border-[#EDE4D9] p-6 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-2">
-            <PieChart className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-base font-semibold text-slate-100">
+            <PieChart className="w-5 h-5 text-cyan-600" />
+            <h3 className="text-base font-semibold text-slate-900">
               Spending by Category
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Distribution of {activeType === 'expense' ? 'outflows' : 'inflows'} by classification
           </p>
         </div>
 
         {/* Type toggle buttons */}
-        <div className="flex bg-slate-950/80 p-1 rounded-xl border border-slate-800">
+        <div className="flex bg-[#FAF5F0] p-1 rounded-xl border border-[#EDE4D9]">
           <button
             type="button"
             onClick={() => onTypeChange && onTypeChange('expense')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeType === 'expense'
-                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-rose-700 shadow-sm border border-rose-200/80'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Expenses
@@ -84,10 +84,10 @@ export default function CategoryBreakdownChart({
           <button
             type="button"
             onClick={() => onTypeChange && onTypeChange('income')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeType === 'income'
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-emerald-700 shadow-sm border border-emerald-200/80'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Income
@@ -96,9 +96,9 @@ export default function CategoryBreakdownChart({
       </div>
 
       {!hasData ? (
-        <div className="h-64 flex flex-col items-center justify-center text-center p-6 border border-dashed border-slate-800 rounded-xl">
-          <Tag className="w-10 h-10 text-slate-600 mb-2" />
-          <p className="text-sm font-medium text-slate-300">
+        <div className="h-64 flex flex-col items-center justify-center text-center p-6 border border-dashed border-[#EDE4D9] bg-[#FAF5F0]/50 rounded-xl">
+          <Tag className="w-10 h-10 text-slate-400 mb-2" />
+          <p className="text-sm font-semibold text-slate-700">
             No {activeType} category data
           </p>
           <p className="text-xs text-slate-500 mt-1">
@@ -117,9 +117,8 @@ export default function CategoryBreakdownChart({
                 cx="80"
                 cy="80"
                 r={radius}
-                className="text-slate-800"
+                stroke="#EDE4D9"
                 strokeWidth="18"
-                stroke="currentColor"
                 fill="transparent"
               />
               {slices.map((slice, idx) => (
@@ -142,17 +141,17 @@ export default function CategoryBreakdownChart({
 
             {/* Donut Center Display */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-              <span className="text-[10px] uppercase font-semibold text-slate-400">
+              <span className="text-[10px] uppercase font-bold text-slate-500">
                 {hoveredCategory || 'Total'}
               </span>
-              <span className="text-sm font-bold font-mono text-slate-100">
+              <span className="text-sm font-extrabold font-mono text-slate-900">
                 {hoveredCategory
                   ? `${formatMoney(
                       slices.find((s) => s.category === hoveredCategory)?.total || 0
                     )}`
                   : formatMoney(totalAmount)}
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">
+              <span className="text-[10px] text-slate-500 font-mono">
                 {hoveredCategory
                   ? `${
                       slices.find((s) => s.category === hoveredCategory)?.percentage || 0
@@ -163,7 +162,7 @@ export default function CategoryBreakdownChart({
           </div>
 
           {/* Category List Legend */}
-          <div className="md:col-span-7 space-y-3 max-h-56 overflow-y-auto pr-1">
+          <div className="md:col-span-7 space-y-2.5 max-h-56 overflow-y-auto pr-1">
             {slices.map((slice) => (
               <div
                 key={slice.category}
@@ -171,8 +170,8 @@ export default function CategoryBreakdownChart({
                 onMouseLeave={() => setHoveredCategory(null)}
                 className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
                   hoveredCategory === slice.category
-                    ? 'bg-slate-800/80 border-slate-600'
-                    : 'bg-slate-950/40 border-slate-800/60 hover:bg-slate-800/40'
+                    ? 'bg-[#FAF5F0] border-[#EDE4D9] shadow-sm'
+                    : 'bg-[#FBF8F5] border-[#EDE4D9]/80 hover:bg-[#FAF5F0]'
                 }`}
               >
                 <div className="flex items-center justify-between text-xs mb-1.5">
@@ -181,23 +180,23 @@ export default function CategoryBreakdownChart({
                       className="w-2.5 h-2.5 rounded-full shrink-0"
                       style={{ backgroundColor: slice.color }}
                     />
-                    <span className="font-medium text-slate-200">{slice.category}</span>
+                    <span className="font-semibold text-slate-800">{slice.category}</span>
                     <span className="text-[10px] text-slate-500">
                       ({slice.count} {slice.count === 1 ? 'tx' : 'txs'})
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-semibold text-slate-100">
+                    <span className="font-mono font-bold text-slate-900">
                       {formatMoney(slice.total)} {currency}
                     </span>
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-white border border-[#EDE4D9] text-slate-700">
                       {slice.percentage}%
                     </span>
                   </div>
                 </div>
 
                 {/* Progress bar line */}
-                <div className="w-full bg-slate-800 rounded-full h-1 overflow-hidden">
+                <div className="w-full bg-[#FAF5F0] border border-[#EDE4D9]/60 rounded-full h-1.5 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-300"
                     style={{

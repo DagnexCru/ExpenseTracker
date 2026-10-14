@@ -39,7 +39,7 @@ export const DeleteConfirmModal = ({
         </div>
 
         {/* Transaction Summary Card */}
-        <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl text-xs space-y-1.5">
+        <div className="p-3.5 bg-[#FAF5F0] border border-[#EDE4D9] rounded-xl text-xs space-y-1.5">
           <div className="flex items-center justify-between">
             <span className="text-slate-500">Category:</span>
             <span className="font-semibold text-slate-800">{transaction.category}</span>

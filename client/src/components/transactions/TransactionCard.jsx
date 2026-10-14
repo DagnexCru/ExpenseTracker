@@ -34,7 +34,7 @@ export const TransactionCard = ({
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-sm hover:shadow-md transition-all space-y-3">
+    <div className="bg-white rounded-2xl border border-[#EDE4D9] p-4 shadow-sm hover:shadow-md transition-all space-y-3">
       {/* Top Row: Category Pill & Amount */}
       <div className="flex items-center justify-between gap-3">
         <span

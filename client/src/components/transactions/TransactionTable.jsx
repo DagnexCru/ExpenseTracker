@@ -34,11 +34,11 @@ export const TransactionTable = ({
       </div>
 
       {/* Desktop / Tablet View: Render Table */}
-      <div className="hidden sm:block overflow-hidden bg-white border border-slate-200/90 rounded-2xl shadow-sm">
+      <div className="hidden sm:block overflow-hidden bg-white border border-[#EDE4D9] rounded-2xl shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-100 bg-slate-50/70 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+              <tr className="border-b border-[#EDE4D9] bg-[#FAF5F0]/70 text-[11px] font-bold uppercase tracking-wider text-slate-600">
                 <th className="py-3 px-4">Category</th>
                 <th className="py-3 px-4">Description</th>
                 <th className="py-3 px-4">Date</th>
@@ -47,7 +47,7 @@ export const TransactionTable = ({
                 <th className="py-3 px-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-xs">
+            <tbody className="divide-y divide-[#EDE4D9]/60 text-xs">
               {transactions.map((tx) => {
                 const isIncome = tx.type === 'income';
                 const categoryList = isIncome ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
@@ -67,7 +67,7 @@ export const TransactionTable = ({
                 return (
                   <tr
                     key={tx.id}
-                    className="hover:bg-slate-50/80 transition-colors group"
+                    className="hover:bg-[#FAF5F0]/70 transition-colors group"
                   >
                     {/* Category */}
                     <td className="py-3.5 px-4 whitespace-nowrap">

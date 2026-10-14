@@ -72,21 +72,21 @@ export const TransactionFilters = ({
   const currentSortVal = `${sortBy}_${sortOrder}`;
 
   return (
-    <div className="rounded-2xl bg-slate-900/80 border border-slate-700/60 p-4 shadow-xl backdrop-blur-md space-y-3">
+    <div className="rounded-2xl bg-white border border-[#EDE4D9] p-4 shadow-sm space-y-3">
       {/* Primary Filter Row */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         {/* Left: Type Filter Pills */}
-        <div className="flex items-center gap-1.5 p-1 bg-slate-950/80 rounded-xl border border-slate-800 shrink-0 self-start sm:self-auto">
+        <div className="flex items-center gap-1.5 p-1 bg-[#FAF5F0] rounded-xl border border-[#EDE4D9] shrink-0 self-start sm:self-auto">
           <button
             type="button"
             onClick={() => {
               onTypeFilterChange('all');
               onCategoryFilterChange('');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               typeFilter === 'all'
-                ? 'bg-slate-800 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-slate-900 shadow-sm border border-[#EDE4D9]'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             All
@@ -97,10 +97,10 @@ export const TransactionFilters = ({
               onTypeFilterChange('expense');
               onCategoryFilterChange('');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               typeFilter === 'expense'
-                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-rose-700 shadow-sm border border-rose-200'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Expenses
@@ -111,10 +111,10 @@ export const TransactionFilters = ({
               onTypeFilterChange('income');
               onCategoryFilterChange('');
             }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               typeFilter === 'income'
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-emerald-700 shadow-sm border border-emerald-200'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Income
@@ -131,13 +131,13 @@ export const TransactionFilters = ({
               value={searchQuery}
               onChange={(e) => onSearchQueryChange(e.target.value)}
               placeholder="Search descriptions..."
-              className="w-full pl-8 pr-7 py-1.5 bg-slate-950/70 border border-slate-700/80 rounded-xl text-xs placeholder:text-slate-500 text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+              className="w-full pl-8 pr-7 py-1.5 bg-[#FAF5F0] hover:bg-white focus:bg-white border border-[#EDE4D9] rounded-xl text-xs placeholder:text-slate-400 text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => onSearchQueryChange('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -148,36 +148,36 @@ export const TransactionFilters = ({
           <select
             value={categoryFilter}
             onChange={(e) => onCategoryFilterChange(e.target.value)}
-            className="text-xs bg-slate-950/70 border border-slate-700/80 rounded-xl px-2.5 py-1.5 text-slate-300 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 cursor-pointer"
+            className="text-xs bg-[#FAF5F0] hover:bg-white focus:bg-white border border-[#EDE4D9] rounded-xl px-2.5 py-1.5 text-slate-800 font-medium focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer"
           >
-            <option value="" className="bg-slate-900 text-slate-300">
+            <option value="" className="bg-white text-slate-800">
               All Categories
             </option>
             {categoryOptions.map((cat) => (
-              <option key={cat.name} value={cat.name} className="bg-slate-900 text-slate-300">
+              <option key={cat.name} value={cat.name} className="bg-white text-slate-800">
                 {cat.name}
               </option>
             ))}
           </select>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-1.5 bg-slate-950/70 border border-slate-700/80 rounded-xl px-2.5 py-1.5">
-            <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-1.5 bg-[#FAF5F0] border border-[#EDE4D9] rounded-xl px-2.5 py-1.5">
+            <ArrowUpDown className="w-3.5 h-3.5 text-slate-500" />
             <select
               value={currentSortVal}
               onChange={handleSortChange}
-              className="bg-transparent border-none text-xs text-slate-300 focus:ring-0 focus:outline-none cursor-pointer"
+              className="bg-transparent border-none text-xs text-slate-800 font-medium focus:ring-0 focus:outline-none cursor-pointer"
             >
-              <option value="date_desc" className="bg-slate-900 text-slate-300">
+              <option value="date_desc" className="bg-white text-slate-800">
                 Date: Newest
               </option>
-              <option value="date_asc" className="bg-slate-900 text-slate-300">
+              <option value="date_asc" className="bg-white text-slate-800">
                 Date: Oldest
               </option>
-              <option value="amount_desc" className="bg-slate-900 text-slate-300">
+              <option value="amount_desc" className="bg-white text-slate-800">
                 Amount: High &rarr; Low
               </option>
-              <option value="amount_asc" className="bg-slate-900 text-slate-300">
+              <option value="amount_asc" className="bg-white text-slate-800">
                 Amount: Low &rarr; High
               </option>
             </select>
@@ -187,10 +187,10 @@ export const TransactionFilters = ({
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className={`p-1.5 rounded-xl border transition-colors flex items-center gap-1 text-xs ${
+            className={`p-1.5 rounded-xl border transition-colors flex items-center gap-1 text-xs cursor-pointer ${
               showAdvanced || startDate || endDate
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                : 'bg-slate-950/70 border-slate-700/80 text-slate-400 hover:text-slate-200'
+                ? 'bg-emerald-50 border-emerald-200 text-emerald-700 font-bold'
+                : 'bg-[#FAF5F0] border-[#EDE4D9] text-slate-600 hover:text-slate-900 hover:bg-[#F5EFEB]'
             }`}
             title="Toggle Date Range Filters"
           >
@@ -203,7 +203,7 @@ export const TransactionFilters = ({
             <button
               type="button"
               onClick={onReset}
-              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-500/10 border border-rose-500/20 rounded-xl transition-all"
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-rose-700 hover:text-rose-800 bg-rose-50 border border-rose-200 rounded-xl transition-all cursor-pointer"
               title="Reset all filters"
             >
               <RotateCcw className="w-3 h-3" />
@@ -215,26 +215,26 @@ export const TransactionFilters = ({
 
       {/* Advanced Collapsible Filter Drawer: Date Range */}
       {showAdvanced && (
-        <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center gap-4 text-xs text-slate-400">
+        <div className="pt-3 border-t border-[#EDE4D9] flex flex-wrap items-center gap-4 text-xs text-slate-600">
           <div className="flex items-center gap-2">
-            <span className="font-medium text-slate-300">Date Range:</span>
+            <span className="font-semibold text-slate-700">Date Range:</span>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 bg-slate-950/80 border border-slate-700 rounded-lg px-2 py-1">
-                <span className="text-[10px] text-slate-500">From:</span>
+              <div className="flex items-center gap-1 bg-[#FAF5F0] border border-[#EDE4D9] rounded-lg px-2 py-1">
+                <span className="text-[10px] text-slate-500 font-medium">From:</span>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => onStartDateChange(e.target.value)}
-                  className="bg-transparent text-slate-200 text-xs border-none focus:outline-none cursor-pointer"
+                  className="bg-transparent text-slate-800 text-xs border-none focus:outline-none cursor-pointer font-medium"
                 />
               </div>
-              <div className="flex items-center gap-1 bg-slate-950/80 border border-slate-700 rounded-lg px-2 py-1">
-                <span className="text-[10px] text-slate-500">To:</span>
+              <div className="flex items-center gap-1 bg-[#FAF5F0] border border-[#EDE4D9] rounded-lg px-2 py-1">
+                <span className="text-[10px] text-slate-500 font-medium">To:</span>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => onEndDateChange(e.target.value)}
-                  className="bg-transparent text-slate-200 text-xs border-none focus:outline-none cursor-pointer"
+                  className="bg-transparent text-slate-800 text-xs border-none focus:outline-none cursor-pointer font-medium"
                 />
               </div>
             </div>
@@ -247,7 +247,7 @@ export const TransactionFilters = ({
                 onStartDateChange('');
                 onEndDateChange('');
               }}
-              className="text-[11px] text-slate-400 hover:text-rose-400 underline transition-colors"
+              className="text-[11px] text-slate-500 hover:text-rose-600 underline transition-colors cursor-pointer"
             >
               Clear dates
             </button>

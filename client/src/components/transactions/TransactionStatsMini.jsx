@@ -30,7 +30,7 @@ export const TransactionStatsMini = ({ transactions = [], currency = 'ETB' }) =>
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Total Balance */}
-      <Card className="border-slate-200/90 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-[#EDE4D9] shadow-sm hover:shadow-md transition-shadow">
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -58,7 +58,7 @@ export const TransactionStatsMini = ({ transactions = [], currency = 'ETB' }) =>
       </Card>
 
       {/* Total Income */}
-      <Card className="border-slate-200/90 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-[#EDE4D9] shadow-sm hover:shadow-md transition-shadow">
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -78,7 +78,7 @@ export const TransactionStatsMini = ({ transactions = [], currency = 'ETB' }) =>
       </Card>
 
       {/* Total Expense */}
-      <Card className="border-slate-200/90 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-[#EDE4D9] shadow-sm hover:shadow-md transition-shadow">
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -98,7 +98,7 @@ export const TransactionStatsMini = ({ transactions = [], currency = 'ETB' }) =>
       </Card>
 
       {/* Total Records Count */}
-      <Card className="border-slate-200/90 shadow-sm hover:shadow-md transition-shadow">
+      <Card className="border-[#EDE4D9] shadow-sm hover:shadow-md transition-shadow">
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">

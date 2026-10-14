@@ -54,16 +54,16 @@ function MainApp() {
         };
       case 'dashboard':
         return {
-          title: 'Financial Overview & Analytics',
-          subtitle: 'Real-time income vs. expense cashflow, monthly trends, and spending allocations.',
-          showHeader: true,
+          title: '',
+          subtitle: '',
+          showHeader: false,
         };
       case 'transactions':
       case 'filters':
         return {
-          title: 'Financial Ledger & Transaction Management',
-          subtitle: 'Comprehensive ledger with real-time multi-field search, date range filters, category analytics, and pagination.',
-          showHeader: true,
+          title: '',
+          subtitle: '',
+          showHeader: false,
         };
       default:
         return {

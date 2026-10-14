@@ -25,7 +25,7 @@ export const getPasswordStrength = (password = '') => {
   if (rules.special && password.length >= 8) score += 1;
 
   const colorMap = {
-    0: 'bg-slate-700',
+    0: 'bg-slate-300',
     1: 'bg-rose-500',
     2: 'bg-amber-500',
     3: 'bg-blue-500',

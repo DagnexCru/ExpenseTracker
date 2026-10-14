@@ -41,7 +41,7 @@ export const getCategoryMetadata = (categoryName) => {
     all.find((c) => c.name === categoryName) || {
       name: categoryName,
       icon: 'Tag',
-      color: 'bg-slate-500/10 text-slate-400 border-slate-700',
+      color: 'bg-slate-100 text-slate-600 border-[#EDE4D9]',
     }
   );
 };

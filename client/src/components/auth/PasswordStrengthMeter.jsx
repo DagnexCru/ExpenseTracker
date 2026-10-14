@@ -20,7 +20,7 @@ export const PasswordStrengthMeter = ({ password = '' }) => {
           <div
             key={level}
             className={`flex-1 h-full rounded-full transition-all duration-300 ${
-              score >= level ? color : 'bg-slate-800'
+              score >= level ? color : 'bg-[#EDE4D9]'
             }`}
           />
         ))}
@@ -28,25 +28,25 @@ export const PasswordStrengthMeter = ({ password = '' }) => {
 
       {/* Label and Score */}
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-400">Password strength:</span>
-        <span className="font-semibold text-slate-200">{label}</span>
+        <span className="text-slate-500">Password strength:</span>
+        <span className="font-bold text-slate-800">{label}</span>
       </div>
 
       {/* Checklist hints */}
-      <div className="grid grid-cols-2 gap-1 pt-1 text-[11px] text-slate-400">
-        <div className={`flex items-center gap-1 ${rules.minLength ? 'text-emerald-400' : 'text-slate-500'}`}>
+      <div className="grid grid-cols-2 gap-1 pt-1 text-[11px] text-slate-500">
+        <div className={`flex items-center gap-1 ${rules.minLength ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
           <span>{rules.minLength ? '✓' : '○'}</span>
           <span>At least 6 chars</span>
         </div>
-        <div className={`flex items-center gap-1 ${rules.upper && rules.lower ? 'text-emerald-400' : 'text-slate-500'}`}>
+        <div className={`flex items-center gap-1 ${rules.upper && rules.lower ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
           <span>{rules.upper && rules.lower ? '✓' : '○'}</span>
           <span>Upper & lowercase</span>
         </div>
-        <div className={`flex items-center gap-1 ${rules.number ? 'text-emerald-400' : 'text-slate-500'}`}>
+        <div className={`flex items-center gap-1 ${rules.number ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
           <span>{rules.number ? '✓' : '○'}</span>
           <span>Contains number</span>
         </div>
-        <div className={`flex items-center gap-1 ${rules.special ? 'text-emerald-400' : 'text-slate-500'}`}>
+        <div className={`flex items-center gap-1 ${rules.special ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
           <span>{rules.special ? '✓' : '○'}</span>
           <span>Special symbol</span>
         </div>

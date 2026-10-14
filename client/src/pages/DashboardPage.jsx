@@ -99,17 +99,17 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#EDE4D9]">
         <div>
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200/80">
               <LayoutDashboard className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-bold text-slate-100 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Financial Dashboard
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Real-time financial summary, monthly cashflow velocity, and category allocations
           </p>
         </div>
@@ -117,23 +117,23 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
         {/* Action Controls */}
         <div className="flex items-center gap-3">
           {/* Period Filter Dropdown */}
-          <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-1.5 text-xs text-slate-300">
-            <Calendar className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-1.5 bg-white border border-[#EDE4D9] rounded-xl px-2.5 py-1.5 text-xs text-slate-700 shadow-sm">
+            <Calendar className="w-3.5 h-3.5 text-slate-500" />
             <select
               value={periodFilter}
               onChange={(e) => setPeriodFilter(e.target.value)}
-              className="bg-transparent border-none text-slate-200 text-xs focus:ring-0 focus:outline-none cursor-pointer"
+              className="bg-transparent border-none text-slate-800 text-xs font-medium focus:ring-0 focus:outline-none cursor-pointer"
             >
-              <option value="all" className="bg-slate-900 text-slate-200">
+              <option value="all" className="bg-white text-slate-800">
                 All Time
               </option>
-              <option value="this_month" className="bg-slate-900 text-slate-200">
+              <option value="this_month" className="bg-white text-slate-800">
                 This Month
               </option>
-              <option value="last_30_days" className="bg-slate-900 text-slate-200">
+              <option value="last_30_days" className="bg-white text-slate-800">
                 Last 30 Days
               </option>
-              <option value="this_year" className="bg-slate-900 text-slate-200">
+              <option value="this_year" className="bg-white text-slate-800">
                 This Year
               </option>
             </select>
@@ -144,10 +144,10 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
             type="button"
             onClick={() => loadDashboardData(true)}
             disabled={refreshing || loading}
-            className="p-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors disabled:opacity-50"
+            className="p-2 rounded-xl bg-white border border-[#EDE4D9] text-slate-600 hover:text-slate-900 hover:bg-[#FAF5F0] shadow-sm transition-colors disabled:opacity-50 cursor-pointer"
             title="Refresh calculations"
           >
-            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin text-emerald-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin text-emerald-600' : ''}`} />
           </button>
 
           {/* New Transaction CTA */}
@@ -155,7 +155,7 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
             <button
               type="button"
               onClick={() => onNavigate('transactions')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-semibold text-xs shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-semibold text-xs shadow-sm hover:bg-emerald-500 transition-all cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Add Transaction</span>
@@ -178,12 +178,12 @@ export default function DashboardPage({ onNavigate, userCurrency = 'ETB' }) {
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-28 bg-slate-800/60 rounded-2xl border border-slate-700/50" />
+              <div key={i} className="h-28 bg-white/80 rounded-2xl border border-[#EDE4D9]" />
             ))}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-pulse">
-            <div className="lg:col-span-7 h-72 bg-slate-800/60 rounded-2xl border border-slate-700/50" />
-            <div className="lg:col-span-5 h-72 bg-slate-800/60 rounded-2xl border border-slate-700/50" />
+            <div className="lg:col-span-7 h-72 bg-white/80 rounded-2xl border border-[#EDE4D9]" />
+            <div className="lg:col-span-5 h-72 bg-white/80 rounded-2xl border border-[#EDE4D9]" />
           </div>
         </div>
       ) : (

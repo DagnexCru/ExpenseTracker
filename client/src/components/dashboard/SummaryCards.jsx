@@ -31,16 +31,16 @@ export default function SummaryCards({ summary, currency = 'ETB' }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* 1. Net Balance Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-slate-900/80 border border-slate-700/60 p-5 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-slate-600/80">
+      <div className="relative overflow-hidden rounded-2xl bg-white border border-[#EDE4D9] p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#DFD3C3]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Net Balance
           </span>
           <div
-            className={`p-2 rounded-xl ${
+            className={`p-2 rounded-xl border ${
               isNetPositive
-                ? 'bg-emerald-500/10 text-emerald-400'
-                : 'bg-rose-500/10 text-rose-400'
+                ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                : 'bg-rose-50 text-rose-600 border-rose-100'
             }`}
           >
             <Wallet className="w-5 h-5" />
@@ -48,8 +48,8 @@ export default function SummaryCards({ summary, currency = 'ETB' }) {
         </div>
         <div className="flex items-baseline gap-1.5">
           <span
-            className={`text-2xl font-bold font-mono tracking-tight ${
-              isNetPositive ? 'text-emerald-400' : 'text-rose-400'
+            className={`text-2xl sm:text-3xl font-extrabold font-mono tracking-tight ${
+              isNetPositive ? 'text-emerald-600' : 'text-rose-600'
             }`}
           >
             {isNetPositive ? '+' : ''}
@@ -57,10 +57,10 @@ export default function SummaryCards({ summary, currency = 'ETB' }) {
           </span>
           <span className="text-xs font-medium text-slate-400">{currency}</span>
         </div>
-        <div className="mt-3 flex items-center text-xs text-slate-400">
+        <div className="mt-3 flex items-center text-xs text-slate-500">
           <span
-            className={`inline-flex items-center gap-0.5 font-medium ${
-              isNetPositive ? 'text-emerald-400' : 'text-rose-400'
+            className={`inline-flex items-center gap-0.5 font-semibold ${
+              isNetPositive ? 'text-emerald-600' : 'text-rose-600'
             }`}
           >
             {isNetPositive ? (
@@ -70,88 +70,88 @@ export default function SummaryCards({ summary, currency = 'ETB' }) {
             )}
             {isNetPositive ? 'Surplus' : 'Deficit'}
           </span>
-          <span className="mx-1.5 text-slate-600">•</span>
+          <span className="mx-1.5 text-slate-300">•</span>
           <span>Income minus expenses</span>
         </div>
       </div>
 
       {/* 2. Total Income Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-slate-900/80 border border-slate-700/60 p-5 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-slate-600/80">
+      <div className="relative overflow-hidden rounded-2xl bg-white border border-[#EDE4D9] p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#DFD3C3]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Total Income
           </span>
-          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+          <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
             <TrendingUp className="w-5 h-5" />
           </div>
         </div>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-bold font-mono tracking-tight text-slate-100">
+          <span className="text-2xl sm:text-3xl font-extrabold font-mono tracking-tight text-slate-900">
             {formatMoney(totalIncome)}
           </span>
           <span className="text-xs font-medium text-slate-400">{currency}</span>
         </div>
-        <div className="mt-3 flex items-center text-xs text-slate-400">
-          <span className="inline-flex items-center gap-1 text-emerald-400 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        <div className="mt-3 flex items-center text-xs text-slate-500">
+          <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             {incomeCount} {incomeCount === 1 ? 'entry' : 'entries'}
           </span>
-          <span className="mx-1.5 text-slate-600">•</span>
+          <span className="mx-1.5 text-slate-300">•</span>
           <span>All cash inflows</span>
         </div>
       </div>
 
       {/* 3. Total Expenses Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-slate-900/80 border border-slate-700/60 p-5 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-slate-600/80">
+      <div className="relative overflow-hidden rounded-2xl bg-white border border-[#EDE4D9] p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#DFD3C3]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Total Expenses
           </span>
-          <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400">
+          <div className="p-2 rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
             <TrendingDown className="w-5 h-5" />
           </div>
         </div>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-bold font-mono tracking-tight text-slate-100">
+          <span className="text-2xl sm:text-3xl font-extrabold font-mono tracking-tight text-slate-900">
             {formatMoney(totalExpenses)}
           </span>
           <span className="text-xs font-medium text-slate-400">{currency}</span>
         </div>
-        <div className="mt-3 flex items-center text-xs text-slate-400">
-          <span className="inline-flex items-center gap-1 text-rose-400 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+        <div className="mt-3 flex items-center text-xs text-slate-500">
+          <span className="inline-flex items-center gap-1 text-rose-600 font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
             {expenseCount} {expenseCount === 1 ? 'entry' : 'entries'}
           </span>
-          <span className="mx-1.5 text-slate-600">•</span>
+          <span className="mx-1.5 text-slate-300">•</span>
           <span>All cash outflows</span>
         </div>
       </div>
 
       {/* 4. Savings Rate Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-slate-900/80 border border-slate-700/60 p-5 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-slate-600/80">
+      <div className="relative overflow-hidden rounded-2xl bg-white border border-[#EDE4D9] p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#DFD3C3]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Savings Rate
           </span>
-          <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400">
+          <div className="p-2 rounded-xl bg-cyan-50 text-cyan-700 border border-cyan-100">
             <PiggyBank className="w-5 h-5" />
           </div>
         </div>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-bold font-mono tracking-tight text-slate-100">
+          <span className="text-2xl sm:text-3xl font-extrabold font-mono tracking-tight text-slate-900">
             {savingsRate}%
           </span>
           <span className="text-xs font-medium text-slate-400">of income</span>
         </div>
         <div className="mt-3">
-          <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+          <div className="w-full bg-[#FAF5F0] border border-[#EDE4D9] rounded-full h-2 overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-500 ${
                 savingsRate >= 20
-                  ? 'bg-emerald-400'
+                  ? 'bg-emerald-500'
                   : savingsRate > 0
-                  ? 'bg-amber-400'
-                  : 'bg-rose-400'
+                  ? 'bg-amber-500'
+                  : 'bg-rose-500'
               }`}
               style={{ width: `${Math.min(Math.max(savingsRate, 0), 100)}%` }}
             />
