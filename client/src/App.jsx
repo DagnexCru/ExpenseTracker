@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
 import PageContainer from './components/layout/PageContainer';
+import HomePage from './pages/HomePage';
 import HealthCheckPage from './pages/HealthCheckPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -13,7 +14,7 @@ import ProtectedRoute from './components/layout/ProtectedRoute';
 
 function MainApp() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentView, setCurrentView] = useState('health');
+  const [currentView, setCurrentView] = useState('home');
   const { user, isAuthenticated } = useAuth();
 
   const handleNavigate = (view) => {
@@ -23,47 +24,60 @@ function MainApp() {
 
   const getPageTitle = () => {
     switch (currentView) {
+      case 'home':
+        return {
+          title: '',
+          subtitle: '',
+          showHeader: false,
+        };
       case 'health':
         return {
           title: 'System Architecture & Telemetry',
           subtitle: 'Real-time Mongoose health checks, database latency, and system telemetry.',
+          showHeader: true,
         };
       case 'register':
         return {
           title: 'Create Account',
           subtitle: 'Register your private account with industry-standard bcrypt encryption and secure sessions.',
+          showHeader: true,
         };
       case 'login':
         return {
           title: 'Sign In to SpendWise',
           subtitle: 'Secure authentication with HTTP-only cookies and token verification.',
+          showHeader: true,
         };
       case 'profile':
       case 'settings':
         return {
           title: 'User Profile & Currency Preferences',
           subtitle: 'Manage your display name, account security, and preferred baseline currency.',
+          showHeader: true,
         };
       case 'dashboard':
         return {
           title: 'Financial Overview & Analytics',
           subtitle: 'Real-time income vs. expense cashflow, monthly trends, and spending allocations.',
+          showHeader: true,
         };
       case 'transactions':
       case 'filters':
         return {
           title: 'Transaction Management & Filters',
           subtitle: 'Full CRUD ledger with multi-field search, date range filters, and pagination.',
+          showHeader: true,
         };
       default:
         return {
           title: 'SpendWise Personal Expense Tracker',
           subtitle: 'MERN Full-Stack Application',
+          showHeader: true,
         };
     }
   };
 
-  const { title, subtitle } = getPageTitle();
+  const { title, subtitle, showHeader } = getPageTitle();
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
@@ -85,7 +99,9 @@ function MainApp() {
         />
 
         {/* Dynamic Page Container */}
-        <PageContainer title={title} subtitle={subtitle}>
+        <PageContainer title={title} subtitle={subtitle} showHeader={showHeader}>
+          {currentView === 'home' && <HomePage onNavigate={handleNavigate} />}
+
           {currentView === 'health' && <HealthCheckPage />}
 
           {currentView === 'register' && (
