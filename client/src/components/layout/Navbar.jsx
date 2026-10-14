@@ -3,10 +3,8 @@ import {
   Wallet,
   Menu,
   X,
-  Camera,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import ProfileAvatar from '../profile/ProfileAvatar';
 
 export const Navbar = ({
   currentView,
@@ -49,7 +47,7 @@ export const Navbar = ({
             </button>
           </div>
         ) : (
-          /* Authenticated Header: Mobile menu trigger + Brand on left, User Profile on right */
+          /* Authenticated Header: Mobile menu trigger + Brand on left, Workspace title */
           <div className="flex items-center justify-between gap-4">
             {/* Left: Mobile Sidebar Drawer Button & SpendWise Logo */}
             <div className="flex items-center gap-3">
@@ -95,31 +93,6 @@ export const Navbar = ({
                     : 'Dashboard'}
                 </span>
               </div>
-            </div>
-            {/* Right: User Profile Pill */}
-            <div className="flex items-center gap-2.5">
-              {/* Top-Right Profile Pill with Photo Avatar (Click opens Photo & Profile Modal) */}
-              <button
-                type="button"
-                onClick={onOpenPhotoModal || (() => handleTabClick('profile'))}
-                className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl border border-[#EDE4D9] bg-white hover:bg-[#F5EFEB] text-slate-700 transition-all cursor-pointer shadow-xs group"
-                title="Click to update photo or view profile"
-              >
-                <ProfileAvatar
-                  name={user?.name || 'User'}
-                  avatar={user?.avatar}
-                  size="sm"
-                  showStatus={false}
-                />
-                <div className="text-left hidden sm:block">
-                  <span className="text-xs font-bold text-slate-800 max-w-[110px] truncate block leading-tight">
-                    {user?.name}
-                  </span>
-                  <span className="text-[10px] font-medium text-brand-600 block leading-tight">
-                    Photo & Info
-                  </span>
-                </div>
-              </button>
             </div>
           </div>
         )}
