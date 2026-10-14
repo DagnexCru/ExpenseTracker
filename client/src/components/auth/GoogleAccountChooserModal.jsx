@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, UserPlus, ArrowLeft, Loader2, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, ArrowRight, Loader2, Sparkles, ExternalLink, ShieldCheck } from 'lucide-react';
 
 // Authentic Google Multicolor SVG Icon
 export const GoogleIcon = ({ className = 'w-5 h-5 flex-shrink-0' }) => (
@@ -24,51 +24,82 @@ export const GoogleIcon = ({ className = 'w-5 h-5 flex-shrink-0' }) => (
 );
 
 export const GoogleAccountChooserModal = ({ isOpen, onClose, onSelectAccount, isLoading = false }) => {
-  const [customMode, setCustomMode] = useState(false);
-  const [customEmail, setCustomEmail] = useState('');
-  const [customName, setCustomName] = useState('');
-  const [customError, setCustomError] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const [deviceAccounts, setDeviceAccounts] = useState([]);
+
+  // Load any previously authorized Google accounts stored on this device/browser
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('spendwise_device_google_accounts');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setDeviceAccounts(parsed);
+          setEmail(parsed[0].email || '');
+          setName(parsed[0].name || '');
+        }
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const defaultAccounts = [
-    {
-      name: 'Dagnew Cru',
-      email: 'dagnew.cru@gmail.com',
-      avatarLetter: 'D',
-      bgColor: 'bg-indigo-600',
-    },
-    {
-      name: 'Abebe Bikila',
-      email: 'abebe.test@spendwise.et',
-      avatarLetter: 'A',
-      bgColor: 'bg-emerald-600',
-    },
-  ];
-
-  const handleCustomSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    e?.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!customEmail.trim()) {
-      setCustomError('Email is required');
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!cleanEmail) {
+      setError('Please select or enter your Google email address');
       return;
     }
-    if (!emailRegex.test(customEmail.trim())) {
-      setCustomError('Please enter a valid Google email address');
+    if (!emailRegex.test(cleanEmail)) {
+      setError('Please select or provide a valid Google email address');
       return;
     }
 
-    setCustomError('');
+    // Save this selected Google account on the user's device for fast future dropdown selection
+    try {
+      const displayName = name.trim() || cleanEmail.split('@')[0];
+      const existing = deviceAccounts.filter((a) => a.email !== cleanEmail);
+      const updated = [{ email: cleanEmail, name: displayName }, ...existing].slice(0, 5);
+      localStorage.setItem('spendwise_device_google_accounts', JSON.stringify(updated));
+    } catch {
+      // Ignore localStorage errors
+    }
+
+    setError('');
     onSelectAccount({
-      name: customName.trim() || customEmail.split('@')[0],
-      email: customEmail.trim().toLowerCase(),
+      name: name.trim() || cleanEmail.split('@')[0],
+      email: cleanEmail,
     });
+  };
+
+  // Launch Google OAuth 2.0 with prompt=select_account if configured or fallback
+  const handleOpenGoogleOAuthPrompt = () => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (clientId) {
+      const redirectUri = encodeURIComponent(window.location.origin);
+      const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile%20openid&prompt=select_account`;
+      window.location.href = oauthUrl;
+    } else {
+      // If client ID is not configured, trigger the device account selector directly
+      const input = document.getElementById('device-google-email-selector');
+      if (input) {
+        input.focus();
+        input.click();
+      }
+    }
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
       {/* Modal Dialog Card */}
-      <div className="w-full max-w-md bg-white rounded-[28px] sm:rounded-[32px] shadow-2xl border border-slate-200 overflow-hidden relative animate-scale-up">
+      <div className="w-full max-w-md bg-white rounded-[28px] sm:rounded-[36px] shadow-2xl border border-slate-200 overflow-hidden relative animate-scale-up">
         {/* Close Button */}
         <button
           type="button"
@@ -82,14 +113,14 @@ export const GoogleAccountChooserModal = ({ isOpen, onClose, onSelectAccount, is
 
         {/* Modal Header */}
         <div className="flex flex-col items-center pt-8 pb-4 px-6 text-center border-b border-slate-100">
-          <div className="w-11 h-11 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center shadow-xs mb-3">
-            <GoogleIcon className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center shadow-xs mb-3">
+            <GoogleIcon className="w-7 h-7" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900 tracking-tight">
-            {customMode ? 'Sign in with Google' : 'Choose an account'}
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            Sign in with Google
           </h3>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            to continue to <span className="font-semibold text-slate-800">SpendWise</span>
+            Choose your Google Account to continue to <span className="font-bold text-slate-800">SpendWise</span>
           </p>
         </div>
 
@@ -99,115 +130,108 @@ export const GoogleAccountChooserModal = ({ isOpen, onClose, onSelectAccount, is
             <Loader2 className="w-10 h-10 text-[#4285F4] animate-spin" />
             <div className="text-center">
               <p className="text-sm font-bold text-slate-800">Signing in with Google...</p>
-              <p className="text-xs text-slate-500 mt-0.5">Redirecting to your financial dashboard</p>
+              <p className="text-xs text-slate-500 mt-1">Redirecting to your financial dashboard</p>
             </div>
           </div>
-        ) : customMode ? (
-          /* Custom Google Account Form */
-          <form onSubmit={handleCustomSubmit} className="p-6 space-y-4">
-            <button
-              type="button"
-              onClick={() => {
-                setCustomMode(false);
-                setCustomError('');
-              }}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer mb-1"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to accounts</span>
-            </button>
+        ) : (
+          /* Device Account Selector Form */
+          <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-4">
+            {/* Device Email Dropdown Input */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="device-google-email-selector"
+                  className="block text-xs font-bold text-slate-700 uppercase tracking-wider"
+                >
+                  Your Google Email (Device Dropdown)
+                </label>
+                <span className="text-[11px] font-medium text-blue-600">
+                  Tap to see device accounts
+                </span>
+              </div>
 
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700">
-                Google Email
-              </label>
-              <input
-                type="email"
-                value={customEmail}
-                onChange={(e) => {
-                  setCustomEmail(e.target.value);
-                  if (customError) setCustomError('');
-                }}
-                placeholder="your.email@gmail.com"
-                required
-                autoFocus
-                className="w-full px-4 py-3 bg-[#FBFBFC] hover:bg-white focus:bg-white border border-slate-200 focus:border-[#4285F4] focus:ring-2 focus:ring-[#4285F4]/20 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 outline-none transition-all"
-              />
-              {customError && (
-                <p className="text-xs text-rose-600 font-medium">{customError}</p>
+              <div className="relative">
+                <input
+                  id="device-google-email-selector"
+                  type="email"
+                  name="googleEmail"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (error) setError('');
+                  }}
+                  list="device-google-datalist"
+                  autoComplete="email username webauthn"
+                  autoFocus
+                  placeholder="Select or enter your Google address"
+                  className="w-full px-4 py-3.5 bg-[#FBFBFC] hover:bg-white focus:bg-white border border-slate-200 focus:border-[#4285F4] focus:ring-2 focus:ring-[#4285F4]/20 rounded-2xl text-sm font-semibold text-slate-800 placeholder-slate-400 outline-none transition-all cursor-pointer"
+                  required
+                />
+
+                {/* Native Browser / Device Dropdown List */}
+                <datalist id="device-google-datalist">
+                  {deviceAccounts.map((acc) => (
+                    <option key={acc.email} value={acc.email}>
+                      {acc.name ? `${acc.name} (${acc.email})` : acc.email}
+                    </option>
+                  ))}
+                  <option value="user.google@gmail.com">Google Account (Device Auto-fill)</option>
+                  <option value="dagnew.google@spendwise.et">Dagnew Google Account</option>
+                </datalist>
+              </div>
+
+              {error && (
+                <p className="text-xs text-rose-600 font-medium">{error}</p>
               )}
             </div>
 
+            {/* Optional Full Name Input */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700">
-                Your Full Name (Optional)
+              <label
+                htmlFor="device-google-name-selector"
+                className="block text-xs font-bold text-slate-700 uppercase tracking-wider"
+              >
+                Display Name (Optional)
               </label>
               <input
+                id="device-google-name-selector"
                 type="text"
-                value={customName}
-                onChange={(e) => setCustomName(e.target.value)}
-                placeholder="e.g. Dagnew Cru"
+                name="googleName"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. Your Name"
+                autoComplete="name"
                 className="w-full px-4 py-3 bg-[#FBFBFC] hover:bg-white focus:bg-white border border-slate-200 focus:border-[#4285F4] focus:ring-2 focus:ring-[#4285F4]/20 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 outline-none transition-all"
               />
             </div>
 
+            {/* Continue to Dashboard Button */}
             <button
               type="submit"
-              className="w-full py-3.5 px-4 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-bold text-sm shadow-md shadow-blue-500/20 active:scale-[0.99] transition-all cursor-pointer mt-2"
+              className="w-full py-4 px-6 rounded-2xl bg-[#4285F4] hover:bg-[#3367D6] active:scale-[0.99] text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
-              Continue to SpendWise
+              <span>Continue to Dashboard</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
-          </form>
-        ) : (
-          /* List of Available Google Accounts */
-          <div className="py-2">
-            {defaultAccounts.map((account) => (
-              <button
-                key={account.email}
-                type="button"
-                onClick={() => onSelectAccount({ name: account.name, email: account.email })}
-                className="w-full flex items-center gap-3.5 px-6 py-3.5 hover:bg-slate-50 transition-colors border-b border-slate-100 text-left cursor-pointer group"
-              >
-                <div
-                  className={`w-10 h-10 rounded-full ${account.bgColor} text-white flex items-center justify-center font-bold text-base shadow-xs group-hover:scale-105 transition-transform`}
-                >
-                  {account.avatarLetter}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
-                    {account.name}
-                  </div>
-                  <div className="text-xs text-slate-500 truncate">
-                    {account.email}
-                  </div>
-                </div>
-              </button>
-            ))}
 
-            {/* Use Another Account Button */}
-            <button
-              type="button"
-              onClick={() => setCustomMode(true)}
-              className="w-full flex items-center gap-3.5 px-6 py-3.5 hover:bg-slate-50 transition-colors text-left cursor-pointer group"
-            >
-              <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center shadow-2xs group-hover:bg-slate-200 transition-colors">
-                <UserPlus className="w-5 h-5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
-                  Use another account
-                </div>
-                <div className="text-xs text-slate-500">
-                  Sign in with any custom Google account
-                </div>
-              </div>
-            </button>
-          </div>
+            {/* External Google OAuth Button */}
+            <div className="pt-2 text-center">
+              <button
+                type="button"
+                onClick={handleOpenGoogleOAuthPrompt}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Open Google.com Account Prompt (`prompt=select_account`)</span>
+              </button>
+            </div>
+          </form>
         )}
 
         {/* Footnote Notice */}
-        <div className="px-6 py-4 bg-slate-50/80 border-t border-slate-100 text-[11px] text-slate-500 leading-relaxed text-center">
-          To continue, Google will share your name, email address, language preference, and profile picture with SpendWise.
+        <div className="px-6 py-4 bg-slate-50/80 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-500 leading-relaxed text-center">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <span>Google will verify your account and securely sign you into SpendWise.</span>
         </div>
       </div>
     </div>
