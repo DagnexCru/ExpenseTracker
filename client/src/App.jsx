@@ -25,35 +25,35 @@ function MainApp() {
     switch (currentView) {
       case 'health':
         return {
-          title: 'System Architecture & Shell',
-          subtitle: 'Phase 1: Backend foundation, Mongoose health checks, and React application shell.',
+          title: 'System Architecture & Telemetry',
+          subtitle: 'Real-time Mongoose health checks, database latency, and system telemetry.',
         };
       case 'register':
         return {
           title: 'Create Account',
-          subtitle: 'Phase 2: User registration with bcrypt password hashing and HTTP-only session cookies.',
+          subtitle: 'Register your private account with industry-standard bcrypt encryption and secure sessions.',
         };
       case 'login':
         return {
           title: 'Sign In to SpendWise',
-          subtitle: 'Phase 2: User authentication, JWT issuance, and secure cookie transport.',
+          subtitle: 'Secure authentication with HTTP-only cookies and token verification.',
         };
       case 'profile':
       case 'settings':
         return {
           title: 'User Profile & Currency Preferences',
-          subtitle: 'Phase 6: Update display name, preferred currency, and manage account security.',
+          subtitle: 'Manage your display name, account security, and preferred baseline currency.',
         };
       case 'dashboard':
         return {
           title: 'Financial Overview & Analytics',
-          subtitle: 'Phase 4: Summary totals, monthly cashflow velocity, and category allocations.',
+          subtitle: 'Real-time income vs. expense cashflow, monthly trends, and spending allocations.',
         };
       case 'transactions':
       case 'filters':
         return {
           title: 'Transaction Management & Filters',
-          subtitle: 'Phase 5: Search descriptions, filter by date range, category, and paginate.',
+          subtitle: 'Full CRUD ledger with multi-field search, date range filters, and pagination.',
         };
       default:
         return {
