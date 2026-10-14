@@ -13,7 +13,6 @@ import {
 import { useAuth } from '../hooks/useAuth';
 import Alert from '../components/ui/Alert';
 import { useGoogleLogin } from '@react-oauth/google';
-import DemoCredentialsButton from '../components/auth/DemoCredentialsButton';
 import { validateRegisterForm } from '../utils/validation';
 import { GoogleIcon } from '../components/auth/GoogleAccountChooserModal';
 
@@ -432,22 +431,6 @@ export const RegisterPage = ({ onSwitchToLogin, onSwitchToGoogleAuth, onSuccess 
                     </>
                   )}
                 </button>
-              </div>
-
-              {/* Quick Evaluator 1-Click Auto Fill Demo */}
-              <div className="pt-1">
-                <DemoCredentialsButton
-                  mode="register"
-                  onApply={({ name, email, password }) => {
-                    setFormData({
-                      name,
-                      email,
-                      password,
-                      confirmPassword: password,
-                    });
-                    setFormErrors({});
-                  }}
-                />
               </div>
             </form>
 

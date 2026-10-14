@@ -30,6 +30,12 @@ export const Navbar = ({ currentView, onNavigate }) => {
   ];
 
   const handleTabClick = (viewId) => {
+    const protectedViews = ['dashboard', 'transactions', 'filters', 'profile', 'settings'];
+    if (!isAuthenticated && protectedViews.includes(viewId)) {
+      if (onNavigate) onNavigate('login');
+      setMobileMenuOpen(false);
+      return;
+    }
     if (onNavigate) onNavigate(viewId);
     setMobileMenuOpen(false);
   };

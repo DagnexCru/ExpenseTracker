@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Alert from '../components/ui/Alert';
-import DemoCredentialsButton from '../components/auth/DemoCredentialsButton';
 import RememberMeCheckbox from '../components/auth/RememberMeCheckbox';
 import { useGoogleLogin } from '@react-oauth/google';
 import { validateLoginForm } from '../utils/validation';
@@ -335,17 +334,6 @@ export const LoginPage = ({ onSwitchToRegister, onSwitchToGoogleAuth, onSuccess 
                     </>
                   )}
                 </button>
-              </div>
-
-              {/* Quick Evaluator 1-Click Auto Fill Demo */}
-              <div className="pt-1">
-                <DemoCredentialsButton
-                  mode="login"
-                  onApply={({ email, password }) => {
-                    setFormData({ email, password });
-                    setFormErrors({});
-                  }}
-                />
               </div>
             </form>
 
