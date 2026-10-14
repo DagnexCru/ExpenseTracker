@@ -41,24 +41,50 @@ export const Navbar = ({ currentView, onNavigate }) => {
 
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 py-3 transition-all">
-      <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
-        {/* Left: SpendWise Brand Logo & Title */}
-        <button
-          type="button"
-          onClick={() => handleTabClick(isAuthenticated ? 'dashboard' : 'home')}
-          className="flex items-center gap-2.5 text-left group cursor-pointer"
-          title={isAuthenticated ? 'Go to Financial Dashboard' : 'Go to SpendWise Home'}
-        >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
-            <Wallet className="w-5 h-5" />
+      <div className="relative flex items-center justify-between gap-4 max-w-7xl mx-auto">
+        {/* Left Side: Brand Logo (when logged in) or spacer (when guest) */}
+        {isAuthenticated ? (
+          <button
+            type="button"
+            onClick={() => handleTabClick('dashboard')}
+            className="flex items-center gap-2.5 text-left group cursor-pointer"
+            title="Go to Financial Dashboard"
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
+              <Wallet className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="font-bold text-slate-900 tracking-tight text-lg leading-none">
+                SpendWise
+              </span>
+              <p className="text-[11px] text-slate-500 font-medium mt-0.5">Personal Expense Tracker</p>
+            </div>
+          </button>
+        ) : (
+          <div className="hidden sm:block w-36" aria-hidden="true" />
+        )}
+
+        {/* Center: Brand Logo & Title in the MIDDLE of header for public view */}
+        {!isAuthenticated && (
+          <div className="sm:absolute sm:left-1/2 sm:-translate-x-1/2 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => handleTabClick('home')}
+              className="flex items-center gap-2.5 text-left group cursor-pointer"
+              title="SpendWise Home"
+            >
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
+                <Wallet className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-bold text-slate-900 tracking-tight text-lg leading-none">
+                  SpendWise
+                </span>
+                <p className="text-[11px] text-slate-500 font-medium mt-0.5">Personal Expense Tracker</p>
+              </div>
+            </button>
           </div>
-          <div>
-            <span className="font-bold text-slate-900 tracking-tight text-lg leading-none">
-              SpendWise
-            </span>
-            <p className="text-[11px] text-slate-500 font-medium mt-0.5">Personal Expense Tracker</p>
-          </div>
-        </button>
+        )}
 
         {/* Center: Navigation Tabs (ONLY available after user logs in) */}
         {isAuthenticated && (
