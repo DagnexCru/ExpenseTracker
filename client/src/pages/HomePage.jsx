@@ -70,10 +70,14 @@ export const HomePage = ({ onNavigate }) => {
             </span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Subheading */}
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
+            Ready to Take Control of Your Financial Future?
+          </h2>
+
+          {/* Combined Description */}
           <p className="text-slate-300 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
-            Gain full control of your personal finances. Track income, monitor expenses across categories, 
-            inspect real-time monthly trends, and protect your data with enterprise-grade encryption.
+            Join thousands tracking their daily transactions with zero hassle, instant categorization, and complete data privacy.
           </p>
 
           {/* Action Button Row */}
@@ -105,7 +109,7 @@ export const HomePage = ({ onNavigate }) => {
                   onClick={() => onNavigate && onNavigate('register')}
                   className="bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-lg shadow-brand-500/30"
                 >
-                  Create Free Account
+                  Get Started Today
                 </Button>
                 <button
                   type="button"
@@ -113,7 +117,7 @@ export const HomePage = ({ onNavigate }) => {
                   className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
                 >
                   <Lock className="w-4 h-4 text-slate-300" />
-                  <span>Sign In to Account</span>
+                  <span>Sign In</span>
                 </button>
               </>
             )}
@@ -257,38 +261,6 @@ export const HomePage = ({ onNavigate }) => {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* --------------------------------------------------------------------- */}
-      {/* FINAL CALL TO ACTION BANNER                                           */}
-      {/* --------------------------------------------------------------------- */}
-      <section className="bg-gradient-to-r from-brand-900 via-indigo-950 to-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-brand-800/60 shadow-xl text-center space-y-6 relative overflow-hidden">
-        <div className="max-w-2xl mx-auto space-y-4 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            Ready to Take Control of Your Financial Future?
-          </h2>
-          <p className="text-slate-300 text-sm sm:text-base font-normal">
-            Join thousands tracking their daily transactions with zero hassle, instant categorization, and complete data privacy.
-          </p>
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-            <Button
-              size="lg"
-              icon={ArrowRight}
-              onClick={() => onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
-              className="bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-lg shadow-brand-500/25"
-            >
-              {isAuthenticated ? 'Open Financial Dashboard' : 'Get Started Free Today'}
-            </Button>
-            <button
-              type="button"
-              onClick={() => onNavigate && onNavigate(isAuthenticated ? 'transactions' : 'login')}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm sm:text-base font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 shadow-md transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <Receipt className="w-4 h-4 text-slate-300" />
-              <span>{isAuthenticated ? 'Manage Transactions' : 'Sign In'}</span>
-            </button>
-          </div>
         </div>
       </section>
 
