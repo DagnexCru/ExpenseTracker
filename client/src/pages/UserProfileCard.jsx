@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   User as UserIcon,
   Mail,
-  ShieldCheck,
   Globe,
   Calendar,
   Key,
@@ -12,6 +11,7 @@ import {
   Sparkles,
   Camera,
   CheckCircle,
+  ArrowRight,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card';
@@ -174,65 +174,83 @@ export const UserProfileCard = () => {
             </div>
           </div>
 
-          {/* Account Snapshot Badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
-            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
-              <div className="w-8 h-8 rounded-xl bg-white text-brand-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
-                <Globe className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Active Currency
-                </span>
-                <p className="text-sm font-extrabold text-slate-900 mt-0.5 font-mono">
-                  {user.currency || 'ETB'}
-                </p>
-                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Default Format</p>
+          {/* Account Snapshot Badges (Interactive on Cursor Hover) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6">
+            {/* Card 1: Active Currency (Interactive Hover Card) */}
+            <div
+              onClick={() => {
+                const el = document.getElementById('currency-selector-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="group cursor-pointer p-5 rounded-2xl bg-[#FAF5F0] hover:bg-white border border-[#EDE4D9] hover:border-brand-400 shadow-2xs hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 transform hover:-translate-y-1.5 active:scale-[0.99] relative overflow-hidden select-none"
+            >
+              {/* Top ambient glow bar on hover */}
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-brand-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              {/* Ambient blur glow */}
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
+              <div className="flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-white group-hover:bg-brand-600 text-brand-600 group-hover:text-white border border-[#EDE4D9] group-hover:border-transparent flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md group-hover:shadow-brand-500/30 shrink-0">
+                    <Globe className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider group-hover:text-brand-600 transition-colors block">
+                      Active Currency
+                    </span>
+                    <p className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5 font-mono group-hover:text-brand-950 transition-colors">
+                      {user.currency || 'ETB'}
+                    </p>
+                    <p className="text-xs text-slate-500 font-medium mt-0.5 group-hover:text-slate-600 transition-colors">
+                      Default Baseline Format
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-200 bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-200">
+                    <span>Change</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
-              <div className="w-8 h-8 rounded-xl bg-white text-emerald-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
-                <Calendar className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Member Since
-                </span>
-                <p className="text-sm font-extrabold text-slate-900 mt-0.5">
-                  {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Active User'}
-                </p>
-                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Account Created</p>
-              </div>
-            </div>
+            {/* Card 2: Member Since (Interactive Hover Card) */}
+            <div
+              className="group cursor-default p-5 rounded-2xl bg-[#FAF5F0] hover:bg-white border border-[#EDE4D9] hover:border-emerald-400 shadow-2xs hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 transform hover:-translate-y-1.5 active:scale-[0.99] relative overflow-hidden select-none"
+            >
+              {/* Top ambient glow bar on hover */}
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
-              <div className="w-8 h-8 rounded-xl bg-white text-amber-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
-                <Key className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Session Guard
-                </span>
-                <p className="text-sm font-extrabold text-slate-900 mt-0.5">
-                  HTTP-Only JWT
-                </p>
-                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Secure Cookies</p>
-              </div>
-            </div>
+              {/* Ambient blur glow */}
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
 
-            <div className="p-4 rounded-2xl bg-[#FAF5F0] border border-[#EDE4D9] flex items-start gap-3 shadow-2xs">
-              <div className="w-8 h-8 rounded-xl bg-white text-indigo-600 border border-[#EDE4D9] flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Data Isolation
-                </span>
-                <p className="text-sm font-extrabold text-slate-900 mt-0.5">
-                  Multi-Tenant
-                </p>
-                <p className="text-[10px] text-slate-500 mt-0.5 font-medium">Zero Data Leakage</p>
+              <div className="flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-white group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white border border-[#EDE4D9] group-hover:border-transparent flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md group-hover:shadow-emerald-500/30 shrink-0">
+                    <Calendar className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider group-hover:text-emerald-700 transition-colors block">
+                      Member Since
+                    </span>
+                    <p className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5 group-hover:text-emerald-950 transition-colors">
+                      {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Active User'}
+                    </p>
+                    <p className="text-xs text-slate-500 font-medium mt-0.5 group-hover:text-slate-600 transition-colors">
+                      Account Registered & Verified
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Verified</span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -317,7 +335,7 @@ export const UserProfileCard = () => {
             </div>
 
             {/* Interactive Currency Selector */}
-            <div className="space-y-2 pt-2">
+            <div id="currency-selector-section" className="space-y-2 pt-2 scroll-mt-6">
               <label className="block text-xs font-bold text-slate-700">
                 Select Preferred Display Currency
               </label>
