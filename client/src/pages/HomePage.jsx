@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   Receipt,
   Lock,
-  CheckCircle2,
   Sparkles,
   BarChart3,
 } from 'lucide-react';
@@ -141,26 +140,6 @@ export const HomePage = ({ onNavigate }) => {
                 </button>
               </>
             )}
-          </div>
-
-          {/* Trust Guarantees */}
-          <div className="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-medium text-slate-500 border-t border-[#EDE4D9] max-w-3xl mx-auto">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>100% Private Multi-Tenant Isolation</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Bcrypt Salted Encryption</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Multi-Currency (ETB, USD, EUR, GBP)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Zero Third-Party Trackers</span>
-            </div>
           </div>
         </div>
       </section>
