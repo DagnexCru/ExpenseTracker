@@ -35,6 +35,13 @@ export default {
           DEFAULT: '#EF4444',
           dark: '#DC2626',
         },
+        warm: {
+          50: '#FAF5F0',
+          100: '#F5EFEB',
+          200: '#EDE4D9',
+          300: '#E0D2C3',
+          400: '#C7B49E',
+        },
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],

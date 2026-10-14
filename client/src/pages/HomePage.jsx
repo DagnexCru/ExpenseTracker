@@ -186,7 +186,7 @@ export const HomePage = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Card 1: Total Income */}
           <div
-            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-emerald-500/15 hover:border-emerald-300 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
+            className="bg-white p-6 rounded-2xl border border-[#EDE4D9] shadow-sm hover:shadow-xl hover:shadow-emerald-500/15 hover:border-emerald-300 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
           >
             {/* Top gradient glow bar */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -214,7 +214,7 @@ export const HomePage = ({ onNavigate }) => {
             </div>
 
             {/* Informational feature status on hover */}
-            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 group-hover:text-emerald-600 transition-colors relative z-10">
+            <div className="mt-4 pt-3 border-t border-[#EDE4D9]/60 flex items-center justify-between text-xs text-slate-400 group-hover:text-emerald-600 transition-colors relative z-10">
               <span className="font-medium">Live Cash Inflow</span>
               <span className="font-semibold text-emerald-600">Real-Time Stream</span>
             </div>
@@ -222,7 +222,7 @@ export const HomePage = ({ onNavigate }) => {
 
           {/* Card 2: Total Expenses */}
           <div
-            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-rose-500/15 hover:border-rose-300 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
+            className="bg-white p-6 rounded-2xl border border-[#EDE4D9] shadow-sm hover:shadow-xl hover:shadow-rose-500/15 hover:border-rose-300 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
           >
             {/* Top gradient glow bar */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-rose-400 via-pink-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -257,7 +257,7 @@ export const HomePage = ({ onNavigate }) => {
             </div>
 
             {/* Informational feature status on hover */}
-            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 group-hover:text-rose-600 transition-colors relative z-10">
+            <div className="mt-4 pt-3 border-t border-[#EDE4D9]/60 flex items-center justify-between text-xs text-slate-400 group-hover:text-rose-600 transition-colors relative z-10">
               <span className="font-medium">Categorized Spend</span>
               <span className="font-semibold text-rose-600">Dynamic Allocation</span>
             </div>
@@ -305,7 +305,7 @@ export const HomePage = ({ onNavigate }) => {
       {/* --------------------------------------------------------------------- */}
       {/* 3-STEP WORKFLOW                                                       */}
       {/* --------------------------------------------------------------------- */}
-      <section className="bg-slate-100/70 rounded-3xl p-8 sm:p-12 border border-slate-200/70 space-y-8">
+      <section className="bg-[#F5EFEB]/90 rounded-3xl p-8 sm:p-12 border border-[#EDE4D9] space-y-8">
         <div className="text-center max-w-2xl mx-auto">
           <Badge variant="default" className="mb-2">
             Simple 3-Step Lifecycle
@@ -321,7 +321,7 @@ export const HomePage = ({ onNavigate }) => {
             return (
               <div
                 key={step.step}
-                className={`bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl ${step.borderHover} transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out space-y-3 relative overflow-hidden group select-none cursor-default`}
+                className={`bg-white p-6 rounded-2xl border border-[#EDE4D9] shadow-xs hover:shadow-xl ${step.borderHover} transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out space-y-3 relative overflow-hidden group select-none cursor-default`}
               >
                 {/* Top gradient glow bar */}
                 <div
@@ -356,7 +356,7 @@ export const HomePage = ({ onNavigate }) => {
                 </div>
 
                 {/* Informational badge footer */}
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-slate-700 transition-colors relative z-10">
+                <div className="pt-3 border-t border-[#EDE4D9]/60 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-slate-700 transition-colors relative z-10">
                   <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400 group-hover:text-brand-600 transition-colors">
                     {step.badge}
                   </span>
@@ -373,7 +373,7 @@ export const HomePage = ({ onNavigate }) => {
       {/* --------------------------------------------------------------------- */}
       {/* FOOTER                                                                */}
       {/* --------------------------------------------------------------------- */}
-      <footer className="pt-8 border-t border-slate-200/80 flex items-center justify-center gap-2 text-xs text-slate-500 text-center">
+      <footer className="pt-8 border-t border-[#EDE4D9] flex items-center justify-center gap-2 text-xs text-slate-500 text-center">
         <div className="w-5 h-5 rounded-md bg-brand-600 text-white flex items-center justify-center font-bold text-[10px]">
           SW
         </div>

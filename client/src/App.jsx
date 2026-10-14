@@ -86,7 +86,7 @@ function MainApp() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#FAF5F0] flex flex-col font-sans">
       {/* Top Header Navbar with concise navigation tabs (no left sidebar) */}
       <Navbar
         currentView={currentView}

@@ -168,7 +168,7 @@ export const UserProfileCard = () => {
 
           {/* Account Snapshot Badges */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-start gap-3">
+            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
               <Globe className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" />
               <div>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -181,7 +181,7 @@ export const UserProfileCard = () => {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-start gap-3">
+            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
               <Calendar className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -194,7 +194,7 @@ export const UserProfileCard = () => {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-start gap-3">
+            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
               <Key className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -207,7 +207,7 @@ export const UserProfileCard = () => {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-start gap-3">
+            <div className="p-3.5 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] flex items-start gap-3">
               <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
               <div>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -311,7 +311,7 @@ export const UserProfileCard = () => {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-50/70 border-t border-slate-100 px-6 py-4">
+          <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#FBF8F5] border-t border-[#EDE4D9] px-6 py-4">
             <span className="text-xs text-slate-500">
               {hasChanges
                 ? 'You have unsaved adjustments. Click Save to persist them to MongoDB.'
@@ -387,7 +387,7 @@ export const UserProfileCard = () => {
               )}
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 text-xs">
+            <div className="p-4 rounded-xl bg-[#FBF8F5] border border-[#EDE4D9] text-slate-500 text-xs">
               Click &quot;Verify Endpoint&quot; to test your active session against the newly mounted Express endpoint.
             </div>
           )}

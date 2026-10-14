@@ -6,7 +6,7 @@ export const PageContainer = ({ title, subtitle, actions, showHeader = true, chi
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Page Header */}
         {showHeader && title && (
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 pb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#EDE4D9] pb-5">
             <div>
               <h1 className="text-2xl font-bold text-slate-900 tracking-tight sm:text-3xl">
                 {title}

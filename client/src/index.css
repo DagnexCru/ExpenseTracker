@@ -4,11 +4,11 @@
 
 @layer base {
   * {
-    border-color: #e2e8f0;
+    border-color: #EDE4D9;
   }
 
   body {
-    background-color: #f8fafc;
+    background-color: #FAF5F0;
     color: #0f172a;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }

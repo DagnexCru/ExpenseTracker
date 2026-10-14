@@ -35,7 +35,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 py-3 transition-all">
+    <header className="sticky top-0 z-40 bg-[#FAF5F0]/90 backdrop-blur-md border-b border-[#EDE4D9] px-4 sm:px-6 lg:px-8 py-3 transition-all">
       <div className="max-w-7xl mx-auto">
         {!isAuthenticated ? (
           /* Public Header: Large SpendWise branding in the middle with NO sign-in/register buttons */
@@ -81,7 +81,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
             </button>
 
             {/* Center: Navigation Tabs (ONLY available after login) */}
-            <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-xl border border-slate-200/60 shadow-inner">
+            <nav className="hidden md:flex items-center gap-1.5 bg-[#F2ECE3]/80 p-1.5 rounded-xl border border-[#EDE4D9] shadow-inner">
               {navTabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive =
@@ -96,7 +96,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
                     onClick={() => handleTabClick(tab.id)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-white text-brand-700 shadow-xs border border-slate-200/60'
+                        ? 'bg-white text-brand-700 shadow-xs border border-[#EDE4D9]'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                     }`}
                   >
@@ -115,7 +115,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border transition-all cursor-pointer ${
                   currentView === 'profile' || currentView === 'settings'
                     ? 'bg-brand-50 border-brand-200 text-brand-700 font-semibold'
-                    : 'bg-white hover:bg-slate-50 border-slate-200/80 text-slate-700'
+                    : 'bg-white hover:bg-[#F5EFEB] border-[#EDE4D9] text-slate-700'
                 }`}
                 title="View Profile Details"
               >
@@ -130,7 +130,7 @@ export const Navbar = ({ currentView, onNavigate }) => {
                 size="md"
                 icon={LogOut}
                 onClick={handleLogout}
-                className="text-slate-600 hover:text-rose-600 hover:border-rose-200"
+                className="text-slate-600 hover:text-rose-600 border-[#EDE4D9] bg-white hover:bg-[#F5EFEB]"
               >
                 <span className="hidden sm:inline">Sign Out</span>
               </Button>
