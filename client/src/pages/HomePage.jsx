@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Wallet,
   ArrowRight,
-  ArrowUpRight,
   TrendingUp,
   TrendingDown,
   LayoutDashboard,
@@ -33,8 +32,7 @@ export const HomePage = ({ onNavigate }) => {
       numberColor: 'text-brand-600 group-hover:text-brand-700',
       iconBox: 'bg-brand-50 text-brand-600 group-hover:bg-brand-600 group-hover:text-white group-hover:shadow-brand-500/30',
       badge: 'Zero Friction',
-      actionText: isAuthenticated ? 'Open Ledger' : 'Get Started',
-      target: isAuthenticated ? 'transactions' : 'register',
+      tag: 'Fast Entry',
     },
     {
       step: '02',
@@ -48,8 +46,7 @@ export const HomePage = ({ onNavigate }) => {
       numberColor: 'text-indigo-600 group-hover:text-indigo-700',
       iconBox: 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-indigo-500/30',
       badge: 'Visual Insights',
-      actionText: isAuthenticated ? 'View Charts' : 'Explore Free',
-      target: isAuthenticated ? 'dashboard' : 'register',
+      tag: 'Real-Time Charts',
     },
     {
       step: '03',
@@ -63,8 +60,7 @@ export const HomePage = ({ onNavigate }) => {
       numberColor: 'text-emerald-600 group-hover:text-emerald-700',
       iconBox: 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white group-hover:shadow-emerald-500/30',
       badge: 'Financial Growth',
-      actionText: isAuthenticated ? 'Track Velocity' : 'Start Today',
-      target: isAuthenticated ? 'dashboard' : 'register',
+      tag: 'Automated Metrics',
     },
   ];
 
@@ -190,11 +186,7 @@ export const HomePage = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Card 1: Total Income */}
           <div
-            role="button"
-            tabIndex={0}
-            onClick={() => onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
-            onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
-            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-emerald-500/15 hover:border-emerald-300 transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-emerald-500/15 hover:border-emerald-300 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
           >
             {/* Top gradient glow bar */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -206,11 +198,8 @@ export const HomePage = ({ onNavigate }) => {
               <span className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-emerald-700 transition-colors">
                 Total Monthly Inflow
               </span>
-              <div className="flex items-center gap-1.5">
-                <ArrowUpRight className="w-4 h-4 text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center transition-all duration-300 group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md group-hover:shadow-emerald-500/30">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center transition-all duration-300 group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md group-hover:shadow-emerald-500/30">
+                <TrendingUp className="w-5 h-5" />
               </div>
             </div>
 
@@ -224,22 +213,16 @@ export const HomePage = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Micro action bar on hover */}
+            {/* Informational feature status on hover */}
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 group-hover:text-emerald-600 transition-colors relative z-10">
               <span className="font-medium">Live Cash Inflow</span>
-              <span className="font-semibold flex items-center gap-1">
-                Explore Analytics <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </span>
+              <span className="font-semibold text-emerald-600">Real-Time Stream</span>
             </div>
           </div>
 
           {/* Card 2: Total Expenses */}
           <div
-            role="button"
-            tabIndex={0}
-            onClick={() => onNavigate && onNavigate(isAuthenticated ? 'transactions' : 'register')}
-            onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(isAuthenticated ? 'transactions' : 'register')}
-            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-rose-500/15 hover:border-rose-300 transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-rose-400"
+            className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-rose-500/15 hover:border-rose-300 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
           >
             {/* Top gradient glow bar */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-rose-400 via-pink-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -251,11 +234,8 @@ export const HomePage = ({ onNavigate }) => {
               <span className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-rose-700 transition-colors">
                 Total Outflow Expenses
               </span>
-              <div className="flex items-center gap-1.5">
-                <ArrowUpRight className="w-4 h-4 text-rose-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center transition-all duration-300 group-hover:bg-rose-500 group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 group-hover:shadow-md group-hover:shadow-rose-500/30">
-                  <TrendingDown className="w-5 h-5" />
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center transition-all duration-300 group-hover:bg-rose-500 group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 group-hover:shadow-md group-hover:shadow-rose-500/30">
+                <TrendingDown className="w-5 h-5" />
               </div>
             </div>
 
@@ -276,22 +256,16 @@ export const HomePage = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Micro action bar on hover */}
+            {/* Informational feature status on hover */}
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 group-hover:text-rose-600 transition-colors relative z-10">
               <span className="font-medium">Categorized Spend</span>
-              <span className="font-semibold flex items-center gap-1">
-                View Ledger <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </span>
+              <span className="font-semibold text-rose-600">Dynamic Allocation</span>
             </div>
           </div>
 
           {/* Card 3: Net Cashflow Balance */}
           <div
-            role="button"
-            tabIndex={0}
-            onClick={() => onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
-            onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(isAuthenticated ? 'dashboard' : 'register')}
-            className="bg-gradient-to-tr from-brand-700 via-indigo-700 to-brand-800 text-white p-6 rounded-2xl border border-brand-600 shadow-md hover:shadow-2xl hover:shadow-brand-500/35 hover:border-brand-400 transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-300"
+            className="bg-gradient-to-tr from-brand-700 via-indigo-700 to-brand-800 text-white p-6 rounded-2xl border border-brand-600 shadow-md hover:shadow-2xl hover:shadow-brand-500/35 hover:border-brand-400 transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden group select-none cursor-default"
           >
             {/* Top gradient glow bar */}
             <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-brand-300 via-indigo-200 to-emerald-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -303,11 +277,8 @@ export const HomePage = ({ onNavigate }) => {
               <span className="text-xs font-bold text-brand-200 uppercase tracking-wider group-hover:text-white transition-colors">
                 Net Operating Balance
               </span>
-              <div className="flex items-center gap-1.5">
-                <ArrowUpRight className="w-4 h-4 text-emerald-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                <div className="w-10 h-10 rounded-xl bg-white/15 text-white flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-brand-700 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-lg group-hover:shadow-white/20">
-                  <Wallet className="w-5 h-5" />
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-white/15 text-white flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-brand-700 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-lg group-hover:shadow-white/20">
+                <Wallet className="w-5 h-5" />
               </div>
             </div>
 
@@ -321,12 +292,10 @@ export const HomePage = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Micro action bar on hover */}
+            {/* Informational feature status on hover */}
             <div className="mt-4 pt-3 border-t border-white/15 flex items-center justify-between text-xs text-brand-200 group-hover:text-white transition-colors relative z-10">
               <span className="font-medium">Total Capital Velocity</span>
-              <span className="font-semibold flex items-center gap-1">
-                Net Analysis <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </span>
+              <span className="font-semibold text-emerald-300">Live Formula</span>
             </div>
           </div>
         </div>
@@ -352,11 +321,7 @@ export const HomePage = ({ onNavigate }) => {
             return (
               <div
                 key={step.step}
-                role="button"
-                tabIndex={0}
-                onClick={() => onNavigate && onNavigate(step.target)}
-                onKeyDown={(e) => e.key === 'Enter' && onNavigate && onNavigate(step.target)}
-                className={`bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl ${step.borderHover} transform hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out space-y-3 relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-400`}
+                className={`bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl ${step.borderHover} transform hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 ease-out space-y-3 relative overflow-hidden group select-none cursor-default`}
               >
                 {/* Top gradient glow bar */}
                 <div
@@ -374,13 +339,10 @@ export const HomePage = ({ onNavigate }) => {
                   >
                     {step.step}
                   </span>
-                  <div className="flex items-center gap-1.5">
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                    <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md ${step.iconBox}`}
-                    >
-                      <Icon className="w-4 h-4" />
-                    </div>
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md ${step.iconBox}`}
+                  >
+                    <Icon className="w-4 h-4" />
                   </div>
                 </div>
 
@@ -393,13 +355,13 @@ export const HomePage = ({ onNavigate }) => {
                   </p>
                 </div>
 
-                {/* Action footer */}
+                {/* Informational badge footer */}
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-slate-700 transition-colors relative z-10">
                   <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400 group-hover:text-brand-600 transition-colors">
                     {step.badge}
                   </span>
-                  <span className="flex items-center gap-1 group-hover:text-brand-600 transition-colors">
-                    {step.actionText} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <span className="text-xs font-medium text-slate-400 group-hover:text-slate-600 transition-colors">
+                    {step.tag}
                   </span>
                 </div>
               </div>
