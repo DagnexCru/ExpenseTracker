@@ -19,40 +19,34 @@ export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
 
   const navigationItems = [
     {
-      id: 'health',
-      name: 'System Shell & Health',
-      icon: Activity,
-      phase: 'Phase 1',
-    },
-    {
-      id: isAuthenticated ? 'profile' : 'login',
-      name: isAuthenticated ? 'User Profile & Auth' : 'Authentication',
-      icon: Lock,
-      phase: 'Phase 2',
+      id: 'dashboard',
+      name: 'Financial Dashboard',
+      icon: LayoutDashboard,
+      phase: 'Overview',
     },
     {
       id: 'transactions',
-      name: 'Transactions CRUD',
+      name: 'Transaction Ledger',
       icon: Receipt,
-      phase: 'Phase 3',
-    },
-    {
-      id: 'dashboard',
-      name: 'Dashboard & Charts',
-      icon: LayoutDashboard,
-      phase: 'Phase 4 (Active)',
+      phase: 'CRUD & Live',
     },
     {
       id: 'filters',
-      name: 'Search & Filters',
+      name: 'Search & Filtering',
       icon: PieChart,
-      phase: 'Phase 5',
+      phase: 'Query Studio',
     },
     {
-      id: 'settings',
-      name: 'Currency & Preferences',
+      id: isAuthenticated ? 'profile' : 'login',
+      name: isAuthenticated ? 'Profile & Preferences' : 'Sign In / Register',
       icon: User,
-      phase: 'Phase 6',
+      phase: 'Account',
+    },
+    {
+      id: 'health',
+      name: 'System Health & Shell',
+      icon: Activity,
+      phase: 'Diagnostics',
     },
   ];
 
