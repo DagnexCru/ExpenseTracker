@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Home,
   LayoutDashboard,
   Receipt,
   PieChart,
@@ -18,6 +19,12 @@ export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
   const { user, isAuthenticated } = useAuth();
 
   const navigationItems = [
+    {
+      id: 'home',
+      name: 'Home & Welcome',
+      icon: Home,
+      phase: 'Landing',
+    },
     {
       id: 'dashboard',
       name: 'Financial Dashboard',
@@ -68,15 +75,22 @@ export const Sidebar = ({ isOpen, onClose, currentView, onNavigate }) => {
       >
         {/* Sidebar Header */}
         <div className="p-5 flex items-center justify-between border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400">
+          <button
+            type="button"
+            onClick={() => {
+              if (onNavigate) onNavigate('home');
+              if (onClose) onClose();
+            }}
+            className="flex items-center gap-3 text-left group cursor-pointer"
+          >
+            <div className="w-8 h-8 rounded-lg bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 group-hover:scale-105 transition-transform">
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-semibold tracking-wide text-white">SpendWise Core</h2>
-              <p className="text-[11px] text-slate-400">MERN Workspace</p>
+              <h2 className="text-sm font-semibold tracking-wide text-white group-hover:text-brand-300 transition-colors">SpendWise Core</h2>
+              <p className="text-[11px] text-slate-400">Personal Expense Tracker</p>
             </div>
-          </div>
+          </button>
           <button
             onClick={onClose}
             className="p-1.5 text-slate-400 hover:text-white rounded-lg lg:hidden"
